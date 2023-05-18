@@ -10,7 +10,6 @@ import useNetwork from '@/composables/useNetwork';
 
 import AppNavActions from './AppNavActions.vue';
 import AppNavAlert from './AppNavAlert.vue';
-import DesktopLinks from './DesktopLinks/DesktopLinks.vue';
 
 /**
  * STATE
@@ -20,7 +19,7 @@ const appNav = ref<HTMLDivElement>();
 /**
  * COMPOSABLES
  */
-const { bp, isDesktop } = useBreakpoints();
+const { bp } = useBreakpoints();
 const { trackGoal, Goals } = useFathom();
 const { currentAlert } = useAlerts();
 const { networkSlug } = useNetwork();
@@ -63,7 +62,8 @@ onUnmounted(() => {
           <AppLogo v-else />
         </router-link>
 
-        <DesktopLinks v-if="isDesktop" class="ml-8 font-medium" />
+        <!-- GSUprotocol -->
+        <!-- <DesktopLinks v-if="isDesktop" class="ml-8 font-medium" /> -->
       </div>
 
       <AppNavActions />
