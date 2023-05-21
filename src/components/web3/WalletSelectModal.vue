@@ -113,7 +113,7 @@ function onBalRulesAccepted() {
     >
       <WalletButton v-for="wallet in wallets" :key="wallet" :wallet="wallet" />
       <div
-        class="p-4 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-gray-100 dark:to-gray-850 rounded-lg"
+        class="p-4 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-gray-100 dark:to-gray-850 rounded-lg help"
       >
         <h6>{{ $t('newToEthereum') }}</h6>
         <p class="text-sm">
@@ -129,3 +129,10 @@ function onBalRulesAccepted() {
     </div>
   </BalModal>
 </template>
+
+<style scoped>
+.help {
+  background: #133838;
+  color: #fff;
+}
+</style>
