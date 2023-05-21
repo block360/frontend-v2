@@ -1,62 +1,38 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-
-import Avatar from '@/components/images/Avatar.vue';
-import useBreakpoints from '@/composables/useBreakpoints';
 import useWeb3 from '@/services/web3/useWeb3';
 import { shorten } from '@/lib/utils';
 
 import AppNavSettings from './AppNavSettings.vue';
 
-const { bp, upToLargeBreakpoint, isMobile } = useBreakpoints();
-const { isLoadingProfile, profile, account } = useWeb3();
-
-const avatarSize = computed(() => {
-  if (bp.value === 'sm') {
-    return 35;
-  } else if (['md', 'lg'].includes(bp.value)) {
-    return 40;
-  } else {
-    return 20;
-  }
-});
+const { isLoadingProfile, account } = useWeb3();
 </script>
 
-<template>
-  <BalPopover
-    noPad
-    :align="isMobile ? 'center' : undefined"
-    :detached="isMobile ? true : undefined"
-  >
+<template class="address">
+  <BalPopover noPad class="address">
     <template #activator>
       <BalBtn
-        class="text-base"
-        :class="{ btn: upToLargeBreakpoint }"
+        class="text-base address"
         :loading="isLoadingProfile"
-        :loadingLabel="upToLargeBreakpoint ? '' : $t('connecting')"
+        :loadingLabel="$t('connecting')"
         color="white"
-        :size="upToLargeBreakpoint ? 'md' : 'sm'"
-        :circle="upToLargeBreakpoint"
       >
-        <Avatar
+        <!-- <Avatar
           :iconURI="profile?.avatar || ''"
           :address="account"
-          :size="avatarSize"
-        />
-        <span
-          v-if="profile && profile.ens"
-          class="hidden lg:inline-block pl-2"
-          v-text="profile && profile.ens"
-        />
-        <span
-          v-else
-          class="hidden lg:inline-block pl-2 eth-address"
-          v-text="shorten(account)"
-        />
+        /> -->
+
+        <span class="inline-block pl-2 eth-address" v-text="shorten(account)" />
       </BalBtn>
     </template>
     <AppNavSettings />
   </BalPopover>
 </template>
+
+<style scoped>
+.address {
+  background-color: #133838;
+  color: #fff;
+}
+</style>
 
 

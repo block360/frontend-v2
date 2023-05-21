@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 
-import useBreakpoints from '@/composables/useBreakpoints';
 import useNotifications from '@/composables/useNotifications';
 import useTransactions from '@/composables/useTransactions';
 import { cowswapProtocolService } from '@/services/cowswap/cowswapProtocol.service';
@@ -14,7 +13,6 @@ import ActivityRows from './ActivityRows.vue';
 /**
  * COMPOSABLES
  */
-const { upToLargeBreakpoint, isMobile } = useBreakpoints();
 const { account, getSigner } = useWeb3();
 const { t } = useI18n();
 
@@ -65,19 +63,14 @@ async function cancelOrder(orderId: string) {
 </script>
 
 <template>
-  <BalPopover noPad :align="isMobile ? 'left' : undefined">
+  <BalPopover noPad class="activity-card">
     <template #activator>
-      <BalBtn
-        color="white"
-        :size="upToLargeBreakpoint ? 'md' : 'sm'"
-        class="relative p-1"
-        :circle="upToLargeBreakpoint"
-      >
+      <BalBtn color="white" :size="'sm'" class="relative p-1 activity-card">
         <ActivityIcon v-if="pendingTransactions.length === 0" />
         <ActivityCounter v-else :count="pendingTransactions.length" />
       </BalBtn>
     </template>
-    <BalCard class="w-72" noPad noBorder>
+    <BalCard class="w-72 activity-card" noPad noBorder>
       <template #header>
         <div
           class="flex justify-between items-center p-3 w-full border-b dark:border-gray-900"
@@ -98,7 +91,7 @@ async function cancelOrder(orderId: string) {
             v-if="
               pendingTransactions.length > 0 && finalizedTransactions.length > 0
             "
-            class="my-3 h-px bg-gray-100 dark:bg-gray-700"
+            class="my-3 h-px bg-white-100 dark:bg-white-700"
           />
           <ActivityRows
             :transactions="finalizedTransactions"
@@ -113,8 +106,8 @@ async function cancelOrder(orderId: string) {
         </template>
       </div>
       <template v-if="transactions.length > 0" #footer>
-        <div class="p-3 w-full text-sm bg-white dark:bg-gray-800 rounded-b-lg">
-          <a class="text-blue-500" @click="clearAllTransactions()">
+        <div class="p-3 w-full text-sm dark:bg-gray-800 rounded-b-lg">
+          <a class="text-white-500" @click="clearAllTransactions()">
             {{ $t('clearTransactions') }}
           </a>
         </div>
@@ -122,5 +115,17 @@ async function cancelOrder(orderId: string) {
     </BalCard>
   </BalPopover>
 </template>
+
+<style>
+.activity-card {
+  background-color: #133838;
+  color: white;
+}
+
+.activity-card:hover {
+  background-color: #133838;
+  color: white;
+}
+</style>
 
 

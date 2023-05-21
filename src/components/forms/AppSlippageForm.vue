@@ -44,7 +44,7 @@ const isFixedSlippage = computed(() => {
 const customInputClasses = computed(() => ({
   'border border-blue-500 text-blue-500':
     !isFixedSlippage.value && state.isCustomInput,
-  'border dark:border-gray-900': isFixedSlippage.value && !state.isCustomInput,
+  'border border-white-900': isFixedSlippage.value && !state.isCustomInput,
 }));
 
 /**
@@ -84,7 +84,7 @@ watch(() => state.customSlippage, onCustomInput, { immediate: true });
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex content">
     <BalBtnGroup
       v-model="state.fixedSlippage"
       :options="options"
@@ -93,13 +93,13 @@ watch(() => state.customSlippage, onCustomInput, { immediate: true });
     <div :class="['custom-input', customInputClasses]">
       <input
         v-model="state.customSlippage"
-        class="w-12 text-right bg-transparent"
+        class="w-12 text-right text-white bg-transparent"
         placeholder="0.1"
         type="number"
         step="any"
         min="0"
       />
-      <div class="px-2">%</div>
+      <div class="px-2 text-white">%</div>
     </div>
   </div>
 </template>
@@ -107,5 +107,9 @@ watch(() => state.customSlippage, onCustomInput, { immediate: true });
 <style scoped>
 .custom-input {
   @apply flex items-center px-1 rounded-lg shadow-inner;
+}
+
+.content {
+  color: #fff;
 }
 </style>

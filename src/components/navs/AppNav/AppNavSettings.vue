@@ -5,7 +5,6 @@ import useEthereumTxType from '@/composables/useEthereumTxType';
 import { ethereumTxTypeOptions } from '@/constants/options';
 import useWeb3 from '@/services/web3/useWeb3';
 import { shorten } from '@/lib/utils';
-import useDarkMode from '@/composables/useDarkMode';
 import { getConnectorLogo } from '@/services/web3/wallet-logos';
 import { getConnectorName } from '@/services/web3/wallet-names';
 import { useUserSettings } from '@/providers/user-settings.provider';
@@ -13,7 +12,6 @@ import { isEIP1559SupportedNetwork } from '@/composables/useNetwork';
 import { Network } from '@/lib/config';
 
 // COMPOSABLES
-const { darkMode, setDarkMode } = useDarkMode();
 
 const {
   account,
@@ -71,8 +69,8 @@ function copyAddress() {
 }
 </script>
 
-<template>
-  <div>
+<template >
+  <div class="content">
     <div class="p-4 border-b dark:border-gray-900">
       <div class="flex justify-between items-center mb-6">
         <h5 class="tracking-tight leading-none" v-text="$t('account')" />
@@ -83,7 +81,7 @@ function copyAddress() {
           <div v-if="!hideDisconnect">
             <BalBtn
               outline
-              color="gray"
+              color="white"
               size="xs"
               class="capitalize"
               @click="disconnectWallet"
@@ -106,10 +104,7 @@ function copyAddress() {
           </div>
           <div class="ml-2">
             <div class="flex items-baseline address">
-              <div
-                class="font-bold text-black dark:text-white"
-                v-text="shorten(account)"
-              />
+              <div class="font-bold text-white" v-text="shorten(account)" />
               <div class="flex ml-3">
                 <BalTooltip width="auto">
                   <template #activator>
@@ -162,15 +157,11 @@ function copyAddress() {
       <div class="flex mt-1">
         <div
           class="flex justify-center items-center py-1.5 mr-2 w-16 rounded-xl border cursor-pointer option"
-          :class="{ active: !darkMode }"
-          @click="setDarkMode(false)"
         >
           <BalIcon name="sun" size="sm" />
         </div>
         <div
           class="flex justify-center items-center py-1.5 mr-2 w-16 rounded-xl border cursor-pointer option"
-          :class="{ active: darkMode }"
-          @click="setDarkMode(true)"
         >
           <BalIcon name="moon" size="sm" />
         </div>
@@ -181,19 +172,19 @@ function copyAddress() {
         <span class="mb-2 font-medium" v-text="$t('slippageTolerance')" />
         <BalTooltip>
           <template #activator>
-            <BalIcon name="info" size="xs" class="-mb-px ml-1 text-gray-400" />
+            <BalIcon name="info" size="xs" class="-mb-px ml-1 text-white-400" />
           </template>
           <div v-html="$t('marketConditionsWarning')" />
         </BalTooltip>
       </div>
-      <AppSlippageForm class="mt-1" />
+      <AppSlippageForm class="mt-0" />
     </div>
     <div v-if="isEIP1559SupportedNetwork" class="px-4 mt-6">
       <div class="flex items-baseline">
         <span class="mb-2 font-medium" v-text="$t('transactionType')" />
         <BalTooltip>
           <template #activator>
-            <BalIcon name="info" size="xs" class="-mb-px ml-1 text-gray-400" />
+            <BalIcon name="info" size="xs" class="-mb-px ml-1 text-white-400" />
           </template>
           <div v-text="$t('ethereumTxTypeTooltip')" />
         </BalTooltip>
@@ -253,5 +244,10 @@ function copyAddress() {
 
 .slippage-input.active {
   @apply text-blue-500 border-blue-500 border-2 ring;
+}
+
+.content {
+  background-color: #133838;
+  color: #fff;
 }
 </style>

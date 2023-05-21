@@ -51,7 +51,7 @@ onUnmounted(() => {
 
 <template>
   <AppNavAlert v-if="currentAlert" :alert="currentAlert" />
-  <nav id="app-nav" ref="appNav" class="sticky top-0 lg:px-6 pr-1 pl-4 h-20">
+  <nav id="app-nav" ref="appNav" class="top-0 py-2 xs:px-6 pr-1 pl-4 h-30">
     <div id="app-nav-content" class="flex justify-between items-center h-full">
       <div class="flex items-center h-full">
         <router-link
@@ -83,6 +83,12 @@ onUnmounted(() => {
   justify-content: center;
   align-items: stretch;
   align-self: center;
+
+  /* margin-top: 40px; */
+
+  /* margin-bottom: 20px; */
+
+  /* padding-bottom: 40px; */
 }
 
 #app-nav-content {

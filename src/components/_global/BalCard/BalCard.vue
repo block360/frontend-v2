@@ -125,6 +125,9 @@ export default defineComponent({
 <style scoped>
 .bal-card {
   @apply flex flex-col;
+
+  border-style: none;
+  border-radius: 0;
 }
 
 .card-container {
