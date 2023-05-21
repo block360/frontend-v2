@@ -34,7 +34,7 @@ const { t } = useI18n();
 <style scoped>
 .dropdown-menu {
   position: absolute;
-  top: 90%;
+  top: 100%;
 
   /* left: 0; */
 
@@ -52,7 +52,8 @@ const { t } = useI18n();
   text-align: left;
   list-style: none;
   background-color: #133838;
-  border-radius: 0.8rem;
+
+  /* border-radius: 0.8rem; */
   border-top-right-radius: 0;
   border: 1px solid #133838;
 }
@@ -79,19 +80,25 @@ const { t } = useI18n();
   line-height: 0.6;
   padding: 7px 4px 10px 5px;
   position: relative;
+  right: 0;
+  width: fit-content;
 }
 
 .dropdown:hover {
   color: white;
   background-color: #133838;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+
+  /* border-top-left-radius: 0.5rem; */
+
+  /* border-top-right-radius: 0.5rem; */
   margin-bottom: 0;
 }
 
 .material-icons {
   /* color: #133838; */
   cursor: pointer;
+
+  /* width: 0px; */
 }
 
 .dropdown-item:hover,

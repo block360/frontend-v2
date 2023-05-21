@@ -100,10 +100,15 @@ watch(popoverOpened, () => {
 </template>
 
 <style scoped>
+.bal-popover-activator {
+  border-style: none;
+}
+
 .bal-popover-wrapper {
   @apply invisible opacity-0 absolute z-30 pt-3;
 
   transition: all 0.2s ease-in-out;
+  padding-top: 0;
 }
 
 .bal-popover-wrapper-visible {
