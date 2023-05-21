@@ -51,10 +51,10 @@ function connectWalletHandler() {
         <span class="lg:hidden" v-text="$t('connect')" />
       </BalBtn>
 
-      <div class="currency">
+      <div v-if="account" class="currency">
         {{ nativeCurrency }}
       </div>
-      <div class="balance">
+      <div v-if="account" class="balance">
         {{ nativeBalance }}
       </div>
 
