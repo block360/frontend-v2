@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from 'vue';
 
-import AppIcon from '@/components/images/AppIcon.vue';
 import AppLogo from '@/components/images/AppLogo.vue';
 import useAlerts from '@/composables/useAlerts';
-import useBreakpoints from '@/composables/useBreakpoints';
+// import useBreakpoints from '@/composables/useBreakpoints';
 import useFathom from '@/composables/useFathom';
 import useNetwork from '@/composables/useNetwork';
 
@@ -19,7 +18,7 @@ const appNav = ref<HTMLDivElement>();
 /**
  * COMPOSABLES
  */
-const { bp } = useBreakpoints();
+// const { bp } = useBreakpoints();
 const { trackGoal, Goals } = useFathom();
 const { currentAlert } = useAlerts();
 const { networkSlug } = useNetwork();
@@ -58,8 +57,7 @@ onUnmounted(() => {
           :to="{ name: 'home', params: { networkSlug } }"
           @click="trackGoal(Goals.ClickNavLogo)"
         >
-          <AppIcon v-if="['xs', 'sm'].includes(bp)" />
-          <AppLogo v-else />
+          <AppLogo />
         </router-link>
 
         <!-- GSUprotocol -->
@@ -83,6 +81,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: stretch;
   align-self: center;
+  background: #feed02;
 
   /* margin-top: 40px; */
 
