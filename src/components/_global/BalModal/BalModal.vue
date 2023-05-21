@@ -113,6 +113,9 @@ defineExpose({ hide });
 
 .modal-card {
   @apply mx-auto h-full rounded-b-none sm:rounded-b-lg dark:border-0 relative;
+
+  background: #133838;
+  color: #fff;
 }
 
 .dark .bal-modal .content::before {

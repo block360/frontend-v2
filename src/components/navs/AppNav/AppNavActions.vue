@@ -44,6 +44,7 @@ function connectWalletHandler() {
         v-else
         color="white"
         :size="isMobile ? 'md' : 'sm'"
+        class="wallet-connect"
         @click="connectWalletHandler"
       >
         <!-- <WalletIcon class="mr-2" /> -->
@@ -105,6 +106,21 @@ function connectWalletHandler() {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.wallet-connect {
+  background-color: transparent;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.wallet-connect:hover {
+  background-color: transparent;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  opacity: 0.6;
 }
 </style>
 
