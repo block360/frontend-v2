@@ -2,7 +2,7 @@
   <BalCard class="relative card-container" :shadow="swapCardShadow" noBorder>
     <template #header>
       <div class="flex justify-between items-center w-full">
-        <h4>{{ title }}</h4>
+        <h4>SWAP</h4>
         <SwapSettingsPopover
           :context="SwapSettingsContext.swap"
           :isGasless="swapping.swapGasless.value"
@@ -457,6 +457,12 @@ export default defineComponent({
 /* This is needed because the swap settings popover overflows */
 .card-container {
   overflow: unset;
+
+  /* width: 302px; */
+
+  /* height: 360px; */
+  padding: 17.6px 17.6px 24px 24px;
+  border-radius: 18px;
 }
 
 .swap-gasless :deep(.bal-toggle) {
