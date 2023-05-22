@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import { UseSwapping } from '@/composables/swap/useSwapping';
-import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { useTokens } from '@/providers/tokens.provider';
+// import useNumbers from '@/composables/useNumbers';
+// import { useTokens } from '@/providers/tokens.provider';
 import useVeBal from '@/composables/useVeBAL';
-import { bnum } from '@/lib/utils';
+// import { bnum } from '@/lib/utils';
 
 import SwapPairToggle from './SwapPairToggle.vue';
 
@@ -39,8 +39,8 @@ const emit = defineEmits<{
 /**
  * COMPOSABLES
  */
-const { fNum } = useNumbers();
-const { getToken } = useTokens();
+// const { fNum } = useNumbers();
+// const { getToken } = useTokens();
 const { veBalTokenInfo } = useVeBal();
 
 /**
@@ -51,46 +51,46 @@ const _tokenInAddress = ref<string>('');
 const _tokenOutAmount = ref<string>('');
 const _tokenOutAddress = ref<string>('');
 
-const isInRate = ref<boolean>(true);
+// const isInRate = ref<boolean>(true);
 
 const typingTimeout = ref<any>(undefined);
 
 /**
  * COMPUTED
  */
-const missingToken = computed(
-  () => !_tokenInAddress.value || !_tokenOutAddress.value
-);
+// const missingToken = computed(
+//   () => !_tokenInAddress.value || !_tokenOutAddress.value
+// );
 
-const missingAmount = computed(
-  () => !_tokenInAmount.value || !_tokenOutAmount.value
-);
+// const missingAmount = computed(
+//   () => !_tokenInAmount.value || !_tokenOutAmount.value
+// );
 
-const tokenIn = computed(() => getToken(_tokenInAddress.value));
-const tokenOut = computed(() => getToken(_tokenOutAddress.value));
+// const tokenIn = computed(() => getToken(_tokenInAddress.value));
+// const tokenOut = computed(() => getToken(_tokenOutAddress.value));
 
-const rateLabel = computed(() => {
-  if (missingToken.value || missingAmount.value) return '';
+// const rateLabel = computed(() => {
+//   if (missingToken.value || missingAmount.value) return '';
 
-  if (props.effectivePriceMessage)
-    return isInRate.value
-      ? props.effectivePriceMessage.value.tokenIn
-      : props.effectivePriceMessage.value.tokenOut;
+//   if (props.effectivePriceMessage)
+//     return isInRate.value
+//       ? props.effectivePriceMessage.value.tokenIn
+//       : props.effectivePriceMessage.value.tokenOut;
 
-  let rate, inSymbol, outSymbol;
+//   let rate, inSymbol, outSymbol;
 
-  if (isInRate.value) {
-    rate = bnum(_tokenOutAmount.value).div(_tokenInAmount.value).toString();
-    inSymbol = tokenIn.value.symbol;
-    outSymbol = tokenOut.value.symbol;
-  } else {
-    rate = bnum(_tokenInAmount.value).div(_tokenOutAmount.value).toString();
-    inSymbol = tokenOut.value.symbol;
-    outSymbol = tokenIn.value.symbol;
-  }
+//   if (isInRate.value) {
+//     rate = bnum(_tokenOutAmount.value).div(_tokenInAmount.value).toString();
+//     inSymbol = tokenIn.value.symbol;
+//     outSymbol = tokenOut.value.symbol;
+//   } else {
+//     rate = bnum(_tokenInAmount.value).div(_tokenOutAmount.value).toString();
+//     inSymbol = tokenOut.value.symbol;
+//     outSymbol = tokenIn.value.symbol;
+//   }
 
-  return `1 ${inSymbol} = ${fNum(rate, FNumFormats.token)} ${outSymbol}`;
-});
+//   return `1 ${inSymbol} = ${fNum(rate, FNumFormats.token)} ${outSymbol}`;
+// });
 
 /**
  * METHODS
@@ -177,14 +177,14 @@ onMounted(() => {
     />
 
     <div class="flex items-center my-2">
-      <SwapPairToggle @toggle="handleTokenSwitch" />
-      <div class="mx-2 h-px bg-gray-100 dark:bg-gray-700 grow" />
-      <div
+      <SwapPairToggle />
+      <!-- <div class="mx-2 h-px bg-gray-100 dark:bg-gray-700 grow" /> -->
+      <!-- <div
         v-if="rateLabel"
         class="flex items-center text-xs text-gray-600 dark:text-gray-400 cursor-pointer"
         @click="isInRate = !isInRate"
         v-html="rateLabel"
-      />
+      /> -->
     </div>
 
     <TokenInput

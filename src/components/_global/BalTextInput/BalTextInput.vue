@@ -129,10 +129,10 @@ onMounted(() => {
           </span>
         </slot>
       </div>
+      <div v-if="$slots.footer" :class="['footer', footerClasses]">
+        <slot name="footer" />
+      </div>
       <div :class="['input-group', inputGroupClasses]">
-        <div v-if="$slots.prepend" :class="['prepend', prependClasses]">
-          <slot name="prepend" />
-        </div>
         <input
           ref="textInput"
           :type="type"
@@ -147,13 +147,14 @@ onMounted(() => {
           @click="onClick"
           @focus="onFocus"
         />
+        <div v-if="$slots.prepend" :class="['prepend', prependClasses]">
+          <slot name="prepend" />
+        </div>
         <div v-if="$slots.append" :class="['append', appendClasses]">
           <slot name="append" />
         </div>
       </div>
-      <div v-if="$slots.footer" :class="['footer', footerClasses]">
-        <slot name="footer" />
-      </div>
+
       <div v-if="isInvalid && !!errors[0]" :class="['error']">
         {{ errors[0] }}
       </div>
@@ -171,7 +172,10 @@ onMounted(() => {
 }
 
 .input {
-  @apply grow bg-transparent overflow-hidden w-full;
+  @apply grow overflow-hidden w-full;
+
+  background-color: #feed02;
+  margin-right: 25px;
 }
 
 .label {

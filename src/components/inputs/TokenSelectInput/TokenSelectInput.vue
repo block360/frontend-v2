@@ -93,7 +93,7 @@ function toggleModal(): void {
         v-if="!fixed"
         name="chevron-down"
         size="sm"
-        class="ml-2 text-blue-600 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-yellow-500 transition-colors"
+        class="ml-2 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-yellow-500 transition-colors text-black-800"
       />
     </div>
     <BalDropdown
@@ -179,6 +179,8 @@ function toggleModal(): void {
   @apply text-sm;
 
   font-variation-settings: 'wght' 700;
+  border-radius: 40px;
+  border: 1px solid #133838;
 }
 
 .selectable {
@@ -191,5 +193,7 @@ function toggleModal(): void {
 
 .selected {
   @apply bg-gray-50 dark:bg-gray-700 text-black dark:text-white;
+
+  background-color: #fff;
 }
 </style>

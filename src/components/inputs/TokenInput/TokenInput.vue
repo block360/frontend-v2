@@ -103,8 +103,8 @@ const _address = ref<string>('');
 /**
  * COMPOSABLES
  */
-const { getToken, balanceFor, nativeAsset, getMaxBalanceFor } = useTokens();
-const { fNum, toFiat } = useNumbers();
+const { getToken, balanceFor, nativeAsset } = useTokens();
+const { fNum } = useNumbers();
 const { t } = useI18n();
 const { isWalletReady } = useWeb3();
 
@@ -138,16 +138,16 @@ const shouldShowTxBufferMessage = computed(() => {
   );
 });
 
-const isMaxed = computed(() => {
-  if (shouldUseTxBuffer.value) {
-    return (
-      _amount.value ===
-      tokenBalanceBN.value.minus(nativeAsset.minTransactionBuffer).toString()
-    );
-  } else {
-    return _amount.value === tokenBalance.value;
-  }
-});
+// const isMaxed = computed(() => {
+//   if (shouldUseTxBuffer.value) {
+//     return (
+//       _amount.value ===
+//       tokenBalanceBN.value.minus(nativeAsset.minTransactionBuffer).toString()
+//     );
+//   } else {
+//     return _amount.value === tokenBalance.value;
+//   }
+// });
 
 const tokenBalance = computed(() => {
   if (props.customBalance) return props.customBalance;
@@ -159,9 +159,9 @@ const token = computed((): TokenInfo | undefined => {
   return getToken(_address.value);
 });
 
-const tokenValue = computed(() => {
-  return props.tokenValue ?? toFiat(props.amount, _address.value);
-});
+// const tokenValue = computed(() => {
+//   return props.tokenValue ?? toFiat(props.amount, _address.value);
+// });
 
 const inputRules = computed(() => {
   if (!hasToken.value || !isWalletReady.value || props.noRules) {
@@ -175,30 +175,30 @@ const inputRules = computed(() => {
   return rules;
 });
 
-const maxPercentage = computed(() => {
-  if (!hasBalance.value || !hasAmount.value) return '0';
+// const maxPercentage = computed(() => {
+//   if (!hasBalance.value || !hasAmount.value) return '0';
 
-  return amountBN.value.div(tokenBalance.value).times(100).toFixed(2);
-});
+//   return amountBN.value.div(tokenBalance.value).times(100).toFixed(2);
+// });
 
-const bufferPercentage = computed(() => {
-  if (!shouldShowTxBufferMessage.value) return '0';
+// const bufferPercentage = computed(() => {
+//   if (!shouldShowTxBufferMessage.value) return '0';
 
-  return bnum(nativeAsset.minTransactionBuffer)
-    .div(tokenBalance.value)
-    .times(100)
-    .toFixed(2);
-});
+//   return bnum(nativeAsset.minTransactionBuffer)
+//     .div(tokenBalance.value)
+//     .times(100)
+//     .toFixed(2);
+// });
 
-const barColor = computed(() =>
-  amountExceedsTokenBalance.value ? 'red' : 'green'
-);
+// const barColor = computed(() =>
+//   amountExceedsTokenBalance.value ? 'red' : 'green'
+// );
 
-const priceImpactSign = computed(() => (props.priceImpact >= 0 ? '-' : '+'));
+// const priceImpactSign = computed(() => (props.priceImpact >= 0 ? '-' : '+'));
 
-const priceImpactClass = computed(() =>
-  props.priceImpact >= 0.01 ? 'text-red-500' : ''
-);
+// const priceImpactClass = computed(() =>
+//   props.priceImpact >= 0.01 ? 'text-red-500' : ''
+// );
 
 const decimalLimit = computed<number>(() => token.value?.decimals || 18);
 
@@ -210,16 +210,16 @@ function handleAmountChange(amount: InputValue) {
   emit('update:amount', safeAmount);
 }
 
-const setMax = () => {
-  if (props.disableMax) return;
+// const setMax = () => {
+//   if (props.disableMax) return;
 
-  const maxAmount = props.customBalance
-    ? props.customBalance
-    : getMaxBalanceFor(_address.value, props.disableNativeAssetBuffer);
+//   const maxAmount = props.customBalance
+//     ? props.customBalance
+//     : getMaxBalanceFor(_address.value, props.disableNativeAssetBuffer);
 
-  emit('setMax', maxAmount);
-  handleAmountChange(maxAmount);
-};
+//   emit('setMax', maxAmount);
+//   handleAmountChange(maxAmount);
+// };
 
 /**
  * WATCHERS
@@ -254,7 +254,10 @@ watch(_address, async (newAddress, oldAddress) => {
     step="any"
     spellcheck="false"
     v-bind="$attrs"
-    inputAlignRight
+    :inputAlignRight="false"
+    :noRadius="true"
+    :noShadow="true"
+    :noBorder="true"
     @blur="emit('blur', $event)"
     @focus="emit('focus', $event)"
     @input="emit('input', $event)"
@@ -279,21 +282,23 @@ watch(_address, async (newAddress, oldAddress) => {
     <template v-if="!hideFooter" #footer>
       <div
         v-if="isWalletReady || (hasAmount && hasToken)"
-        class="flex flex-col pt-1"
+        class="flex flex-col pt-1 footer"
       >
-        <div
-          class="flex justify-between items-center text-sm leading-none text-gray-600 dark:text-gray-400"
-        >
+        <div class="text-sm leading-none text-input-label">
+          I am {{ name === 'tokenIn' ? 'spending' : 'receiving' }}
+        </div>
+
+        <div class="text-sm leading-none text-gray-600 dark:text-gray-400">
           <div v-if="!isWalletReady || disableBalance" />
-          <button v-else class="flex items-center" @click="setMax">
+          <button v-else class="flex items-center balance">
             {{ balanceLabel ? balanceLabel : $t('balance') }}:
 
             <BalLoadingBlock v-if="balanceLoading" class="mx-2 w-12 h-4" />
-            <span v-else class="mx-1">
+            <span v-else class="balance">
               {{ fNum(tokenBalance, FNumFormats.token) }}
             </span>
 
-            <template v-if="hasBalance && !noMax && !disableMax">
+            <!-- <template v-if="hasBalance && !noMax && !disableMax">
               <span
                 v-if="!isMaxed"
                 class="text-blue-600 hover:text-purple-600 focus:text-purple-600 dark:text-blue-400 dark:hover:text-yellow-500 dark:focus:text-yellow-500 transition-colors"
@@ -306,25 +311,25 @@ watch(_address, async (newAddress, oldAddress) => {
               >
                 {{ $t('maxed') }}
               </span>
-            </template>
+            </template> -->
           </button>
           <div class="pl-2 truncate">
-            <template v-if="hasAmount && hasToken">
+            <!-- <template v-if="hasAmount && hasToken">
               <span v-if="!hideFiatValue">
                 {{ fNum(tokenValue, FNumFormats.fiat) }}
               </span>
               <span v-if="priceImpact" :class="priceImpactClass">
                 ({{ priceImpactSign + fNum(priceImpact, FNumFormats.percent) }})
               </span>
-            </template>
-            <template v-else-if="hint">
+            </template> -->
+            <!-- <template >
               <span
                 class="text-blue-500 lowercase cursor-pointer"
                 @click="emit('update:amount', hintAmount)"
               >
                 {{ hint }}
               </span>
-            </template>
+            </template> -->
           </div>
         </div>
         <BalRangeInput
@@ -333,13 +338,13 @@ watch(_address, async (newAddress, oldAddress) => {
           class="mt-2"
           @update:model-value="emit('update:slider', $event)"
         />
-        <BalProgressBar
+        <!-- <BalProgressBar
           v-else-if="hasBalance && !noMax"
           :width="maxPercentage"
           :bufferWidth="bufferPercentage"
           :color="barColor"
           class="mt-2"
-        />
+        /> -->
         <div
           v-if="shouldShowTxBufferMessage"
           class="mt-2 text-xs text-orange-600 dark:text-orange-400"
@@ -355,3 +360,33 @@ watch(_address, async (newAddress, oldAddress) => {
     </template>
   </BalTextInput>
 </template>
+
+<style scoped>
+.balance {
+  color: #e94173;
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.text-input-label {
+  color: #e94173;
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.input {
+  background-color: #feed02;
+  margin-right: 25px;
+  color: #133838;
+}
+</style>
