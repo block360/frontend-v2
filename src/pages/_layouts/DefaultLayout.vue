@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Footer from '@/components/footer/Footer.vue';
+// import Footer from '@/components/footer/Footer.vue';
 import AppNav from '@/components/navs/AppNav/AppNav.vue';
 </script>
 
@@ -15,7 +15,7 @@ import AppNav from '@/components/navs/AppNav/AppNav.vue';
         </router-view>
       </div>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
@@ -25,8 +25,8 @@ import AppNav from '@/components/navs/AppNav/AppNav.vue';
 }
 
 .app-body {
-  @apply mb-8;
+  /* @apply mb-8; */
 
-  min-height: calc(100vh - 2rem);
+  min-height: calc(100vh);
 }
 </style>
