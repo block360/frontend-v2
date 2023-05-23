@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Footer from '@/components/footer/Footer.vue';
+// import Footer from '@/components/footer/Footer.vue';
 import AppNav from '@/components/navs/AppNav/AppNav.vue';
 
 onMounted(() => {
@@ -22,7 +22,7 @@ onUnmounted(() => {
       </router-view>
     </div>
   </section>
-  <Footer />
+  <!-- <Footer /> -->
 </template>
 
 <style scoped>
