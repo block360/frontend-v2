@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 // import MyWallet from '@/components/cards/MyWallet/MyWallet.vue';
 // import PairPriceGraph from '@/components/cards/PairPriceGraph/PairPriceGraph.vue';
 import SwapCard from '@/components/cards/SwapCard/SwapCard.vue';
-import Col3Layout from '@/components/layouts/Col3Layout.vue';
+// import Col3Layout from '@/components/layouts/Col3Layout.vue';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 // import useBreakpoints from '@/composables/useBreakpoints';
 // import BridgeLink from '@/components/links/BridgeLink.vue';
@@ -44,12 +44,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <Col3Layout offsetGutters mobileHideGutters class="mt-8">
-      <template #gutterLeft>
-        <!-- <MyWallet /> -->
-        <AboutCard />
-      </template>
+  <div class="main-content">
+    <div class="mt-8 content">
+      <!-- <template #gutterLeft> -->
+      <!-- <MyWallet /> -->
+      <AboutCard />
+      <!-- </template> -->
 
       <SwapCard />
       <!-- <div class="p-4 sm:p-0 lg:p-0 mt-8">
@@ -74,12 +74,32 @@ onMounted(() => {
         <PairPriceGraph />
         <BridgeLink v-if="hasBridge" class="mt-4" />
       </template> -->
-    </Col3Layout>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .graph-modal {
   height: 450px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  /* width: 660px; */
+
+  /* height: 445px; */
+
+  /* height: 100vh; */
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>
