@@ -202,7 +202,7 @@ watchEffect(() => {
           class="group flex items-center mr-2 cursor-pointer"
           @click="toggleSelectTokenList"
         >
-          <span class="text-xs text-secondary">{{ $t('tokenLists') }}</span>
+          <span class="text-xs text-white">{{ $t('tokenLists') }}</span>
           <div class="flex items-center ml-2">
             <span class="mr-1">
               <img

@@ -1,6 +1,6 @@
 <template>
-  <BalCard class="card-container" :shadow="swapCardShadow" noBorder>
-    <template #header>
+  <BalCard class="card-container">
+    <!-- <template #header>
       <div class="flex justify-between items-center w-full">
         <h4></h4>
         <SwapSettingsPopover
@@ -8,7 +8,7 @@
           :isGasless="swapping.swapGasless.value"
         />
       </div>
-    </template>
+    </template> -->
     <div>
       <SwapPair
         v-model:tokenInAmount="tokenInAmount"
@@ -51,15 +51,18 @@
           swapping.isCowswapSwap.value ? $t('loadingBestPrice') : $t('loading')
         "
         block
+        class="swap-button"
       />
       <BalBtn
         v-else
-        :label="$t('preview')"
+        :label="$t('swap')"
         :disabled="swapDisabled"
-        color="gradient"
         block
+        class="swap-button"
         @click.prevent="handlePreviewButton"
       />
+      <hr class="divider" />
+
       <div
         v-if="swapping.isCowswapSupportedOnNetwork.value"
         class="flex items-center mt-5 h-8 text-sm"
@@ -164,9 +167,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useSwapAssets } from '@/composables/swap/useSwapAssets';
 import SwapPreviewModal from '@/components/modals/SwapPreviewModal.vue';
-import SwapSettingsPopover, {
-  SwapSettingsContext,
-} from '@/components/popovers/SwapSettingsPopover.vue';
+import { SwapSettingsContext } from '@/components/popovers/SwapSettingsPopover.vue';
 import { useSwapState } from '@/composables/swap/useSwapState';
 import useSwapping from '@/composables/swap/useSwapping';
 import useValidation from '@/composables/swap/useValidation';
@@ -187,7 +188,6 @@ export default defineComponent({
     SwapPair,
     SwapPreviewModal,
     SwapRoute,
-    SwapSettingsPopover,
   },
   setup() {
     // COMPOSABLES
@@ -470,6 +470,7 @@ export default defineComponent({
   border-radius: 18px;
   height: 429px;
   max-width: 360px;
+  box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
 
   /* min-height: 366px */
 
@@ -490,5 +491,22 @@ export default defineComponent({
 
 .signature-symbol::before {
   content: '✍️';
+}
+
+.swap-button {
+  color: #feed02;
+  border: 1px solid #133838;
+  background-color: #133838;
+  border-radius: 50px;
+  text-transform: uppercase;
+  margin-top: 55px;
+}
+
+.divider {
+  background-color: red;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  height: 1px;
+  border: 0;
 }
 </style>

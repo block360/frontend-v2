@@ -174,7 +174,7 @@ onMounted(() => {
 .input {
   @apply grow overflow-hidden w-full;
 
-  background-color: #feed02;
+  /* background-color: #feed02; */
   margin-right: 25px;
 }
 

@@ -203,3 +203,9 @@ onMounted(() => {
     />
   </div>
 </template>
+
+<style scoped>
+.token-input {
+  margin-top: 0;
+}
+</style>
