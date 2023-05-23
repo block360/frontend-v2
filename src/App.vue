@@ -121,3 +121,14 @@ watch(route, newRoute => {
   </div>
   <GlobalModalContainer />
 </template>
+
+<style scoped>
+#app {
+  background-image: url('../src/assets/images/main-background.png');
+
+  /* background:  #feed02; */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>

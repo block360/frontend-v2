@@ -81,7 +81,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: stretch;
   align-self: center;
-  background: #feed02;
+  background: transparent;
 
   /* margin-top: 40px; */
 
