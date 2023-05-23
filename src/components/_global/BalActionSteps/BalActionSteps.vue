@@ -263,10 +263,10 @@ async function handleTransaction(
         <BalBtn
           v-if="!lastActionState?.confirmed"
           :disabled="props.disabled"
-          color="gradient"
           :loading="currentAction?.pending || isLoading"
           :loadingLabel="_loadingLabel"
           block
+          class="swap-button"
           @click="currentAction?.promise()"
         >
           <div
@@ -284,3 +284,15 @@ async function handleTransaction(
     </AnimatePresence>
   </div>
 </template>
+
+<style scoped>
+.swap-button {
+  color: #feed02;
+  border: 1px solid #fff;
+  background-color: #133838;
+  border-radius: 50px;
+  text-transform: uppercase;
+
+  /* margin-top: 55px; */
+}
+</style>

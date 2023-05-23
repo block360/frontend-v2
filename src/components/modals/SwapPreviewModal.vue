@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { SubgraphPoolBase } from '@balancer-labs/sdk';
+// import { SubgraphPoolBase } from '@balancer-labs/sdk';
 import { formatUnits } from '@ethersproject/units';
 import { mapValues } from 'lodash';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import SwapRoute from '@/components/cards/SwapCard/SwapRoute.vue';
 import { SwapQuote } from '@/composables/swap/types';
 import useRelayerApproval, {
   RelayerType,
@@ -86,7 +85,7 @@ const tokenOutFiatValue = computed(() =>
   )
 );
 
-const showSwapRoute = computed(() => props.swapping.isBalancerSwap.value);
+// const showSwapRoute = computed(() => props.swapping.isBalancerSwap.value);
 
 const zeroFee = computed(() =>
   showSummaryInFiat.value ? fNum('0', FNumFormats.fiat) : '0.0 ETH'
@@ -277,9 +276,9 @@ const cowswapRelayerApproval = useRelayerApprovalTx(
 
 const lidoRelayerApproval = useRelayerApprovalTx(RelayerType.LIDO, isStETHSwap);
 
-const pools = computed<SubgraphPoolBase[]>(() => {
-  return props.swapping.sor.pools.value;
-});
+// const pools = computed<SubgraphPoolBase[]>(() => {
+//   return props.swapping.sor.pools.value;
+// });
 
 const requiresTokenApproval = computed(() => {
   if (props.swapping.isWrap.value && !props.swapping.isEthSwap.value) {
@@ -520,7 +519,7 @@ watch(blockNumber, () => {
               />
             </div>
             <div
-              class="p-3 w-full text-sm bg-gray-50 dark:bg-gray-800 rounded-t-lg border-b dark:border-gray-800"
+              class="p-3 w-full text-sm text-black bg-gray-50 dark:bg-gray-800 rounded-t-lg border-b dark:border-gray-800"
             >
               <span>
                 {{ $t('effectivePrice') }}
@@ -557,7 +556,7 @@ watch(blockNumber, () => {
                 />
               </div>
               <div>
-                <div class="font-medium">
+                <div class="font-medium text-black">
                   {{
                     fNum(swapping.tokenInAmountInput.value, FNumFormats.token)
                   }}
@@ -581,7 +580,7 @@ watch(blockNumber, () => {
                 />
               </div>
               <div>
-                <div class="font-medium">
+                <div class="font-medium text-black">
                   {{
                     fNum(swapping.tokenOutAmountInput.value, FNumFormats.token)
                   }}
@@ -611,10 +610,12 @@ watch(blockNumber, () => {
           <div
             class="flex justify-between items-center p-3 w-full border-b dark:border-gray-900"
           >
-            <div class="font-semibold">
+            <div class="font-semibold text-black">
               {{ labels.swapSummary.title }}
             </div>
-            <div class="flex text-xs uppercase divide-x dark:divide-gray-500">
+            <div
+              class="flex text-xs text-black uppercase divide-x dark:divide-gray-500"
+            >
               <div
                 :class="[
                   'pr-2 cursor-pointer font-medium',
@@ -636,7 +637,7 @@ watch(blockNumber, () => {
             </div>
           </div>
         </template>
-        <div v-if="swapping.isCowswapSwap.value" class="p-3 text-sm">
+        <div v-if="swapping.isCowswapSwap.value" class="p-3 text-sm text-black">
           <div class="summary-item-row">
             <div>
               {{ labels.swapSummary.totalBeforeFees }}
@@ -662,7 +663,7 @@ watch(blockNumber, () => {
         </div>
         <template #footer>
           <div
-            class="p-3 w-full text-sm bg-white dark:bg-gray-800 rounded-b-lg"
+            class="p-3 w-full text-sm text-black bg-white dark:bg-gray-800 rounded-b-lg"
           >
             <div class="font-medium summary-item-row">
               <div class="w-64">
@@ -702,8 +703,8 @@ watch(blockNumber, () => {
       />
       <BalBtn
         v-if="!account"
-        color="gradient"
         block
+        class="swap-button"
         @click.prevent="startConnectWithInjectedProvider"
       >
         {{ $t('connectWallet') }}
@@ -712,6 +713,7 @@ watch(blockNumber, () => {
         v-else
         :actions="actions"
         :disabled="disableSubmitButton || showPriceUpdateError"
+        class="swap-button"
       />
       <BalAlert
         v-if="swapping.submissionError.value != null"
@@ -738,7 +740,7 @@ watch(blockNumber, () => {
         block
       />
     </div>
-    <SwapRoute
+    <!-- <SwapRoute
       v-if="showSwapRoute"
       :addressIn="swapping.tokenIn.value.address"
       :amountIn="swapping.tokenInAmountInput.value"
@@ -747,7 +749,7 @@ watch(blockNumber, () => {
       :pools="pools"
       :sorReturn="swapping.sor.sorReturn.value"
       class="mt-3"
-    />
+    /> -->
   </BalModal>
 </template>
 
@@ -778,5 +780,15 @@ watch(blockNumber, () => {
 
 .step-approved {
   @apply border-green-500 dark:border-green-500;
+}
+
+.swap-button {
+  color: #feed02;
+  border: 1px solid #133838;
+  background-color: #133838;
+  border-radius: 50px;
+  text-transform: uppercase;
+
+  /* margin-top: 55px; */
 }
 </style>
