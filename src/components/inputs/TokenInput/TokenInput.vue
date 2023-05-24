@@ -47,6 +47,7 @@ type Props = {
   tokenSelectProps?: Partial<TokenSelectProps>;
   slider?: boolean;
   sliderProps?: Partial<BalRangeInputProps>;
+  inputColor?: string;
 };
 
 /**
@@ -80,6 +81,7 @@ const props = withDefaults(defineProps<Props>(), {
   tokenSelectProps: () => ({}),
   slider: false,
   sliderProps: () => ({}),
+  inputColor: '',
 });
 
 const emit = defineEmits<{
@@ -258,6 +260,7 @@ watch(_address, async (newAddress, oldAddress) => {
     :noRadius="true"
     :noShadow="true"
     :noBorder="true"
+    :inputColor="inputColor"
     @blur="emit('blur', $event)"
     @focus="emit('focus', $event)"
     @input="emit('input', $event)"
@@ -379,11 +382,5 @@ watch(_address, async (newAddress, oldAddress) => {
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
-}
-
-.input {
-  background-color: #feed02;
-  margin-right: 25px;
-  color: #133838;
 }
 </style>

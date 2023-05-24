@@ -19,9 +19,9 @@
     },
     {
       "chainId": 1,
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "name": "Dai Stablecoin",
-      "symbol": "DAI",
+      "address": "0x6CA37D0874D8540e6BA91d15267B880A572351B1",
+      "name": "GSU Coin",
+      "symbol": "GSUc",
       "decimals": 18,
       "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png"
     }

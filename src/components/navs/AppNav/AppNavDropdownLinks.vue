@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import FaqsModal from '@/components/modals/FaqsModal.vue';
+import SupportModal from '@/components/modals/SupportModal.vue';
+import AddTokenModal from '@/components/modals/AddTokenModal.vue';
 
 // COMPOSABLES
 const { t } = useI18n();
@@ -10,6 +13,22 @@ const { t } = useI18n();
 function routeTo(url) {
   window.open(url, '_blank');
 }
+function handlePreviewButton(modalName) {
+  if (modalName == 'FAQS') {
+    modalFaqs.value = true;
+  } else if (modalName == 'SUPPORT') {
+    modalSupport.value = true;
+  } else if (modalName == 'ADDTOKEN') [(modalAddToken.value = true)];
+}
+function handlePreviewModalClose() {
+  modalFaqs.value = false;
+  modalSupport.value = false;
+  modalAddToken.value = false;
+}
+
+const modalFaqs = ref(false);
+const modalSupport = ref(false);
+const modalAddToken = ref(false);
 
 // function openModal(id) {
 //   $("#" + id).modal("show");
@@ -20,18 +39,24 @@ function routeTo(url) {
   <div class="dropdown">
     <span class="material-icons">reorder</span>
     <div class="dropdown-menu dropdown-menu-right">
+      <div
+        class="dropdown-item"
+        :onclick="() => handlePreviewButton('ADDTOKEN')"
+      >
+        <a>{{ t('AddGSUToYourWallet') }}</a>
+      </div>
       <div class="dropdown-item">
         <a @click.prevent="routeTo('https://gsu.io/')">{{
-          t('AddGSUToYourWallet')
+          t('AboutTheGSU')
         }}</a>
       </div>
-      <div class="dropdown-item">
-        <a>{{ t('AboutTheGSU') }}</a>
-      </div>
-      <div class="dropdown-item">
+      <div class="dropdown-item" :onclick="() => handlePreviewButton('FAQS')">
         <a>{{ t('FAQ') }}</a>
       </div>
-      <div class="dropdown-item">
+      <div
+        class="dropdown-item"
+        :onclick="() => handlePreviewButton('SUPPORT')"
+      >
         <a>{{ t('Support') }}</a>
       </div>
       <div class="dropdown-item">
@@ -42,6 +67,18 @@ function routeTo(url) {
       </div>
     </div>
   </div>
+
+  <teleport to="#modal">
+    <FaqsModal v-if="modalFaqs" @close="handlePreviewModalClose" />
+  </teleport>
+
+  <teleport to="#modal">
+    <SupportModal v-if="modalSupport" @close="handlePreviewModalClose" />
+  </teleport>
+
+  <teleport to="#modal">
+    <AddTokenModal v-if="modalAddToken" @close="handlePreviewModalClose" />
+  </teleport>
 </template>
 
 <style scoped>
