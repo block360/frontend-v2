@@ -36,7 +36,7 @@
           class="mt-0 mb-4"
           @amount-change="swapping.handleAmountChange"
         />
-        <BalAlert
+        <!-- <BalAlert
           v-if="error"
           class="p-3 mb-4"
           type="error"
@@ -55,7 +55,7 @@
           :title="warning.header"
           :description="warning.body"
           block
-        />
+        /> -->
         <BalBtn
           v-if="swapping.isLoading.value"
           loading
@@ -554,8 +554,6 @@ export default defineComponent({
   flex-flow: row wrap;
   flex-flow: row wrap;
   flex-flow: row wrap;
-  flex-flow: row wrap;
-  justify-content: center;
   justify-content: center;
   justify-content: center;
   justify-content: center;
@@ -570,8 +568,6 @@ export default defineComponent({
   flex: 1;
   flex: 1;
   flex: 1;
-  flex: 1;
-  backface-visibility: hidden;
   backface-visibility: hidden;
 }
 

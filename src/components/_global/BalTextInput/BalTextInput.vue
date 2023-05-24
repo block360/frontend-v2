@@ -33,6 +33,7 @@ type Props = {
   noBorder?: boolean;
   autoFocus?: boolean;
   format?: (input: string | number) => string | number;
+  inputColor?: string;
 };
 
 /**
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   noShadow: false,
   noBorder: false,
   autoFocus: false,
+  inputColor: '',
 });
 
 const emit = defineEmits<{
@@ -141,6 +143,7 @@ onMounted(() => {
           v-bind="inputAttrs"
           :disabled="disabled"
           :class="['input', inputClasses]"
+          :style="inputColor && `background-color: ${inputColor};`"
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
@@ -176,6 +179,7 @@ onMounted(() => {
 
   /* background-color: #feed02; */
   margin-right: 25px;
+  padding-left: 5px;
 }
 
 .label {

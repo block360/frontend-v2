@@ -163,5 +163,8 @@
     "*.{css,vue}": "stylelint --fix"
   },
   "license": "MIT",
-  "repository": "balancer/frontend-v2"
+  "repository": "balancer/frontend-v2",
+  "dependencies": {
+    "qrcode.vue": "^3.4.0"
+  }
 }

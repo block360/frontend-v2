@@ -1636,5 +1636,11 @@
   "About8": "- Beta-Release 11/11",
   "About9": "- Limited Scale public release end of November",
   "About10": "- Full Scale public release around new year",
-  "Disclaimer": "Disclaimer"
+  "Disclaimer": "Disclaimer",
+  "Q1": "What is WalletConnect?",
+  "A1": "WalletConnect is an open protocol for connecting desktop Dapps to mobile Wallets using end-to-end encryption by scanning a QR code. Opening up a whole world of Dapps that were once only available to Metamask. The user can interact with any Dapp without comprising their private keys and will be notified to sign any transaction requests on their mobile.",
+  "Q2": "How does it work?",
+  "A2": "WalletConnect is a simple infrastructure that can be setup by any developer. Using a Bridge server to relay the messages without having access to any of its contents. The contents are encrypted using the session data shared by the QR code between the desktop and mobile. There are libraries for Web, iOS and Android. Read more about it in our documentation introduction.",
+  "Q3": "What Dapps are supported?",
+  "A3": "You can find the full list of supported Dapps here: "
 }
