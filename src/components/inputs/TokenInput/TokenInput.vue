@@ -280,10 +280,7 @@ watch(_address, async (newAddress, oldAddress) => {
       </slot>
     </template>
     <template v-if="!hideFooter" #footer>
-      <div
-        v-if="isWalletReady || (hasAmount && hasToken)"
-        class="flex flex-col pt-1 footer"
-      >
+      <div class="flex flex-col pt-1 footer">
         <div class="text-sm leading-none text-input-label">
           I am {{ name === 'tokenIn' ? 'spending' : 'receiving' }}
         </div>

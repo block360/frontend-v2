@@ -120,6 +120,10 @@ async function cancelOrder(orderId: string) {
 .activity-card {
   background-color: #133838;
   color: white;
+  height: 27px;
+  align-self: center;
+
+  /* margin-top: 2px; */
 }
 
 .activity-card:hover {

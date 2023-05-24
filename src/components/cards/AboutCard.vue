@@ -111,6 +111,7 @@ const { t } = useI18n();
   padding: 8px 16px;
   background: rgb(255 255 255);
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
+  height: 440px;
 }
 
 .footer {
@@ -151,8 +152,12 @@ const { t } = useI18n();
 .inner-box {
   min-width: 302px;
   max-width: 360px;
-  margin: 20px auto;
+
+  /* margin: 20px auto; */
   margin-right: 20px;
+  margin-top: 12.6vh;
+
+  /* height: 500px; */
 }
 
 .modal .form-control {
