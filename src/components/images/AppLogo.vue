@@ -56,7 +56,7 @@
     </svg> -->
     <img
       src="~@/assets/images/logo.svg"
-      width="170"
+      width="160"
       aria-labelledby="logoTitle logoDesc"
     />
   </div>

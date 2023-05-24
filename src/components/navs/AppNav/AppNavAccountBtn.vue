@@ -4,25 +4,47 @@ import { shorten } from '@/lib/utils';
 
 import AppNavSettings from './AppNavSettings.vue';
 
-const { isLoadingProfile, account } = useWeb3();
+const { disconnectWallet, account } = useWeb3();
 </script>
 
 <template class="address">
   <BalPopover noPad class="address">
     <template #activator>
-      <BalBtn
+      <!-- <BalBtn
         class="text-base address"
         :loading="isLoadingProfile"
         :loadingLabel="$t('connecting')"
         color="white"
-      >
-        <!-- <Avatar
+      > -->
+      <!-- <Avatar
           :iconURI="profile?.avatar || ''"
           :address="account"
         /> -->
+      <div
+        style="
+          justify-content: end;
+          align-items: end;
+          display: flex;
+          cursor: pointer;
+        "
+      >
+        <span
+          style="font-size: 11px; font-weight: 500; margin-right: 5px"
+          v-text="`Addr:  `"
+        />
+        <span
+          style="font-size: 11px; font-weight: 700; margin-right: 5px"
+          v-text="shorten(account)"
+        />
+        <span
+          style="font-size: 11px; font-weight: 700; margin-right: 5px"
+          :onClick="disconnectWallet"
+          v-text="`  |  Log out`"
+        />
+      </div>
 
-        <span class="inline-block pl-2 eth-address" v-text="shorten(account)" />
-      </BalBtn>
+      <!-- <span v-text="`Addr :${shorten(account)}`" /> -->
+      <!-- </BalBtn> -->
     </template>
     <AppNavSettings />
   </BalPopover>
@@ -30,8 +52,8 @@ const { isLoadingProfile, account } = useWeb3();
 
 <style scoped>
 .address {
-  background-color: #133838;
-  color: #fff;
+  /* background-color: #133838; */
+  color: black;
 }
 </style>
 

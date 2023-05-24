@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // import { computed } from 'vue';
 
-import useBreakpoints from '@/composables/useBreakpoints';
+// import useBreakpoints from '@/composables/useBreakpoints';
 // import { useSidebar } from '@/composables/useSidebar';
 import useWeb3 from '@/services/web3/useWeb3';
 
@@ -14,7 +14,7 @@ import useNativeBalance from '@/composables/useNativeBalance';
 /**
  * COMPOSABLES
  */
-const { isMobile } = useBreakpoints();
+// const { isMobile } = useBreakpoints();
 const { account, startConnectWithInjectedProvider } = useWeb3();
 // const { setSidebarOpen } = useSidebar();
 
@@ -35,7 +35,13 @@ function connectWalletHandler() {
 
 <template>
   <div>
-    <div class="grid grid-rows-1 grid-flow-col gap-2">
+    <div
+      :style="
+        account
+          ? `display: flex;flex-direction: row;padding: 0px;margin-top: 15px;`
+          : `display: flex;flex-direction: row;padding: 0px;margin-top: 0px;`
+      "
+    >
       <!-- GSUprotocol -->
       <!-- <DarkModeToggle v-if="isDesktop" /> -->
       <AppNavActivityBtn v-if="account" />
@@ -43,7 +49,6 @@ function connectWalletHandler() {
       <BalBtn
         v-else
         color="white"
-        :size="isMobile ? 'md' : 'sm'"
         class="wallet-connect"
         @click="connectWalletHandler"
       >
@@ -73,7 +78,7 @@ function connectWalletHandler() {
 
       <AppNavDropdownLinks />
     </div>
-    <div class="grid grid-rows-1 grid-flow-col gap-2 pt-1">
+    <div class="">
       <AppNavAccountBtn v-if="account" />
     </div>
   </div>
@@ -81,10 +86,11 @@ function connectWalletHandler() {
 
 <style>
 .currency {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   color: #fff;
   background: #133838;
+  height: 27px;
 
   /* margin: 3px; */
   padding: 1px 6px;
@@ -92,13 +98,19 @@ function connectWalletHandler() {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: center;
+  margin-left: 6px;
+
+  /* margin-top: 4px; */
 }
 
 .balance {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   color: #f7ea22;
   background: #133838;
+  height: 27px;
+  margin-left: 6px;
 
   /* margin: 3px; */
   padding: 1px 6px;
@@ -106,6 +118,9 @@ function connectWalletHandler() {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: center;
+
+  /* margin-top: 2px; */
 }
 
 .wallet-connect {
@@ -113,6 +128,10 @@ function connectWalletHandler() {
   border-color: black;
   border-width: 1px;
   border-style: solid;
+
+  /* width: 117px; */
+  height: 18px;
+  align-self: center;
 }
 
 .wallet-connect:hover {

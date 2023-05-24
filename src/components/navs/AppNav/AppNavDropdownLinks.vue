@@ -3,6 +3,17 @@ import { useI18n } from 'vue-i18n';
 
 // COMPOSABLES
 const { t } = useI18n();
+
+/**
+ * METHODS
+ */
+function routeTo(url) {
+  window.open(url, '_blank');
+}
+
+// function openModal(id) {
+//   $("#" + id).modal("show");
+// }
 </script>
 
 <template>
@@ -10,7 +21,9 @@ const { t } = useI18n();
     <span class="material-icons">reorder</span>
     <div class="dropdown-menu dropdown-menu-right">
       <div class="dropdown-item">
-        <a>{{ t('AddGSUToYourWallet') }}</a>
+        <a @click.prevent="routeTo('https://gsu.io/')">{{
+          t('AddGSUToYourWallet')
+        }}</a>
       </div>
       <div class="dropdown-item">
         <a>{{ t('AboutTheGSU') }}</a>
@@ -78,10 +91,12 @@ const { t } = useI18n();
 .dropdown {
   font-size: 1px;
   line-height: 0.6;
-  padding: 7px 4px 10px 5px;
+  padding: 7px 4px 0 5px;
   position: relative;
   right: 0;
   width: fit-content;
+  margin-top: 0;
+  margin-left: 6px;
 }
 
 .dropdown:hover {
@@ -97,6 +112,11 @@ const { t } = useI18n();
 .material-icons {
   /* color: #133838; */
   cursor: pointer;
+
+  /* width: 36px; */
+
+  /* height: 32px; */
+  font-size: 32px;
 
   /* width: 0px; */
 }
