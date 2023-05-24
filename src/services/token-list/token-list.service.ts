@@ -36,6 +36,8 @@ export default class TokenListService {
       this.appNetwork
     ).tokenlists;
 
+    console.log(Balancer, External, 'uris data');
+
     const balancerLists = [Balancer.Default, Balancer.Vetted];
     const All = [...balancerLists, ...External];
     const Approved = [Balancer.Default, ...External];
