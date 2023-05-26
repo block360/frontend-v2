@@ -7,7 +7,11 @@
       ]"
     >
       <div v-if="imgSrc" class="feature" :style="featureStyles" />
-      <div v-if="!!title || $slots.header" :class="['header', headerClasses]">
+      <div
+        v-if="!!title || $slots.header"
+        :class="['header', headerClasses]"
+        style="align-self: center"
+      >
         <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -- Not sure if this is fine -->
         <component :is="titleTag" v-if="!!title" v-text="title" />
         <div
@@ -127,7 +131,11 @@ export default defineComponent({
   @apply flex flex-col;
 
   border-style: none;
-  border-radius: 0;
+
+  /* border-radius: 20px; */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 .card-container {

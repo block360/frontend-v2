@@ -88,8 +88,8 @@ function connectWalletHandler() {
 .currency {
   font-size: 17px;
   font-weight: 700;
-  color: #fff;
-  background: #133838;
+  color: black;
+  background: transparent;
   height: 27px;
 
   /* margin: 3px; */
@@ -100,6 +100,8 @@ function connectWalletHandler() {
   align-items: center;
   align-self: center;
   margin-left: 6px;
+  border: 1px solid rgb(172 169 169);
+  margin-top: 4px;
 
   /* margin-top: 4px; */
 }
@@ -107,8 +109,8 @@ function connectWalletHandler() {
 .balance {
   font-size: 17px;
   font-weight: 700;
-  color: #f7ea22;
-  background: #133838;
+  color: black;
+  background: transparent;
   height: 27px;
   margin-left: 6px;
 
@@ -119,19 +121,23 @@ function connectWalletHandler() {
   justify-content: center;
   align-items: center;
   align-self: center;
+  border: 1px solid rgb(172 169 169);
+  margin-top: 4px;
 
   /* margin-top: 2px; */
 }
 
 .wallet-connect {
   background-color: transparent;
-  border-color: black;
+  border-color: rgb(172 169 169);
   border-width: 1px;
   border-style: solid;
 
   /* width: 117px; */
   height: 18px;
   align-self: center;
+
+  /* font-size: 13px; */
 }
 
 .wallet-connect:hover {
@@ -140,6 +146,7 @@ function connectWalletHandler() {
   border-width: 1px;
   border-style: solid;
   opacity: 0.6;
+  color: black;
 }
 </style>
 

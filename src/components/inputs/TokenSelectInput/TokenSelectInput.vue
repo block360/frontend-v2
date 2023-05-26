@@ -69,7 +69,7 @@ function toggleModal(): void {
 </script>
 
 <template>
-  <div>
+  <div style="background-color: transparent">
     <div
       v-if="hasToken && options.length === 0"
       :class="['token-select-input selected group', { selectable: !fixed }]"
@@ -78,7 +78,7 @@ function toggleModal(): void {
       <div class="w-8">
         <BalAsset :address="token?.address" class="shadow" />
       </div>
-      <span class="text-base font-medium">
+      <span class="text-base font-medium" style="color: white">
         {{ token?.symbol }}
       </span>
       <span v-if="Number(weight) > 0" class="ml-2 text-secondary">
@@ -94,6 +94,7 @@ function toggleModal(): void {
         name="chevron-down"
         size="sm"
         class="ml-2 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-yellow-500 transition-colors text-black-800"
+        style="color: white"
       />
     </div>
     <BalDropdown
@@ -180,7 +181,7 @@ function toggleModal(): void {
 
   font-variation-settings: 'wght' 700;
   border-radius: 40px;
-  border: 1px solid #133838;
+  border: 1px solid red;
 }
 
 .selectable {
@@ -194,6 +195,6 @@ function toggleModal(): void {
 .selected {
   @apply bg-gray-50 dark:bg-gray-700 text-black dark:text-white;
 
-  background-color: #fff;
+  background-color: transparent;
 }
 </style>

@@ -283,19 +283,23 @@ watch(_address, async (newAddress, oldAddress) => {
       </slot>
     </template>
     <template v-if="!hideFooter" #footer>
-      <div class="flex flex-col pt-1 footer">
+      <div class="flex flex-col pt-0 footer">
         <div class="text-sm leading-none text-input-label">
           I am {{ name === 'tokenIn' ? 'spending' : 'receiving' }}
         </div>
 
         <div class="text-sm leading-none text-gray-600 dark:text-gray-400">
-          <div v-if="!isWalletReady || disableBalance" />
-          <button v-else class="flex items-center balance">
+          <!-- <div v-if="!isWalletReady || disableBalance" /> -->
+          <button class="balance">
             {{ balanceLabel ? balanceLabel : $t('balance') }}:
 
             <BalLoadingBlock v-if="balanceLoading" class="mx-2 w-12 h-4" />
             <span v-else class="balance">
-              {{ fNum(tokenBalance, FNumFormats.token) }}
+              {{
+                !isWalletReady || disableBalance
+                  ? '0'
+                  : fNum(tokenBalance, FNumFormats.token)
+              }}
             </span>
 
             <!-- <template v-if="hasBalance && !noMax && !disableMax">
@@ -363,17 +367,19 @@ watch(_address, async (newAddress, oldAddress) => {
 
 <style scoped>
 .balance {
-  color: #e94173;
-  background-color: #fff;
-  font-size: 12px;
-  font-weight: 500;
+  color: red;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 900;
+  border: none;
+  align-items: end;
 }
 
 .text-input-label {
-  color: #e94173;
-  background-color: #fff;
-  font-size: 12px;
-  font-weight: 500;
+  color: red;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -382,5 +388,6 @@ watch(_address, async (newAddress, oldAddress) => {
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
+  background-color: transparent;
 }
 </style>

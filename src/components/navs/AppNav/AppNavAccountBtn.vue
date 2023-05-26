@@ -29,15 +29,30 @@ const { disconnectWallet, account } = useWeb3();
         "
       >
         <span
-          style="font-size: 11px; font-weight: 500; margin-right: 5px"
+          style="
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            color: rgb(44 43 43);
+          "
           v-text="`Addr:  `"
         />
         <span
-          style="font-size: 11px; font-weight: 700; margin-right: 5px"
+          style="
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            color: rgb(44 43 43);
+          "
           v-text="shorten(account)"
         />
         <span
-          style="font-size: 11px; font-weight: 700; margin-right: 5px"
+          style="
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            color: rgb(44 43 43);
+          "
           :onClick="disconnectWallet"
           v-text="`  |  Log out`"
         />

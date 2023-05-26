@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import { UseSwapping } from '@/composables/swap/useSwapping';
-// import useNumbers from '@/composables/useNumbers';
-// import { useTokens } from '@/providers/tokens.provider';
+import useNumbers, { FNumFormats } from '@/composables/useNumbers';
+import { useTokens } from '@/providers/tokens.provider';
 import useVeBal from '@/composables/useVeBAL';
-// import { bnum } from '@/lib/utils';
+import { bnum } from '@/lib/utils';
 
 import SwapPairToggle from './SwapPairToggle.vue';
 
@@ -39,8 +39,8 @@ const emit = defineEmits<{
 /**
  * COMPOSABLES
  */
-// const { fNum } = useNumbers();
-// const { getToken } = useTokens();
+const { fNum } = useNumbers();
+const { getToken } = useTokens();
 const { veBalTokenInfo } = useVeBal();
 
 /**
@@ -51,7 +51,7 @@ const _tokenInAddress = ref<string>('');
 const _tokenOutAmount = ref<string>('');
 const _tokenOutAddress = ref<string>('');
 
-// const isInRate = ref<boolean>(true);
+const isInRate = ref<boolean>(true);
 
 const typingTimeout = ref<any>(undefined);
 
@@ -66,31 +66,36 @@ const typingTimeout = ref<any>(undefined);
 //   () => !_tokenInAmount.value || !_tokenOutAmount.value
 // );
 
-// const tokenIn = computed(() => getToken(_tokenInAddress.value));
-// const tokenOut = computed(() => getToken(_tokenOutAddress.value));
+const tokenIn = computed(() => getToken(_tokenInAddress.value));
+const tokenOut = computed(() => getToken(_tokenOutAddress.value));
 
-// const rateLabel = computed(() => {
-//   if (missingToken.value || missingAmount.value) return '';
+const rateLabel = computed(() => {
+  console.log('inside rateLabel');
 
-//   if (props.effectivePriceMessage)
-//     return isInRate.value
-//       ? props.effectivePriceMessage.value.tokenIn
-//       : props.effectivePriceMessage.value.tokenOut;
+  // if (missingToken.value || missingAmount.value) return '';
+  console.log(props.effectivePriceMessage, 'props.effectivePriceMessage');
 
-//   let rate, inSymbol, outSymbol;
+  // if (props.effectivePriceMessage)
+  //   return isInRate.value
+  //     ? props.effectivePriceMessage.value.tokenIn
+  //     : props.effectivePriceMessage.value.tokenOut;
 
-//   if (isInRate.value) {
-//     rate = bnum(_tokenOutAmount.value).div(_tokenInAmount.value).toString();
-//     inSymbol = tokenIn.value.symbol;
-//     outSymbol = tokenOut.value.symbol;
-//   } else {
-//     rate = bnum(_tokenInAmount.value).div(_tokenOutAmount.value).toString();
-//     inSymbol = tokenOut.value.symbol;
-//     outSymbol = tokenIn.value.symbol;
-//   }
+  let rate, inSymbol, outSymbol;
 
-//   return `1 ${inSymbol} = ${fNum(rate, FNumFormats.token)} ${outSymbol}`;
-// });
+  console.log(_tokenOutAmount, _tokenInAmount, 'dddddd');
+
+  if (isInRate.value) {
+    rate = bnum(_tokenOutAmount.value).div(_tokenInAmount.value).toString();
+    inSymbol = tokenIn.value.symbol;
+    outSymbol = tokenOut.value.symbol;
+  } else {
+    rate = bnum(_tokenInAmount.value).div(_tokenOutAmount.value).toString();
+    inSymbol = tokenOut.value.symbol;
+    outSymbol = tokenIn.value.symbol;
+  }
+
+  return `${fNum(rate, FNumFormats.token)} ${outSymbol} per ${inSymbol}`;
+});
 
 /**
  * METHODS
@@ -161,7 +166,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div style="background-color: transparent; margin-top: 0">
     <TokenInput
       :amount="_tokenInAmount"
       :address="_tokenInAddress"
@@ -170,14 +175,14 @@ onMounted(() => {
       :excludedTokens="veBalTokenInfo ? [veBalTokenInfo.address] : []"
       :ignoreWalletBalance="swapLoading"
       autoFocus
-      inputColor="#feed02"
+      inputColor="white"
       @update:amount="handleInAmountChange"
       @update:address="handleInputTokenChange"
       @input="emit('update:exactIn', true)"
       @set-max="emit('update:exactIn', true)"
     />
 
-    <div class="flex items-center my-2">
+    <div class="flex items-center" style="margin-top: 35px; margin-bottom: 5px">
       <SwapPairToggle />
       <!-- <div class="mx-2 h-px bg-gray-100 dark:bg-gray-700 grow" /> -->
       <!-- <div
@@ -186,6 +191,7 @@ onMounted(() => {
         @click="isInRate = !isInRate"
         v-html="rateLabel"
       /> -->
+      <!-- <div>aaaa{{ rateLabel }}</div> -->
     </div>
 
     <TokenInput
@@ -198,16 +204,38 @@ onMounted(() => {
       noMax
       disableNativeAssetBuffer
       :excludedTokens="veBalTokenInfo ? [veBalTokenInfo.address] : []"
-      inputColor="#e2e9f3"
+      inputColor="white"
       @update:amount="handleOutAmountChange"
       @update:address="handleOutputTokenChange"
       @input="emit('update:exactIn', false)"
     />
+
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 37px;
+        margin-right: 15px;
+        margin-left: 4px;
+      "
+    >
+      <span v-if="rateLabel" class="text-input-label">Rate</span>
+      <span v-if="rateLabel" class="text-input-label">{{ rateLabel }}</span>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .token-input {
   margin-top: 0;
+}
+
+.text-input-label {
+  color: red;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
 }
 </style>

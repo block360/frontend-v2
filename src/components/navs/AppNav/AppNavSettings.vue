@@ -69,21 +69,27 @@ function copyAddress() {
 }
 </script>
 
-<template >
-  <div class="content">
+<template  style="border-radius: 20px;">
+  <div class="content" style="border-radius: 20px">
     <div class="p-4 border-b dark:border-gray-900">
       <div class="flex justify-between items-center mb-6">
         <h5 class="tracking-tight leading-none" v-text="$t('account')" />
         <div class="flex gap-2 items-center">
-          <BalBtn color="gray" size="xs" @click="toggleWalletSelectModal">
+          <BalBtn
+            color="white"
+            size="xs"
+            style="border: 1px solid rgb(172 169 169)"
+            @click="toggleWalletSelectModal"
+          >
             {{ $t('change') }}
           </BalBtn>
           <div v-if="!hideDisconnect">
             <BalBtn
               outline
-              color="white"
+              color="red"
               size="xs"
               class="capitalize"
+              style="border: 1px solid red; color: white; background-color: red"
               @click="disconnectWallet"
             >
               {{ $t('disconnect') }}
@@ -104,7 +110,7 @@ function copyAddress() {
           </div>
           <div class="ml-2">
             <div class="flex items-baseline address">
-              <div class="font-bold text-white" v-text="shorten(account)" />
+              <div class="font-bold text-black" v-text="shorten(account)" />
               <div class="flex ml-3">
                 <BalTooltip width="auto">
                   <template #activator>
@@ -247,7 +253,11 @@ function copyAddress() {
 }
 
 .content {
-  background-color: #133838;
-  color: #fff;
+  background-color: rgb(255 255 255 / 80%);
+  color: black;
+
+  /* border: 1px solid black; */
+
+  /* border-radius: 10px; */
 }
 </style>
