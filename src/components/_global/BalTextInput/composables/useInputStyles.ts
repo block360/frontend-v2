@@ -14,7 +14,7 @@ export default function useInputStyles(
       case 'lg':
         return 'p-3';
       default:
-        return 'p-2';
+        return 'p-0';
     }
   };
 
@@ -66,7 +66,7 @@ export default function useInputStyles(
   }));
 
   const inputContainerClasses = computed(() => ({
-    'bg-white dark:bg-gray-800': !props.disabled,
+    'bg-transparent dark:bg-gray-800': !props.disabled,
     'bg-gray-100 dark:bg-gray-800': props.disabled,
     [extPaddingClass()]: true,
     border: !props.noBorder,

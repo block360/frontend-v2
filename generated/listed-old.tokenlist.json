@@ -15,7 +15,7 @@
       "name": "GSU Coin",
       "symbol": "GSUc",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png"
+      "logoURI": "https://static.wixstatic.com/media/552241_85f982df336147bd975e4860cf3e12d9~mv2.png/v1/fill/w_164,h_164,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/GSU-Protocol-Emblem.png"
     },
     {
       "chainId": 1,
@@ -39,7 +39,7 @@
       "name": "GSU Coin",
       "symbol": "GSUc",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png"
+      "logoURI": "https://static.wixstatic.com/media/552241_85f982df336147bd975e4860cf3e12d9~mv2.png/v1/fill/w_164,h_164,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/GSU-Protocol-Emblem.png"
     }
   ]
 }

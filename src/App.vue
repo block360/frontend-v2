@@ -106,11 +106,12 @@ watch(route, newRoute => {
 
 <style scoped>
 #app {
-  background-image: url('../src/assets/images/main-background.png');
+  background-image: url('../src/assets/images/background1.png');
 
   /* background:  #feed02; */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
 }
 </style>

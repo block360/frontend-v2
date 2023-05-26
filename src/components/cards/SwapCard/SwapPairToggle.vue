@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group flex justify-center items-center w-full h-9 dark:bg-gray-900 rounded-full bg-white-50"
+    class="group flex justify-center items-center w-full h-0 dark:bg-gray-900 rounded-full bg-white-50"
     @click="toggle"
   >
     <div>
@@ -48,6 +48,10 @@ export default defineComponent({
 <style scoped>
 .icon-swap-toggle {
   @apply transition-transform ease-out duration-200;
+
+  color: white;
+
+  /* background-color: white; */
 }
 
 .toggle-btn:hover .icon-swap-toggle {

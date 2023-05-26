@@ -65,7 +65,11 @@ async function cancelOrder(orderId: string) {
 <template>
   <BalPopover noPad class="activity-card">
     <template #activator>
-      <BalBtn color="white" :size="'sm'" class="relative p-1 activity-card">
+      <BalBtn
+        color="white"
+        :size="'sm'"
+        class="relative p-1 activity-card-content"
+      >
         <ActivityIcon v-if="pendingTransactions.length === 0" />
         <ActivityCounter v-else :count="pendingTransactions.length" />
       </BalBtn>
@@ -118,17 +122,32 @@ async function cancelOrder(orderId: string) {
 
 <style>
 .activity-card {
-  background-color: #133838;
-  color: white;
-  height: 27px;
-  align-self: center;
+  /* background-color: #133838; */
 
-  /* margin-top: 2px; */
+  /* color: white; */
+
+  /* height: 27px; */
+  align-self: center;
+  height: fit-content;
+  margin-top: 2px;
 }
 
-.activity-card:hover {
-  background-color: #133838;
+.activity-card-content {
+  background-color: transparent;
   color: white;
+  align-self: center;
+  height: fit-content;
+
+  /* border-top-right-radius: 0px; */
+  border: 1px solid rgb(172 169 169);
+  border-radius: 0;
+  height: 27px;
+}
+
+.activity-card-content:hover {
+  background-color: transparent;
+
+  /* color: white; */
 }
 </style>
 

@@ -284,11 +284,13 @@ async function handleTransaction(
 
 <style scoped>
 .swap-button {
-  color: #feed02;
-  border: 1px solid #fff;
-  background-color: #133838;
+  color: white;
+
+  /* border: 1px solid #fff; */
+  background-color: red;
   border-radius: 50px;
-  text-transform: uppercase;
+
+  /* text-transform: uppercase; */
 
   /* margin-top: 55px; */
 }

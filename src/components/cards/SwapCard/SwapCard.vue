@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 8.4vh">
+  <div>
     <div class="tabs">
       <nav>
         <ul>
@@ -78,11 +78,19 @@
         />
         <hr class="divider" />
 
-        <div
+        <div style="font-size: 14px; font-weight: 900">
+          {{
+            appNetworkConfig?.chainId === 1
+              ? 'Swap fee  0.001 ETH'
+              : 'Swap fee  0 ETH'
+          }}
+        </div>
+
+        <!-- <div
           v-if="swapping.isCowswapSupportedOnNetwork.value"
           class="flex items-center mt-5 h-8 text-sm"
-        >
-          <Transition name="fade" mode="out-in">
+        > -->
+        <!-- <Transition name="fade" mode="out-in">
             <div
               v-if="swapping.isGaslessSwappingDisabled.value"
               class="text-secondary"
@@ -149,9 +157,9 @@
                 </BalTooltip>
               </div>
             </div>
-          </Transition>
-        </div>
-        <SwapRoute
+          </Transition> -->
+        <!-- </div> -->
+        <!-- <SwapRoute
           v-if="alwaysShowRoutes"
           :addressIn="swapping.tokenIn.value.address"
           :amountIn="swapping.tokenInAmountInput.value"
@@ -160,7 +168,7 @@
           :pools="pools"
           :sorReturn="swapping.sor.sorReturn.value"
           class="mt-4"
-        />
+        /> -->
       </div>
     </BalCard>
   </div>
@@ -198,13 +206,13 @@ import { isRequired } from '@/lib/utils/validations';
 import { ApiErrorCodes } from '@/services/cowswap/errors/OperatorError';
 import useWeb3 from '@/services/web3/useWeb3';
 import SwapPair from './SwapPair.vue';
-import SwapRoute from './SwapRoute.vue';
+// import SwapRoute from './SwapRoute.vue';
 
 export default defineComponent({
   components: {
     SwapPair,
     SwapPreviewModal,
-    SwapRoute,
+    // SwapRoute,
   },
   setup() {
     // COMPOSABLES
@@ -214,6 +222,7 @@ export default defineComponent({
     const { bp } = useBreakpoints();
     const { fNum } = useNumbers();
     const { appNetworkConfig, isMismatchedNetwork } = useWeb3();
+
     const { nativeAsset } = useTokens();
     const {
       tokenInAddress,
@@ -466,6 +475,7 @@ export default defineComponent({
       // methods
       switchToWETH,
       handleErrorButtonClick,
+      appNetworkConfig,
     };
   },
 });
@@ -488,6 +498,12 @@ export default defineComponent({
   height: 440px;
   max-width: 360px;
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
+  background-image: linear-gradient(
+    to right,
+    rgb(211 157 235 / 60%),
+    rgb(241 165 188 / 60%)
+  );
+  background-color: transparent;
 
   /* min-height: 366px */
 
@@ -511,12 +527,13 @@ export default defineComponent({
 }
 
 .swap-button {
-  color: #feed02;
-  border: 1px solid #133838;
-  background-color: #133838;
+  color: #fff;
+
+  /* border: 1px solid #133838; */
+  background-color: red;
   border-radius: 50px;
-  text-transform: uppercase;
-  margin-top: 35px;
+
+  /* margin-top: 25px; */
 }
 
 .divider {
@@ -530,7 +547,8 @@ export default defineComponent({
 .tabs {
   position: relative;
   top: 2px;
-  margin-bottom: 1px;
+
+  /* margin-bottom: 1px; */
 }
 
 .tabs nav {
@@ -553,8 +571,6 @@ export default defineComponent({
   -ms-box-pack: center;
   flex-flow: row wrap;
   flex-flow: row wrap;
-  flex-flow: row wrap;
-  justify-content: center;
   justify-content: center;
   justify-content: center;
 }
@@ -565,7 +581,6 @@ export default defineComponent({
   display: block;
   margin: 0;
   text-align: center;
-  flex: 1;
   flex: 1;
   flex: 1;
   backface-visibility: hidden;
@@ -588,7 +603,6 @@ export default defineComponent({
   white-space: nowrap;
   text-decoration: none;
   text-overflow: ellipsis;
-  text-transform: uppercase;
 }
 
 .tabs nav ul li a::after {
@@ -611,12 +625,15 @@ export default defineComponent({
 }
 
 .tabs nav ul li.tab-current a::after {
-  background: white;
+  background-color: rgb(211 157 235 / 40%);
+
+  /* background-color: rgb(255, 255, 255,0.5); */
 }
 
 .tabs nav ul li:hover a::after {
   transition: background 100ms !important;
-  background: white;
+
+  /* background: white; */
 }
 
 .tabs nav ul li.tab-current a span {

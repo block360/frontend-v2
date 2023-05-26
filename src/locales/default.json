@@ -554,7 +554,7 @@
   "isRequired": "is required",
   "joinPool": "Join pool",
   "language": "Language",
-  "learnMore": "Learn more",
+  "learnMore": "wallets",
   "lockToGetVeBAL": "Lock this to get veBAL",
   "light": "Light",
   "liquidityBootstrappingPool": "Liquidity Bootstrapping Pool",
@@ -899,7 +899,7 @@
     "sentry": "Used for error tracking and performance monitoring."
   },
   "settings": "Settings",
-  "setUpEthereumWallet": "Balancer is a DeFi app on Ethereum. Set up an Ethereum Wallet to swap and provide liquidity here.",
+  "setUpEthereumWallet": "Learn more about ",
   "singleToken": "Single token",
   "singleTokenMax": "Single token max",
   "slippageTolerance": "Slippage tolerance",
@@ -1349,7 +1349,7 @@
   "swapSummary": {
     "exactIn": {
       "title": "Swap from {0} details",
-      "totalAfterFees": "Total expected after fees",
+      "totalAfterFees": "Price",
       "totalBeforeFees": "Total to receive before fees",
       "totalWithSlippage": "The least you’ll get at {0} slippage",
       "swapFees": "Swap fees"
@@ -1642,5 +1642,6 @@
   "Q2": "How does it work?",
   "A2": "WalletConnect is a simple infrastructure that can be setup by any developer. Using a Bridge server to relay the messages without having access to any of its contents. The contents are encrypted using the session data shared by the QR code between the desktop and mobile. There are libraries for Web, iOS and Android. Read more about it in our documentation introduction.",
   "Q3": "What Dapps are supported?",
-  "A3": "You can find the full list of supported Dapps here: "
+  "A3": "You can find the full list of supported Dapps here: ",
+  "SwapFee": "Swap fee"
 }

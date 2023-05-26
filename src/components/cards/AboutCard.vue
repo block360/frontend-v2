@@ -4,8 +4,7 @@ import { useI18n } from 'vue-i18n';
 // COMPOSABLES
 const { t } = useI18n();
 </script>
-
-        <template>
+  <template>
   <div class="inner-box">
     <div class="default-box">
       <div class="about">
@@ -105,11 +104,11 @@ const { t } = useI18n();
   min-width: 302px; */
 
   /* margin-top: 37px; */
-  border-radius: 18px;
+  border-radius: 20px;
 
   /* padding: 3rem 1rem; */
   padding: 8px 16px;
-  background: rgb(255 255 255);
+  background-color: rgb(255 255 255 / 0%);
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
   height: 440px;
 }
@@ -155,7 +154,9 @@ const { t } = useI18n();
 
   /* margin: 20px auto; */
   margin-right: 20px;
-  margin-top: 12.6vh;
+  margin-top: 37px;
+  background-color: rgb(255 255 255 / 50%);
+  border-radius: 20px;
 
   /* height: 500px; */
 }

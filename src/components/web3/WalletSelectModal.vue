@@ -46,19 +46,20 @@ const accepted = ref<'0' | '1'>(acceptedlocalStorageItem || '0');
 
 const isBalRulesAccepted = computed(() => accepted.value === '1');
 
-function onBalRulesAccepted() {
-  accepted.value = isBalRulesAccepted.value ? '0' : '1';
-  localStorage.setItem(LS_KEYS.App.TermsAccepted, accepted.value);
-}
+// function onBalRulesAccepted() {
+//   accepted.value = isBalRulesAccepted.value ? '0' : '1';
+//   localStorage.setItem(LS_KEYS.App.TermsAccepted, accepted.value);
+// }
 </script>
 
 <template>
   <BalModal
     :show="props.isVisible"
     title="Connect to a wallet"
+    bgColor="red"
     @close="emit('close')"
   >
-    <BalRadio
+    <!-- <BalRadio
       :checked="isBalRulesAccepted"
       value="bal-rules"
       name="bal-rules"
@@ -103,7 +104,7 @@ function onBalRulesAccepted() {
           </router-link>
         </p>
       </template>
-    </BalRadio>
+    </BalRadio> -->
 
     <div
       :class="[
@@ -112,11 +113,26 @@ function onBalRulesAccepted() {
       ]"
     >
       <WalletButton v-for="wallet in wallets" :key="wallet" :wallet="wallet" />
+
+      <hr style="margin-top: 20px; background-color: rgb(224 217 217)" />
       <div
         class="p-4 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-gray-100 dark:to-gray-850 rounded-lg help"
       >
-        <h6>{{ $t('newToEthereum') }}</h6>
-        <p class="text-sm">
+        <h6 style="color: rgb(224 217 217)">
+          {{ $t('newToEthereum') }}
+          {{ $t('setUpEthereumWallet') }}
+          <BalLink
+            :href="EXTERNAL_LINKS.Ethereum.Wallets"
+            external
+            style="color: rgb(224 217 217); text-decoration: underline"
+          >
+            {{ $t('learnMore') }}
+            <!-- <span class="align-middle">
+              <BalIcon name="arrow-up-right" size="sm" />
+            </span> -->
+          </BalLink>
+        </h6>
+        <!-- <p class="text-sm">
           {{ $t('setUpEthereumWallet') }}
           <BalLink :href="EXTERNAL_LINKS.Ethereum.Wallets" external>
             {{ $t('learnMore') }}
@@ -124,7 +140,7 @@ function onBalRulesAccepted() {
               <BalIcon name="arrow-up-right" size="sm" />
             </span>
           </BalLink>
-        </p>
+        </p> -->
       </div>
     </div>
   </BalModal>
@@ -132,7 +148,7 @@ function onBalRulesAccepted() {
 
 <style scoped>
 .help {
-  background: #133838;
+  background: transparent;
   color: #fff;
 }
 </style>

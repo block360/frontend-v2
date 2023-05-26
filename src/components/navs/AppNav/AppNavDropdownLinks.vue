@@ -85,6 +85,7 @@ const modalAddToken = ref(false);
 .dropdown-menu {
   position: absolute;
   top: 100%;
+  background-color: rgb(255 255 255 / 90%);
 
   /* left: 0; */
 
@@ -98,14 +99,22 @@ const modalAddToken = ref(false);
 
   /* margin: .125rem 0 0; */
   font-size: 1rem;
+
+  /* font */
   color: white;
   text-align: left;
   list-style: none;
-  background-color: #133838;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+  /* background-color: transparent; */
 
   /* border-radius: 0.8rem; */
-  border-top-right-radius: 0;
-  border: 1px solid #133838;
+
+  /* border-top-right-radius: 0; */
+
+  /* border: 1px solid #133838; */
 }
 
 .dropdown-item {
@@ -113,7 +122,7 @@ const modalAddToken = ref(false);
   font-weight: 800;
   padding: 5px 15px;
   line-height: 1;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
@@ -134,11 +143,18 @@ const modalAddToken = ref(false);
   width: fit-content;
   margin-top: 0;
   margin-left: 6px;
+  color: red;
 }
 
 .dropdown:hover {
-  color: white;
-  background-color: #133838;
+  color: red;
+  background-color: rgb(255 255 255 / 80%);
+
+  /* opacity: 0.3; */
+
+  /* border-radius: 10px; */
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 
   /* border-top-left-radius: 0.5rem; */
 
@@ -160,7 +176,7 @@ const modalAddToken = ref(false);
 
 .dropdown-item:hover,
 .dropdown-item.active {
-  color: #feed02;
+  color: red;
   background-color: transparent;
 }
 

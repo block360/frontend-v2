@@ -10,6 +10,7 @@ type Props = {
   noPad?: boolean;
   noContentPad?: boolean;
   fireworks?: boolean;
+  bgColor?: string;
 };
 
 /**
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   noPad: false,
   noContentPad: false,
   fireworks: false,
+  bgColor: 'transparent',
 });
 
 defineEmits(['close']);
@@ -73,7 +75,7 @@ defineExpose({ hide });
             shadow="lg"
             :noPad="noPad"
             :noContentPad="noContentPad"
-            class="modal-card"
+            :style="bgColor && `background-color:${bgColor};color:white;`"
             noBorder
             overflowYScroll
           >
@@ -114,7 +116,7 @@ defineExpose({ hide });
 .modal-card {
   @apply mx-auto h-full rounded-b-none sm:rounded-b-lg dark:border-0 relative;
 
-  background: #133838;
+  background: red;
   color: #fff;
 }
 

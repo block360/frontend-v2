@@ -20,26 +20,41 @@ function onClose() {
         role="dialog"
         aria-labelledby="supportLabel"
         aria-hidden="true"
+        style="
+          background-image: linear-gradient(
+            to right,
+            rgb(211 157 235 / 60%),
+            rgb(241 165 188 / 60%)
+          );
+          padding: 15px;
+          border-radius: 20px;
+          width: fit-content;
+        "
       >
         <div
           class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
         >
           <div class="modal-content">
-            <div :onclick="onClose" style="cursor: pointer">
-              <span
-                class="float-right material-icons clos text-red"
-                data-dismiss="modal"
-                aria-label="Close"
-                >close</span
+            <div class="mt-8 mb-8 text-center">
+              <div :onclick="onClose" style="cursor: pointer">
+                <span
+                  class="float-right material-icons clos text-red"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  style="color: red; font-size: 30px"
+                  >close</span
+                >
+              </div>
+              <strong
+                class="text-black"
+                style="font-size: 30px; font-weight: 100"
+                >{{ t('FAQ') }}</strong
               >
-            </div>
-            <div class="text-center">
-              <h5 class="mb-2 text-red font-weight-bold">{{ t('FAQ') }}</h5>
-              <small class="mb-3 d-block">
+              <!-- <small class="mb-3 d-block text-black">
                 {{ t('OfferingAccess') }}
-              </small>
+              </small> -->
             </div>
-            <div class="modal-body">
+            <div class="mb-8 text-black modal-body">
               <div class="row">
                 <div class="mb-3 col-sm-12">
                   <div class="card">

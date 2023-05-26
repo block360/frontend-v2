@@ -62,10 +62,23 @@ function support() {
         role="dialog"
         aria-labelledby="supportLabel"
         aria-hidden="true"
+        style="
+          background-image: linear-gradient(
+            to right,
+            rgb(211 157 235 / 60%),
+            rgb(241 165 188 / 60%)
+          );
+          padding: 15px;
+          border-radius: 20px;
+          width: fit-content;
+        "
       >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-            <div :onclick="onClose" style="cursor: pointer">
+            <div
+              :onclick="onClose"
+              style="cursor: pointer; color: red; font-size: 30px"
+            >
               <span
                 class="float-right material-icons clos text-red"
                 data-dismiss="modal"
@@ -73,61 +86,66 @@ function support() {
                 >close</span
               >
             </div>
-            <div class="text-center">
-              <h5 class="mb-2 text-red font-weight-bold">{{ t('Support') }}</h5>
-              <small class="d-block">
-                {{ t('OfferingAccess') }}
-              </small>
+            <div class="mt-8 mb-8 text-center">
+              <strong
+                class="text-black"
+                style="font-size: 30px; font-weight: 100"
+                >{{ t('Support') }}</strong
+              >
             </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <input
-                    v-model="email"
-                    name="email"
-                    type="text"
-                    class="form-control"
-                    autofocus
-                    spellcheck="false"
-                    :placeholder="t('YourEmail')"
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    v-model="subject"
-                    name="text"
-                    type="text"
-                    class="form-control"
-                    autofocus
-                    spellcheck="false"
-                    :placeholder="t('Subject')"
-                  />
-                </div>
-                <div class="form-group">
-                  <textarea
-                    v-model="message"
-                    class="form-control"
-                    rows="4"
-                    :placeholder="t('WriteYourMessageHere')"
-                  ></textarea>
-                </div>
-                <div>
-                  <button
-                    v-if="btnLoad"
-                    class="btn btn-confirm btn-block"
-                    disabled
-                  >
-                    <LoadingGif />
-                  </button>
-                  <button
-                    v-else
-                    class="btn btn-confirm btn-block"
-                    @click.prevent="support()"
-                  >
-                    {{ t('Send') }}
-                  </button>
-                </div>
-              </form>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-right: 30px;
+                margin-left: 30px;
+              "
+            >
+              <!-- <form> -->
+              <div style="margin-top: 20px; width: 250px">
+                <input
+                  v-model="email"
+                  name="email"
+                  type="text"
+                  class="form-control"
+                  autofocus
+                  spellcheck="false"
+                  :placeholder="t('YourEmail')"
+                  style="width: 100%; height: 40px"
+                />
+              </div>
+              <div style="margin-top: 20px; width: 250px">
+                <input
+                  v-model="subject"
+                  name="text"
+                  type="text"
+                  class="form-control"
+                  autofocus
+                  spellcheck="false"
+                  :placeholder="t('Subject')"
+                  style="width: 100%; height: 40px"
+                />
+              </div>
+              <div style="margin-top: 20px; width: 250px">
+                <textarea
+                  v-model="message"
+                  class="form-control"
+                  rows="4"
+                  :placeholder="t('WriteYourMessageHere')"
+                  style="width: 100%"
+                ></textarea>
+              </div>
+              <div class="mb-8" style="width: 100%; margin-top: 10px">
+                <button v-if="btnLoad" class="swap-button" disabled>
+                  <LoadingGif />
+                </button>
+                <button v-else class="swap-button" @click.prevent="support()">
+                  {{ t('Send') }}
+                </button>
+              </div>
+              <!-- </form> -->
             </div>
           </div>
         </div>
@@ -135,5 +153,30 @@ function support() {
     </div>
   </BalModal>
 </template>
+
+<style scoped>
+.modal .form-control {
+  font-size: 13px;
+  padding: 5px 10px;
+  height: 32px;
+  box-shadow: none;
+}
+
+.modal textarea.form-control {
+  height: auto;
+}
+
+.swap-button {
+  color: #fff;
+
+  /* border: 1px solid #133838; */
+  background-color: red;
+  border-radius: 50px;
+  width: 100%;
+  height: 40px;
+
+  /* margin-top: 25px; */
+}
+</style>
 
 

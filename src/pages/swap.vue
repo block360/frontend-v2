@@ -5,7 +5,7 @@ import { onMounted } from 'vue';
 import SwapCard from '@/components/cards/SwapCard/SwapCard.vue';
 // import Col3Layout from '@/components/layouts/Col3Layout.vue';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-// import useBreakpoints from '@/composables/useBreakpoints';
+import useBreakpoints from '@/composables/useBreakpoints';
 // import BridgeLink from '@/components/links/BridgeLink.vue';
 // import { hasBridge } from '@/composables/useNetwork';
 import { provideUserTokens } from '@/providers/local/user-tokens.provider';
@@ -20,7 +20,8 @@ provideUserTokens();
  * COMPOSABLES
  */
 const { setSelectedTokens } = usePoolFilters();
-// const { upToLargeBreakpoint } = useBreakpoints();
+const { bp } = useBreakpoints();
+// console.log(.value,"upToLargeBreakpoint");
 
 /**
  * COMPUTED
@@ -45,35 +46,13 @@ onMounted(() => {
 
 <template>
   <div class="main-content">
-    <div class="mt-8 content">
-      <!-- <template #gutterLeft> -->
-      <!-- <MyWallet /> -->
+    <div
+      :class="
+        ['xs', 'sm', 'md', 'lg'].includes(bp) ? 'content-md' : 'content-lg'
+      "
+    >
       <AboutCard />
-      <!-- </template> -->
-
       <SwapCard />
-      <!-- <div class="p-4 sm:p-0 lg:p-0 mt-8">
-        <BalAccordion
-          v-if="upToLargeBreakpoint"
-          class="w-full"
-          :sections="sections"
-        >
-          <template #my-wallet>
-            <MyWallet />
-          </template>
-          <template #price-chart>
-            <PairPriceGraph />
-          </template>
-          <template v-if="hasBridge" #bridge>
-            <BridgeLink />
-          </template>
-        </BalAccordion>
-      </div>
-
-      <template #gutterRight>
-        <PairPriceGraph />
-        <BridgeLink v-if="hasBridge" class="mt-4" />
-      </template> -->
     </div>
   </div>
 </template>
@@ -83,9 +62,23 @@ onMounted(() => {
   height: 450px;
 }
 
-.content {
+.content-lg {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16vh;
+
+  /* width: 660px; */
+
+  /* height: 445px; */
+
+  /* height: 100vh; */
+}
+
+.content-md {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 

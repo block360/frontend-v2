@@ -55,7 +55,7 @@
       </g>
     </svg> -->
     <img
-      src="~@/assets/images/logo.svg"
+      src="~@/assets/images/GSUSwapLogo.png"
       width="160"
       aria-labelledby="logoTitle logoDesc"
     />
