@@ -22,6 +22,7 @@ import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionActionInfo } from '@/types/transactions';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
+import KeyboardArrow from '@/assets/images/keyboard_arrow_down.svg';
 
 const PRICE_UPDATE_THRESHOLD = 0.02;
 
@@ -594,7 +595,7 @@ watch(blockNumber, () => {
           </div>
           <img
             class="w-12 h-12 icon-swap-toggle"
-            src="../../../../src/assets/images/keyboard_arrow_down.svg"
+            :src="KeyboardArrow"
             width="100px"
             style="margin-left: 17px"
           />

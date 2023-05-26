@@ -36,7 +36,7 @@
           class="mt-0 mb-4"
           @amount-change="swapping.handleAmountChange"
         />
-        <!-- <BalAlert
+        <BalAlert
           v-if="error"
           class="p-3 mb-4"
           type="error"
@@ -55,7 +55,7 @@
           :title="warning.header"
           :description="warning.body"
           block
-        /> -->
+        />
         <BalBtn
           v-if="swapping.isLoading.value"
           loading
@@ -279,6 +279,23 @@ export default defineComponent({
         swapping.cowswap.hasValidationError.value;
       const hasBalancerErrors =
         swapping.isBalancerSwap.value && isHighPriceImpact.value;
+
+      console.log(
+        hasMismatchedNetwork,
+        'hasMismatchedNetwork',
+        hasAmountsError,
+        'hasAmountsError',
+        hasCowswapErrors,
+        'hasCowswapErrors',
+        hasBalancerErrors,
+        'hasBalancerErrors'
+      );
+      console.log(
+        swapping.isBalancerSwap.value,
+        isHighPriceImpact.value,
+        'hasBalancerErrors'
+      );
+
       return (
         hasAmountsError ||
         hasCowswapErrors ||
