@@ -70,10 +70,10 @@ const tokenIn = computed(() => getToken(_tokenInAddress.value));
 const tokenOut = computed(() => getToken(_tokenOutAddress.value));
 
 const rateLabel = computed(() => {
-  console.log('inside rateLabel');
+  // console.log('inside rateLabel');
 
   // if (missingToken.value || missingAmount.value) return '';
-  console.log(props.effectivePriceMessage, 'props.effectivePriceMessage');
+  // console.log(props.effectivePriceMessage, 'props.effectivePriceMessage');
 
   // if (props.effectivePriceMessage)
   //   return isInRate.value
@@ -81,8 +81,6 @@ const rateLabel = computed(() => {
   //     : props.effectivePriceMessage.value.tokenOut;
 
   let rate, inSymbol, outSymbol;
-
-  console.log(_tokenOutAmount, _tokenInAmount, 'dddddd');
 
   if (isInRate.value) {
     rate = bnum(_tokenOutAmount.value).div(_tokenInAmount.value).toString();
