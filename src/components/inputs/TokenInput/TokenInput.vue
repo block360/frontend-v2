@@ -263,6 +263,7 @@ watch(_address, async (newAddress, oldAddress) => {
     :noShadow="true"
     :noBorder="true"
     :inputColor="inputColor"
+    :isSwapView="true"
     @blur="emit('blur', $event)"
     @focus="emit('focus', $event)"
     @input="emit('input', $event)"
