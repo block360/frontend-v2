@@ -174,6 +174,7 @@ onMounted(() => {
       :ignoreWalletBalance="swapLoading"
       autoFocus
       inputColor="white"
+      :isSwapView="true"
       @update:amount="handleInAmountChange"
       @update:address="handleInputTokenChange"
       @input="emit('update:exactIn', true)"
@@ -203,6 +204,7 @@ onMounted(() => {
       disableNativeAssetBuffer
       :excludedTokens="veBalTokenInfo ? [veBalTokenInfo.address] : []"
       inputColor="white"
+      :isSwapView="true"
       @update:amount="handleOutAmountChange"
       @update:address="handleOutputTokenChange"
       @input="emit('update:exactIn', false)"
