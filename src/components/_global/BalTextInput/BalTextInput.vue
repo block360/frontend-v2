@@ -34,6 +34,7 @@ type Props = {
   autoFocus?: boolean;
   format?: (input: string | number) => string | number;
   inputColor?: string;
+  isSwapView?: boolean;
 };
 
 /**
@@ -54,6 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   noBorder: false,
   autoFocus: false,
   inputColor: '',
+  isSwapView: false,
 });
 
 const emit = defineEmits<{
@@ -118,7 +120,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="['bal-text-input', parentClasses, borderRadiusClasses]">
+  <div
+    v-if="isSwapView"
+    :class="['bal-text-input', parentClasses, borderRadiusClasses]"
+  >
     <div
       :class="['input-container', inputContainerClasses, borderRadiusClasses]"
       @mouseover="onMouseOver"
@@ -142,7 +147,7 @@ onMounted(() => {
           :value="modelValue"
           v-bind="inputAttrs"
           :disabled="disabled"
-          :class="['input', inputClasses]"
+          :class="['input', inputClasses, 'input-swap']"
           :style="inputColor && `background-color: ${inputColor};color:black;`"
           @blur="onBlur"
           @input="onInput"
@@ -163,6 +168,50 @@ onMounted(() => {
       </div>
     </div>
   </div>
+
+  <div v-else :class="['bal-text-input', parentClasses, borderRadiusClasses]">
+    <div
+      :class="['input-container', inputContainerClasses, borderRadiusClasses]"
+      @mouseover="onMouseOver"
+      @mouseleave="onMouseLeave"
+    >
+      <div v-if="$slots.header || label" :class="['header', headerClasses]">
+        <slot name="header">
+          <span class="label text-secondary">
+            {{ label }}
+          </span>
+        </slot>
+      </div>
+      <div :class="['input-group', inputGroupClasses]">
+        <div v-if="$slots.prepend" :class="['prepend', prependClasses]">
+          <slot name="prepend" />
+        </div>
+        <input
+          ref="textInput"
+          :type="type"
+          :name="name"
+          :value="modelValue"
+          v-bind="inputAttrs"
+          :disabled="disabled"
+          :class="['input', inputClasses]"
+          @blur="onBlur"
+          @input="onInput"
+          @keydown="onKeydown"
+          @click="onClick"
+          @focus="onFocus"
+        />
+        <div v-if="$slots.append" :class="['append', appendClasses]">
+          <slot name="append" />
+        </div>
+      </div>
+      <div v-if="$slots.footer" :class="['footer', footerClasses]">
+        <slot name="footer" />
+      </div>
+      <div v-if="isInvalid && !!errors[0]" :class="['error']">
+        {{ errors[0] }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -175,6 +224,10 @@ onMounted(() => {
 }
 
 .input {
+  @apply grow overflow-hidden w-full;
+}
+
+.input-swap {
   @apply grow overflow-hidden w-full;
 
   /* background-color: #feed02; */
