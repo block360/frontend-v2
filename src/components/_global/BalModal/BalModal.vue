@@ -12,6 +12,7 @@ type Props = {
   fireworks?: boolean;
   bgColor?: string;
   bgImage?: string;
+  isSwapView?: boolean;
 };
 
 /**
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   fireworks: false,
   bgColor: 'transparent',
   bgImage: '',
+  isSwapView: false,
 });
 
 defineEmits(['close']);
@@ -73,6 +75,7 @@ defineExpose({ hide });
       <Transition name="modal" @after-leave="$emit('close')">
         <div v-if="showContent" class="content">
           <BalCard
+            v-if="isSwapView"
             :title="title"
             shadow="lg"
             :noPad="noPad"
@@ -82,6 +85,25 @@ defineExpose({ hide });
                 ? bgColor && `background-color:${bgColor};color:white;`
                 : `background-color:${bgColor};color:white;background-image:${bgImage};`
             "
+            noBorder
+            overflowYScroll
+          >
+            <template v-if="$slots.header" #header>
+              <slot name="header" />
+            </template>
+            <slot />
+            <template v-if="$slots.footer" #footer>
+              <slot name="footer" />
+            </template>
+          </BalCard>
+
+          <BalCard
+            v-else
+            :title="title"
+            shadow="lg"
+            :noPad="noPad"
+            :noContentPad="noContentPad"
+            class="modal-card"
             noBorder
             overflowYScroll
           >
@@ -121,8 +143,6 @@ defineExpose({ hide });
 
 .modal-card {
   @apply mx-auto h-full rounded-b-none sm:rounded-b-lg dark:border-0 relative;
-
-  color: #fff;
 }
 
 .dark .bal-modal .content::before {

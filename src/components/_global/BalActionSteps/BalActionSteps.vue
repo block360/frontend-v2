@@ -40,6 +40,7 @@ type Props = {
   // override action state loading label
   // for all steps
   loadingLabel?: string;
+  isSwapView?: boolean;
 };
 
 /**
@@ -49,6 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   isLoading: false,
   loadingLabel: '',
+  isSwapView: false,
 });
 
 const emit = defineEmits<{
@@ -245,7 +247,7 @@ async function handleTransaction(
 <template>
   <div>
     <AnimatePresence isVisible>
-      <BalAlert
+      <!-- <BalAlert
         v-if="currentActionState?.error && !isLoading"
         type="error"
         :title="currentActionState?.error?.title"
@@ -264,23 +266,92 @@ async function handleTransaction(
           v-if="!lastActionState?.confirmed"
           :disabled="props.disabled"
           :loading="currentAction?.pending || isLoading"
-          :loadingLabel="_loadingLabel"
+          :loadingLabel="_loadingLabel" -->
+      <div v-if="isSwapView">
+        <BalAlert
+          v-if="currentActionState?.error && !isLoading"
+          type="error"
+          :title="currentActionState?.error?.title"
+          :description="currentActionState?.error?.description"
           block
-          class="swap-button"
-          @click="currentAction?.promise()"
-        >
-          <div
-            :class="{
-              'flex grow justify-between items-center':
-                currentAction?.isSignAction,
-            }"
+          class="mb-4"
+        />
+        <BalStack vertical>
+          <BalHorizSteps
+            v-if="actions.length > 1 && !lastActionState?.confirmed"
+            :steps="steps"
+            :spacerWidth="spacerWidth"
+            class="flex justify-center"
+          />
+          <BalBtn
+            v-if="!lastActionState?.confirmed"
+            :disabled="props.disabled"
+            :loading="currentAction?.pending || isLoading"
+            :loadingLabel="
+              isLoading
+                ? loadingLabel || $t('loading')
+                : currentAction?.loadingLabel
+            "
+            block
+            class="swap-button"
+            @click="currentAction?.promise()"
           >
-            <img v-if="currentAction?.isSignAction" :src="signature" />
-            {{ currentAction?.label }}
-            <div v-if="currentAction?.isSignAction" class="w-8"></div>
-          </div>
-        </BalBtn>
-      </BalStack>
+            <div
+              :class="{
+                'flex grow justify-between items-center':
+                  currentAction?.isSignAction,
+              }"
+            >
+              <img v-if="currentAction?.isSignAction" :src="signature" />
+              {{ currentAction?.label }}
+              <div v-if="currentAction?.isSignAction" class="w-8"></div>
+            </div>
+          </BalBtn>
+        </BalStack>
+      </div>
+
+      <div v-else>
+        <BalAlert
+          v-if="currentActionState?.error && !isLoading"
+          type="error"
+          :title="currentActionState?.error?.title"
+          :description="currentActionState?.error?.description"
+          block
+          class="mb-4"
+        />
+        <BalStack vertical>
+          <BalHorizSteps
+            v-if="actions.length > 1 && !lastActionState?.confirmed"
+            :steps="steps"
+            :spacerWidth="spacerWidth"
+            class="flex justify-center"
+          />
+          <BalBtn
+            v-if="!lastActionState?.confirmed"
+            :disabled="props.disabled"
+            color="gradient"
+            :loading="currentAction?.pending || isLoading"
+            :loadingLabel="
+              isLoading
+                ? loadingLabel || $t('loading')
+                : currentAction?.loadingLabel
+            "
+            block
+            @click="currentAction?.promise()"
+          >
+            <div
+              :class="{
+                'flex grow justify-between items-center':
+                  currentAction?.isSignAction,
+              }"
+            >
+              <img v-if="currentAction?.isSignAction" :src="signature" />
+              {{ currentAction?.label }}
+              <div v-if="currentAction?.isSignAction" class="w-8"></div>
+            </div>
+          </BalBtn>
+        </BalStack>
+      </div>
     </AnimatePresence>
   </div>
 </template>

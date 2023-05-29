@@ -172,6 +172,7 @@ function toggleModal(): void {
         :disableInjection="disableInjection"
         :hideTokenLists="hideTokenLists"
         :ignoreBalances="ignoreBalances"
+        :isSwapView="true"
         @close="openTokenModal = false"
         @select="emit('update:modelValue', $event)"
       />

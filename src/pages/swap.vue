@@ -67,7 +67,7 @@ onMounted(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 16vh;
+  margin-top: 5vh;
 
   /* width: 660px; */
 
@@ -96,5 +96,6 @@ onMounted(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  transform: scale(0.8);
 }
 </style>

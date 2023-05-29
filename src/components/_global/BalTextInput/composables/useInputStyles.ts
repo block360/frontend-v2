@@ -14,7 +14,7 @@ export default function useInputStyles(
       case 'lg':
         return 'p-3';
       default:
-        return 'p-0';
+        return 'p-2';
     }
   };
 

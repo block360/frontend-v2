@@ -19,6 +19,7 @@ interface Props {
   disableInjection?: boolean;
   hideTokenLists?: boolean;
   ignoreBalances?: boolean;
+  isSwapView?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
   disableInjection: false,
   hideTokenLists: false,
   ignoreBalances: false,
+  isSwapView: false,
 });
 
 const emit = defineEmits(['close', 'selectTokenlist', 'select']);
@@ -183,10 +185,11 @@ watchEffect(() => {
     show
     noContentPad
     bgImage="linear-gradient(to right,rgb(211 157 235 / 60%),rgb(241 165 188 / 60%));"
+    :isSwapView="true"
     @close="$emit('close')"
   >
     <template #header>
-      <div class="flex justify-between items-center w-full">
+      <div v-if="isSwapView" class="flex justify-between items-center w-full">
         <div class="flex items-center">
           <BalBtn
             v-if="state.selectTokenList"
@@ -202,11 +205,50 @@ watchEffect(() => {
           <h5>{{ title }}</h5>
         </div>
         <!-- <div
+            v-if="!state.selectTokenList && !hideTokenLists"
+            class="group flex items-center mr-2 cursor-pointer"
+            @click="toggleSelectTokenList"
+          >
+            <span class="text-xs text-white">{{ $t('tokenLists') }}</span>
+            <div class="flex items-center ml-2">
+              <span class="mr-1">
+                <img
+                  v-for="(tokenlist, i) in activeTokenLists"
+                  :key="i"
+                  :src="resolve(tokenlist.logoURI || '')"
+                  class="inline-block w-6 h-6 bg-white rounded-full shadow"
+                />
+              </span>
+              <BalIcon
+                name="chevron-down"
+                size="sm"
+                class="ml-1 text-blue-500 group-hover:text-pink-500 group-focus:text-pink-500 dark:text-blue-400 transition-all duration-200 ease-out"
+              />
+            </div>
+          </div> -->
+      </div>
+
+      <div v-else class="flex justify-between items-center w-full">
+        <div class="flex items-center">
+          <BalBtn
+            v-if="state.selectTokenList"
+            color="gray"
+            size="xs"
+            class="mr-2"
+            flat
+            circle
+            @click="onListExit"
+          >
+            <BalIcon name="arrow-left" size="sm" />
+          </BalBtn>
+          <h5>{{ title }}</h5>
+        </div>
+        <div
           v-if="!state.selectTokenList && !hideTokenLists"
           class="group flex items-center mr-2 cursor-pointer"
           @click="toggleSelectTokenList"
         >
-          <span class="text-xs text-white">{{ $t('tokenLists') }}</span>
+          <span class="text-xs text-secondary">{{ $t('tokenLists') }}</span>
           <div class="flex items-center ml-2">
             <span class="mr-1">
               <img
@@ -222,97 +264,193 @@ watchEffect(() => {
               class="ml-1 text-blue-500 group-hover:text-pink-500 group-focus:text-pink-500 dark:text-blue-400 transition-all duration-200 ease-out"
             />
           </div>
-        </div> -->
+        </div>
       </div>
     </template>
     <template v-if="state.selectTokenList">
-      <div class="flex px-4 pt-2 pb-3 mr-2">
-        <BalTextInput
-          v-model="state.query"
-          name="tokenSearchInput"
-          :placeholder="$t('searchByName')"
-          size="sm"
-          class="w-full"
-          autoFocus
-          inputColor="transparent"
-        >
-          <template #prepend>
-            <div class="flex justify-center items-center w-8 h-full">
-              <BalIcon name="search" size="sm" class="mr-2 text-black-500" />
-            </div>
-          </template>
-        </BalTextInput>
-      </div>
-      <div>
-        <div
-          v-if="Object.keys(tokenLists).length > 0"
-          class="overflow-y-scroll list-height"
-        >
-          <TokenListsListItem
-            v-for="(tokenList, uri) in tokenLists"
-            :key="uri"
-            :isActive="isActiveList(uri.toString())"
-            :tokenlist="tokenList"
-            :uri="uri"
-            @toggle="onToggleList(uri.toString())"
+      <div v-if="isSwapView">
+        <div class="flex px-4 pt-2 pb-3 mr-2">
+          <BalTextInput
+            v-model="state.query"
+            name="tokenSearchInput"
+            :placeholder="$t('searchByName')"
+            size="sm"
+            class="w-full"
+            autoFocus
+            inputColor="transparent"
+            :isSwapView="true"
+          >
+            <template #prepend>
+              <div class="flex justify-center items-center w-8 h-full">
+                <BalIcon name="search" size="sm" class="mr-2 text-black-500" />
+              </div>
+            </template>
+          </BalTextInput>
+        </div>
+        <div>
+          <div
+            v-if="Object.keys(tokenLists).length > 0"
+            class="overflow-y-scroll list-height"
+          >
+            <TokenListsListItem
+              v-for="(tokenList, uri) in tokenLists"
+              :key="uri"
+              :isActive="isActiveList(uri.toString())"
+              :tokenlist="tokenList"
+              :uri="uri"
+              @toggle="onToggleList(uri.toString())"
+            />
+          </div>
+          <div
+            v-else
+            class="flex justify-center items-center h-96"
+            v-text="$t('errorNoLists')"
           />
         </div>
-        <div
-          v-else
-          class="flex justify-center items-center h-96"
-          v-text="$t('errorNoLists')"
-        />
+      </div>
+
+      <div v-else>
+        <div class="flex px-4 pt-2 pb-3 mr-2">
+          <BalTextInput
+            v-model="state.query"
+            name="tokenSearchInput"
+            :placeholder="$t('searchByName')"
+            size="sm"
+            class="w-full"
+            autoFocus
+          >
+            <template #prepend>
+              <div class="flex justify-center items-center w-8 h-full">
+                <BalIcon name="search" size="sm" class="mr-2 text-gray-500" />
+              </div>
+            </template>
+          </BalTextInput>
+        </div>
+        <div>
+          <div
+            v-if="Object.keys(tokenLists).length > 0"
+            class="overflow-y-scroll list-height"
+          >
+            <TokenListsListItem
+              v-for="(tokenList, uri) in tokenLists"
+              :key="uri"
+              :isActive="isActiveList(uri.toString())"
+              :tokenlist="tokenList"
+              :uri="uri"
+              @toggle="onToggleList(uri.toString())"
+            />
+          </div>
+          <div
+            v-else
+            class="flex justify-center items-center h-96"
+            v-text="$t('errorNoLists')"
+          />
+        </div>
       </div>
     </template>
     <template v-else>
-      <div class="flex px-4 pt-2 pb-3 mr-2">
-        <BalTextInput
-          v-model="state.query"
-          name="tokenSearchInput"
-          :placeholder="$t('searchBy')"
-          size="sm"
-          class="w-full"
-          autoFocus
-          inputColor="transparent"
-        >
-          <template #prepend>
-            <div class="flex justify-center items-center w-8 h-full">
-              <BalIcon name="search" size="sm" class="mr-2 text-gray-500" />
-            </div>
-          </template>
-        </BalTextInput>
-      </div>
-      <div class="overflow-hidden">
-        <RecycleScroller
-          v-if="tokens.length > 0"
-          v-slot="{ item: token, index }"
-          class="overflow-y-scroll list-height"
-          :items="tokens"
-          :itemSize="70"
-          keyField="address"
-          :buffer="100"
-        >
-          <a @click="onSelectToken(token.address)">
-            <TokenListItem
-              :token="token"
-              :hideBalance="ignoreBalances"
-              :balanceLoading="dynamicDataLoading"
-              :focussed="index == state.focussedToken"
-              tabIndex="0"
-            />
-          </a>
-        </RecycleScroller>
-        <div
-          v-else-if="state.loading"
-          class="flex justify-center items-center h-96"
-        >
-          <BalLoadingIcon />
+      <div v-if="isSwapView">
+        <div class="flex px-4 pt-2 pb-3 mr-2">
+          <BalTextInput
+            v-model="state.query"
+            name="tokenSearchInput"
+            :placeholder="$t('searchBy')"
+            size="sm"
+            class="w-full"
+            autoFocus
+            inputColor="transparent"
+            :isSwapView="true"
+          >
+            <template #prepend>
+              <div class="flex justify-center items-center w-8 h-full">
+                <BalIcon name="search" size="sm" class="mr-2 text-gray-500" />
+              </div>
+            </template>
+          </BalTextInput>
         </div>
-        <div
-          v-else
-          class="p-12 h-96 text-center text-secondary"
-          v-text="$t('errorNoTokens')"
-        />
+        <div class="overflow-hidden">
+          <RecycleScroller
+            v-if="tokens.length > 0"
+            v-slot="{ item: token, index }"
+            class="overflow-y-scroll list-height"
+            :items="tokens"
+            :itemSize="70"
+            keyField="address"
+            :buffer="100"
+          >
+            <a @click="onSelectToken(token.address)">
+              <TokenListItem
+                :token="token"
+                :hideBalance="ignoreBalances"
+                :balanceLoading="dynamicDataLoading"
+                :focussed="index == state.focussedToken"
+                tabIndex="0"
+              />
+            </a>
+          </RecycleScroller>
+          <div
+            v-else-if="state.loading"
+            class="flex justify-center items-center h-96"
+          >
+            <BalLoadingIcon />
+          </div>
+          <div
+            v-else
+            class="p-12 h-96 text-center text-secondary"
+            v-text="$t('errorNoTokens')"
+          />
+        </div>
+      </div>
+
+      <div v-else>
+        <div class="flex px-4 pt-2 pb-3 mr-2">
+          <BalTextInput
+            v-model="state.query"
+            name="tokenSearchInput"
+            :placeholder="$t('searchBy')"
+            size="sm"
+            class="w-full"
+            autoFocus
+          >
+            <template #prepend>
+              <div class="flex justify-center items-center w-8 h-full">
+                <BalIcon name="search" size="sm" class="mr-2 text-gray-500" />
+              </div>
+            </template>
+          </BalTextInput>
+        </div>
+        <div class="overflow-hidden">
+          <RecycleScroller
+            v-if="tokens.length > 0"
+            v-slot="{ item: token, index }"
+            class="overflow-y-scroll list-height"
+            :items="tokens"
+            :itemSize="70"
+            keyField="address"
+            :buffer="100"
+          >
+            <a @click="onSelectToken(token.address)">
+              <TokenListItem
+                :token="token"
+                :hideBalance="ignoreBalances"
+                :balanceLoading="dynamicDataLoading"
+                :focussed="index == state.focussedToken"
+                tabIndex="0"
+              />
+            </a>
+          </RecycleScroller>
+          <div
+            v-else-if="state.loading"
+            class="flex justify-center items-center h-96"
+          >
+            <BalLoadingIcon />
+          </div>
+          <div
+            v-else
+            class="p-12 h-96 text-center text-secondary"
+            v-text="$t('errorNoTokens')"
+          />
+        </div>
       </div>
     </template>
   </BalModal>
