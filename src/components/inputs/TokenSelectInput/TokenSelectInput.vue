@@ -17,6 +17,7 @@ export type TokenSelectProps = {
   options?: string[];
   subsetTokens?: string[];
   ignoreBalances?: boolean;
+  isSwapView?: boolean;
 };
 
 /**
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<TokenSelectProps>(), {
   excludedTokens: () => [],
   subsetTokens: () => [],
   options: () => [],
+  isSwapView: false,
 });
 
 const emit = defineEmits<{
@@ -69,7 +71,7 @@ function toggleModal(): void {
 </script>
 
 <template>
-  <div style="background-color: transparent">
+  <div v-if="isSwapView" style="background-color: transparent">
     <div
       v-if="hasToken && options.length === 0"
       :class="['token-select-input selected group', { selectable: !fixed }]"
@@ -95,6 +97,109 @@ function toggleModal(): void {
         size="sm"
         class="ml-2 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-yellow-500 transition-colors text-black-800"
         style="color: white"
+      />
+    </div>
+    <BalDropdown
+      v-else-if="hasToken && fixed && options.length > 0"
+      :options="options"
+      minWidth="40"
+      @selected="emit('update:modelValue', $event)"
+    >
+      <template #activator>
+        <div class="group token-select-input selected selectable">
+          <div class="w-8">
+            <BalAsset :address="token?.address" class="shadow" />
+          </div>
+          <span class="text-base font-medium">
+            {{ token?.symbol }}
+          </span>
+          <span v-if="Number(weight) > 0" class="ml-2 text-secondary">
+            {{
+              fNum(weight, {
+                style: 'percent',
+                maximumFractionDigits: 0,
+              })
+            }}
+          </span>
+          <BalIcon
+            name="chevron-down"
+            size="sm"
+            class="ml-2 text-blue-500 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-purple-400 transition-colors"
+          />
+        </div>
+      </template>
+      <template #option="{ option: address }">
+        <div
+          :set="(optionTokens[address] = getToken(address) || {})"
+          class="flex justify-between items-center"
+        >
+          <div class="flex items-center">
+            <BalAsset
+              :address="optionTokens[address]?.address"
+              class="shadow"
+            />
+            <span class="ml-1 font-medium">
+              {{ optionTokens[address]?.symbol }}
+            </span>
+          </div>
+          <BalIcon
+            v-if="isSameAddress(optionTokens[address].address, modelValue)"
+            name="check"
+            class="ml-4 text-blue-500 dark:text-blue-400"
+          />
+        </div>
+      </template>
+    </BalDropdown>
+
+    <div
+      v-else
+      class="token-select-input unselected selectable"
+      @click="toggleModal"
+    >
+      {{ $t('selectToken') }}
+      <BalIcon name="chevron-down" size="sm" class="ml-2" />
+    </div>
+
+    <teleport to="#modal">
+      <SelectTokenModal
+        v-if="openTokenModal"
+        :excludedTokens="[...excludedTokens, modelValue]"
+        :subset="subsetTokens"
+        :includeEther="true"
+        :disableInjection="disableInjection"
+        :hideTokenLists="hideTokenLists"
+        :ignoreBalances="ignoreBalances"
+        @close="openTokenModal = false"
+        @select="emit('update:modelValue', $event)"
+      />
+    </teleport>
+  </div>
+
+  <div v-else>
+    <div
+      v-if="hasToken && options.length === 0"
+      :class="['token-select-input selected group', { selectable: !fixed }]"
+      @click="toggleModal"
+    >
+      <div class="w-8">
+        <BalAsset :address="token?.address" class="shadow" />
+      </div>
+      <span class="text-base font-medium">
+        {{ token?.symbol }}
+      </span>
+      <span v-if="Number(weight) > 0" class="ml-2 text-secondary">
+        {{
+          fNum(weight, {
+            style: 'percent',
+            maximumFractionDigits: 0,
+          })
+        }}
+      </span>
+      <BalIcon
+        v-if="!fixed"
+        name="chevron-down"
+        size="sm"
+        class="ml-2 text-blue-600 group-hover:text-purple-500 dark:text-blue-400 dark:group-hover:text-yellow-500 transition-colors"
       />
     </div>
     <BalDropdown
