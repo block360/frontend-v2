@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 import WalletButton from '@/components/web3/WalletButton.vue';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import { SupportedWallets } from '@/providers/wallet.provider';
-import LS_KEYS from '@/constants/local-storage.keys';
+// import LS_KEYS from '@/constants/local-storage.keys';
 import { useWalletHelpers } from '@/composables/useWalletHelpers';
 import { useUserAgent } from '@/composables/useUserAgent';
 
@@ -13,7 +13,7 @@ interface Props {
   onShowThirdParty: () => void;
 }
 
-type AcceptedLocalStorageItemType = '0' | '1' | null;
+// type AcceptedLocalStorageItemType = '0' | '1' | null;
 
 const props = withDefaults(defineProps<Props>(), {
   isVisible: false,
@@ -38,13 +38,13 @@ const wallets = SupportedWallets.filter(id => {
   return id !== 'safe';
 });
 
-const acceptedlocalStorageItem = localStorage.getItem(
-  LS_KEYS.App.TermsAccepted
-) as AcceptedLocalStorageItemType;
+// const acceptedlocalStorageItem = localStorage.getItem(
+//   LS_KEYS.App.TermsAccepted
+// ) as AcceptedLocalStorageItemType;
 
-const accepted = ref<'0' | '1'>(acceptedlocalStorageItem || '0');
+// const accepted = ref<'0' | '1'>(acceptedlocalStorageItem || '0');
 
-const isBalRulesAccepted = computed(() => accepted.value === '1');
+const isBalRulesAccepted = computed(() => '1');
 
 // function onBalRulesAccepted() {
 //   accepted.value = isBalRulesAccepted.value ? '0' : '1';
