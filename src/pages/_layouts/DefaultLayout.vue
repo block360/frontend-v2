@@ -7,7 +7,7 @@ import AppNav from '@/components/navs/AppNav/AppNav.vue';
   <div>
     <div class="app-body">
       <AppNav />
-      <div class="pb-16">
+      <div class="pb-5">
         <router-view v-slot="{ Component }" :key="$route.path">
           <transition appear name="appear">
             <component :is="Component" />
