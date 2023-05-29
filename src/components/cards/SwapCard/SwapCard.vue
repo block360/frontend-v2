@@ -512,7 +512,7 @@ export default defineComponent({
 
   /* padding: 17.6px 17.6px 24px 24px; */
   border-radius: 18px;
-  height: 440px;
+  min-height: 440px;
   max-width: 360px;
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
   background-image: linear-gradient(
@@ -587,8 +587,6 @@ export default defineComponent({
   -ms-box-orient: horizontal;
   -ms-box-pack: center;
   flex-flow: row wrap;
-  flex-flow: row wrap;
-  justify-content: center;
   justify-content: center;
 }
 
@@ -598,7 +596,6 @@ export default defineComponent({
   display: block;
   margin: 0;
   text-align: center;
-  flex: 1;
   flex: 1;
   backface-visibility: hidden;
 }

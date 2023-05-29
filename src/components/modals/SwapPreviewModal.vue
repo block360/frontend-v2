@@ -741,6 +741,7 @@ watch(blockNumber, () => {
         :actions="actions"
         :disabled="disableSubmitButton || showPriceUpdateError"
         class="swap-button"
+        :isSwapView="true"
       />
       <BalAlert
         v-if="swapping.submissionError.value != null"

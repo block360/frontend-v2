@@ -52,7 +52,7 @@ function support() {
 </script>
 
 <template>
-  <BalModal show @close="onClose">
+  <BalModal show :isSwapView="true" @close="onClose">
     <div>
       <!-- Modal -->
       <div

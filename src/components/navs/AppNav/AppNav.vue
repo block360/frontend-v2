@@ -84,6 +84,7 @@ onUnmounted(() => {
   background: transparent;
   padding: 14px 16px 8px;
   height: 82px;
+  transform: scale(0.8);
 
   /* margin-top: 40px; */
 

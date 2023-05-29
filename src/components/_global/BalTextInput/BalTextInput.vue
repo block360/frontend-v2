@@ -126,6 +126,7 @@ onMounted(() => {
   >
     <div
       :class="['input-container', inputContainerClasses, borderRadiusClasses]"
+      :style="isSwapView ? `padding:0px` : ``"
       @mouseover="onMouseOver"
       @mouseleave="onMouseLeave"
     >

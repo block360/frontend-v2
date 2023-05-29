@@ -57,6 +57,7 @@ const isBalRulesAccepted = computed(() => '1');
     :show="props.isVisible"
     title="Connect to a wallet"
     bgColor="red"
+    :isSwapView="true"
     @close="emit('close')"
   >
     <!-- <BalRadio
