@@ -74,7 +74,10 @@ function toggleModal(): void {
   <div v-if="isSwapView" style="background-color: transparent">
     <div
       v-if="hasToken && options.length === 0"
-      :class="['token-select-input selected group', { selectable: !fixed }]"
+      :class="[
+        'token-select-input-swap selected-swap group',
+        { selectable: !fixed },
+      ]"
       @click="toggleModal"
     >
       <div class="w-8">
@@ -106,7 +109,7 @@ function toggleModal(): void {
       @selected="emit('update:modelValue', $event)"
     >
       <template #activator>
-        <div class="group token-select-input selected selectable">
+        <div class="group token-select-input-swap selected-swap selectable">
           <div class="w-8">
             <BalAsset :address="token?.address" class="shadow" />
           </div>
@@ -285,6 +288,13 @@ function toggleModal(): void {
   @apply text-sm;
 
   font-variation-settings: 'wght' 700;
+}
+
+.token-select-input-swap {
+  @apply shadow rounded-lg flex items-center h-10 px-2 whitespace-nowrap;
+  @apply text-sm;
+
+  font-variation-settings: 'wght' 700;
   border-radius: 40px;
   border: 1px solid red;
 }
@@ -298,6 +308,10 @@ function toggleModal(): void {
 }
 
 .selected {
+  @apply bg-gray-50 dark:bg-gray-700 text-black dark:text-white;
+}
+
+.selected-swap {
   @apply bg-gray-50 dark:bg-gray-700 text-black dark:text-white;
 
   background-color: transparent;
