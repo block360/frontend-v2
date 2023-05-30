@@ -1,5 +1,5 @@
 <template>
-  <div :class="['bal-card', cardClasses]">
+  <div v-if="isSwapView" :class="['bal-card-swap', cardClasses]">
     <div
       :class="[
         'card-container',
@@ -12,6 +12,33 @@
         :class="['header', headerClasses]"
         style="align-self: center"
       >
+        <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -- Not sure if this is fine -->
+        <component :is="titleTag" v-if="!!title" v-text="title" />
+        <div
+          v-if="$slots.header"
+          :class="['header-content', headerContentClasses]"
+        >
+          <slot name="header" />
+        </div>
+      </div>
+      <div :class="['content', contentClasses]">
+        <slot />
+      </div>
+      <div v-if="$slots.footer" :class="['footer', footerClasses]">
+        <slot name="footer" />
+      </div>
+    </div>
+  </div>
+
+  <div :class="['bal-card', cardClasses]">
+    <div
+      :class="[
+        'card-container',
+        { 'overflow-y-scroll max-h-screen': overflowYScroll },
+      ]"
+    >
+      <div v-if="imgSrc" class="feature" :style="featureStyles" />
+      <div v-if="!!title || $slots.header" :class="['header', headerClasses]">
         <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -- Not sure if this is fine -->
         <component :is="titleTag" v-if="!!title" v-text="title" />
         <div
@@ -66,6 +93,7 @@ export default defineComponent({
         ].includes(val);
       },
     },
+    isSwapView: { type: Boolean, default: false },
   },
 
   setup(props) {
@@ -128,6 +156,10 @@ export default defineComponent({
 
 <style scoped>
 .bal-card {
+  @apply flex flex-col;
+}
+
+.bal-card-swap {
   @apply flex flex-col;
 
   border-style: none;

@@ -7,7 +7,7 @@ import TokenListItem from '@/components/lists/TokenListItem.vue';
 import TokenListsListItem from '@/components/lists/TokenListsListItem.vue';
 import { useTokenLists } from '@/providers/token-lists.provider';
 import { useTokens } from '@/providers/tokens.provider';
-// import useUrls from '@/composables/useUrls';
+import useUrls from '@/composables/useUrls';
 import { TokenInfoMap, TokenList } from '@/types/TokenList';
 import { useMagicKeys } from '@vueuse/core';
 
@@ -57,7 +57,8 @@ const state: ComponentState = reactive({
 /**
  * COMPOSABLES
  */
-const { approvedTokenLists, toggleTokenList, isActiveList } = useTokenLists();
+const { activeTokenLists, approvedTokenLists, toggleTokenList, isActiveList } =
+  useTokenLists();
 const {
   getToken,
   searchTokens,
@@ -68,7 +69,7 @@ const {
   injectTokens,
 } = useTokens();
 const { t } = useI18n();
-// const { resolve } = useUrls();
+const { resolve } = useUrls();
 
 /**
  * COMPUTED
@@ -84,6 +85,7 @@ const tokenLists = computed<Record<string, TokenList>>(() => {
   const results = tokenListArray.filter(([, tokenList]) =>
     tokenList.name.toLowerCase().includes(query)
   );
+
   return Object.fromEntries(results);
 });
 
@@ -141,10 +143,10 @@ function onListExit(): void {
   state.query = '';
 }
 
-// function toggleSelectTokenList(): void {
-//   state.selectTokenList = !state.selectTokenList;
-//   state.query = '';
-// }
+function toggleSelectTokenList(): void {
+  state.selectTokenList = !state.selectTokenList;
+  state.query = '';
+}
 
 /**
  * WATCHERS
@@ -166,6 +168,8 @@ watch(
 
 const { ArrowDown, ArrowUp, Enter, Tab } = useMagicKeys();
 watchEffect(() => {
+  console.log(tokenLists, 'tokenLists');
+
   if (
     ArrowDown.value &&
     state.focussedToken < Object.keys(state.results).length
