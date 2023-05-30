@@ -281,7 +281,7 @@ watch(_address, async (newAddress, oldAddress) => {
           :options="options"
           class="mr-2"
           :excludedTokens="excludedTokens"
-          :isSwapView="true"
+          :isSwapView="isSwapView"
           @update:model-value="emit('update:address', $event)"
         />
       </slot>

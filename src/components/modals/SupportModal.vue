@@ -89,7 +89,7 @@ function support() {
             <div class="mt-8 mb-8 text-center">
               <strong
                 class="text-black"
-                style="font-size: 30px; font-weight: 100"
+                style="font-size: 30px; font-weight: 100; margin-left: 25px"
                 >{{ t('Support') }}</strong
               >
             </div>

@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div :class="['bal-card', cardClasses]">
+  <div v-else :class="['bal-card', cardClasses]">
     <div
       :class="[
         'card-container',

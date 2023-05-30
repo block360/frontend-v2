@@ -107,7 +107,7 @@ const poolApr = computed(() => aprQuery.data.value);
 
 //#region Intersection Observer
 const intersectionSentinel = ref<HTMLDivElement | null>(null);
-const isSentinelIntersected = ref(false);
+const isSentinelIntersected = ref(true);
 let observer: IntersectionObserver | undefined;
 
 function addIntersectionObserver(): void {

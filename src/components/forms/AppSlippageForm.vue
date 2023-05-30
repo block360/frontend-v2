@@ -93,7 +93,7 @@ watch(() => state.customSlippage, onCustomInput, { immediate: true });
     <div :class="['custom-input', customInputClasses]">
       <input
         v-model="state.customSlippage"
-        class="w-12 text-right text-white bg-transparent"
+        class="w-12 text-right text-black bg-transparent"
         placeholder="0.1"
         type="number"
         step="any"
