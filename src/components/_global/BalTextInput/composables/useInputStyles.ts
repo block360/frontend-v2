@@ -66,7 +66,7 @@ export default function useInputStyles(
   }));
 
   const inputContainerClasses = computed(() => ({
-    'bg-transparent dark:bg-gray-800': !props.disabled,
+    'bg-white dark:bg-gray-800': !props.disabled,
     'bg-gray-100 dark:bg-gray-800': props.disabled,
     [extPaddingClass()]: true,
     border: !props.noBorder,

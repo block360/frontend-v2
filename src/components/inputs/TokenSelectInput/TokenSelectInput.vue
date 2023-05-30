@@ -68,6 +68,10 @@ const token = computed((): TokenInfo | null => {
 function toggleModal(): void {
   if (!props.fixed) openTokenModal.value = !openTokenModal.value;
 }
+
+watch(props, () => {
+  console.log(token, 'tokenselectinput');
+});
 </script>
 
 <template>

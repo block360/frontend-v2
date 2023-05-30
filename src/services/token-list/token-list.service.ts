@@ -40,6 +40,15 @@ export default class TokenListService {
     const All = [...balancerLists, ...External];
     const Approved = [Balancer.Default, ...External];
 
+    console.log(
+      balancerLists,
+      'balancerLists',
+      All,
+      'ALL',
+      Approved,
+      'Approved'
+    );
+
     return {
       All,
       Balancer: {
