@@ -52,7 +52,7 @@ function onClose() {
           class="mt-5 text-center text-black"
           style="font-size: 30px; font-weight: 100"
           >{{ t('Add') }} GSU {{ t('TokenTo') }} <br />
-          {{ t('YourWallet') }}</strong
+          {{ t('Your Wallet') }}</strong
         >
         <!-- <div class="text-center" style="align-self: center;"> -->
         <div class="mt-12 mb-12">

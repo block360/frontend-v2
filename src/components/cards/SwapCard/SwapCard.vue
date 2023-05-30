@@ -12,7 +12,7 @@
         </ul>
       </nav>
     </div>
-    <BalCard class="card-container">
+    <BalCard class="card-container" :isSwapView="true">
       <!-- <template #header>
       <div class="flex justify-between items-center w-full">
         <h4></h4>
@@ -279,22 +279,6 @@ export default defineComponent({
         swapping.cowswap.hasValidationError.value;
       const hasBalancerErrors =
         swapping.isBalancerSwap.value && isHighPriceImpact.value;
-
-      console.log(
-        hasMismatchedNetwork,
-        'hasMismatchedNetwork',
-        hasAmountsError,
-        'hasAmountsError',
-        hasCowswapErrors,
-        'hasCowswapErrors',
-        hasBalancerErrors,
-        'hasBalancerErrors'
-      );
-      console.log(
-        swapping.isBalancerSwap.value,
-        isHighPriceImpact.value,
-        'hasBalancerErrors'
-      );
 
       return (
         hasAmountsError ||

@@ -47,7 +47,7 @@ function onClose() {
               </div>
               <strong
                 class="text-black"
-                style="font-size: 30px; font-weight: 100"
+                style="font-size: 30px; font-weight: 100; margin-left: 25px"
                 >{{ t('FAQ') }}</strong
               >
               <!-- <small class="mb-3 d-block text-black">

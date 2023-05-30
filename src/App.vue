@@ -112,6 +112,9 @@ watch(route, newRoute => {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative;
+  background-attachment: fixed;
+
+  /* position: relative; */
+  min-height: 100vh;
 }
 </style>

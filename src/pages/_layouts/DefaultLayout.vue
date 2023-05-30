@@ -7,7 +7,7 @@ import AppNav from '@/components/navs/AppNav/AppNav.vue';
   <div>
     <div class="app-body">
       <AppNav />
-      <div class="pb-5">
+      <div class="pb-16">
         <router-view v-slot="{ Component }" :key="$route.path">
           <transition appear name="appear">
             <component :is="Component" />
@@ -27,6 +27,6 @@ import AppNav from '@/components/navs/AppNav/AppNav.vue';
 .app-body {
   /* @apply mb-8; */
 
-  min-height: calc(100vh);
+  min-height: calc(100vh - 2rem);
 }
 </style>
