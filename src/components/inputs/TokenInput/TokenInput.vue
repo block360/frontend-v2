@@ -87,14 +87,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  (e: 'blur', value: string): void;
+  // (e: 'blur', value: string): void;
   (e: 'input', value: string): void;
   (e: 'update:amount', value: string): void;
   (e: 'update:address', value: string): void;
   (e: 'update:slider', value: number): void;
   (e: 'update:isValid', value: boolean): void;
   (e: 'keydown', value: KeyboardEvent);
-  (e: 'focus', value: Event);
+  // (e: 'focus', value: Event);
   (e: 'setMax', value: string);
 }>();
 
@@ -264,8 +264,6 @@ watch(_address, async (newAddress, oldAddress) => {
     :noBorder="true"
     :inputColor="inputColor"
     :isSwapView="true"
-    @blur="emit('blur', $event)"
-    @focus="emit('focus', $event)"
     @input="emit('input', $event)"
     @update:model-value="handleAmountChange($event)"
     @update:is-valid="emit('update:isValid', $event)"
@@ -298,7 +296,7 @@ watch(_address, async (newAddress, oldAddress) => {
             {{ balanceLabel ? balanceLabel : $t('balance') }}:
 
             <BalLoadingBlock v-if="balanceLoading" class="mx-2 w-12 h-4" />
-            <span v-else class="balance">
+            <span v-else class="balance" style="margin-bottom: 3px">
               {{
                 !isWalletReady || disableBalance
                   ? '0'
@@ -405,19 +403,21 @@ watch(_address, async (newAddress, oldAddress) => {
 
 <style scoped>
 .balance {
-  color: red;
+  color: white;
   background-color: transparent;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 500;
   border: none;
   align-items: end;
+  background-image: none;
 }
 
 .text-input-label {
-  color: red;
+  color: white;
   background-color: transparent;
   font-size: 14px;
-  font-weight: 700;
+
+  /* font-weight: 700; */
   text-align: center;
 }
 

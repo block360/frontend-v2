@@ -5,8 +5,8 @@ const tokens: TokenConstants = {
     Symbols: ['WBTC', 'DAI', 'USDC', 'BAL', 'AAVE', 'WETH'],
   },
   InitialSwapTokens: {
-    input: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    output: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    input: '0x6CA37D0874D8540e6BA91d15267B880A572351B1',
+    output: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
   },
   Addresses: {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',

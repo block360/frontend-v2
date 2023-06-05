@@ -23,9 +23,10 @@ function onClose() {
       style="
         background-image: linear-gradient(
           to right,
-          rgb(211 157 235 / 60%),
-          rgb(241 165 188 / 60%)
+          rgb(153 73 255),
+          rgb(233 74 116)
         );
+        opacity: 0.75;
         padding: 10px;
         border-radius: 20px;
         width: fit-content;
@@ -42,16 +43,16 @@ function onClose() {
         <div :onclick="onClose" style="cursor: pointer; align-self: flex-end">
           <span
             class="float-right material-icons close text-red"
-            style="color: red; font-size: 30px"
+            style="color: white; font-size: 30px"
             data-dismiss="modal"
             aria-label="Close"
             >close</span
           >
         </div>
         <strong
-          class="mt-5 text-center text-black"
-          style="font-size: 30px; font-weight: 100"
-          >{{ t('Add') }} GSU {{ t('TokenTo') }} <br />
+          class="mt-5 text-center text-white"
+          style="font-size: 30px; font-weight: 100; line-height: 35px"
+          >{{ t('Add') }} GSU {{ t('Token To') }} <br />
           {{ t('Your Wallet') }}</strong
         >
         <!-- <div class="text-center" style="align-self: center;"> -->
@@ -68,11 +69,12 @@ function onClose() {
         <address
           class="mb-12"
           style="
-            border: 1px solid red;
+            /* border: 1px solid red; */
+            background-image: linear-gradient(to right, #7124d4, #d62050);
             border-radius: 20px;
             padding: 10px;
             font-size: 15px;
-            color: black;
+            color: white;
           "
         >
           {{ appNetworkConfig.chainId === 1 ? addressMainnet : addressGoerli }}

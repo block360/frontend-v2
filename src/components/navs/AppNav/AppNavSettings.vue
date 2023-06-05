@@ -70,7 +70,7 @@ function copyAddress() {
 </script>
 
 <template  style="border-radius: 20px;">
-  <div class="content" style="border-radius: 20px">
+  <div class="content main">
     <div class="p-4 border-b dark:border-gray-900">
       <div class="flex justify-between items-center mb-6">
         <h5 class="tracking-tight leading-none" v-text="$t('account')" />
@@ -110,7 +110,7 @@ function copyAddress() {
           </div>
           <div class="ml-2">
             <div class="flex items-baseline address">
-              <div class="font-bold text-black" v-text="shorten(account)" />
+              <div class="font-bold text-white" v-text="shorten(account)" />
               <div class="flex ml-3">
                 <BalTooltip width="auto">
                   <template #activator>
@@ -183,7 +183,7 @@ function copyAddress() {
           <div v-html="$t('marketConditionsWarning')" />
         </BalTooltip>
       </div>
-      <AppSlippageForm class="mt-0" />
+      <AppSlippageForm class="mt-0" bgColor="white" />
     </div>
     <div v-if="isEIP1559SupportedNetwork" class="px-4 mt-6">
       <div class="flex items-baseline">
@@ -230,18 +230,28 @@ function copyAddress() {
 </template>
 
 <style scoped>
+.main {
+  background-image: linear-gradient(
+    to right,
+    rgb(113 36 212 / 75%),
+    rgb(214 32 80 / 75%)
+  );
+
+  /* opacity: 80%; */
+}
+
 .address {
-  @apply text-blue-500;
+  @apply text-white;
 
   font-variant-ligatures: no-contextual;
 }
 
 .option:hover {
-  @apply text-blue-500 border-blue-500;
+  @apply text-white border-blue-500;
 }
 
 .option.active {
-  @apply text-blue-500 border-blue-500;
+  @apply text-white border-blue-500;
 }
 
 .slippage-input {
@@ -249,12 +259,14 @@ function copyAddress() {
 }
 
 .slippage-input.active {
-  @apply text-blue-500 border-blue-500 border-2 ring;
+  @apply text-white border-blue-500 border-2 ring;
 }
 
 .content {
-  background-color: rgb(255 255 255 / 80%);
-  color: black;
+  /* background-color: rgb(255 255 255 / 80%); */
+
+  /* color: black; */
+  color: white;
 
   /* border: 1px solid black; */
 

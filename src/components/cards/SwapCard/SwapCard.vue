@@ -38,7 +38,7 @@
         />
         <BalAlert
           v-if="error"
-          class="p-3 mb-4"
+          class="p-3 mb-4 text-white"
           type="error"
           size="sm"
           :title="error.header"
@@ -49,7 +49,7 @@
         />
         <BalAlert
           v-else-if="warning"
-          class="p-3 mb-4"
+          class="p-3 mb-4 text-white"
           type="warning"
           size="sm"
           :title="warning.header"
@@ -76,9 +76,16 @@
           class="swap-button"
           @click.prevent="handlePreviewButton"
         />
-        <hr class="divider" />
+        <!-- <hr class="divider" /> -->
 
-        <div style="font-size: 14px; font-weight: 900">
+        <div
+          style="
+            font-size: 14px;
+            font-weight: 900;
+            color: white;
+            margin-top: 15px;
+          "
+        >
           {{
             appNetworkConfig?.chainId === 1
               ? 'Swap fee  0.001 ETH'
@@ -501,10 +508,13 @@ export default defineComponent({
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
   background-image: linear-gradient(
     to right,
-    rgb(211 157 235 / 60%),
-    rgb(241 165 188 / 60%)
+    rgb(153 73 255 / 90%),
+    rgb(233 74 116 / 90%)
   );
-  background-color: transparent;
+
+  /* opacity: 75%; */
+
+  /* background-color: transparent; */
 
   /* min-height: 366px */
 
@@ -531,7 +541,9 @@ export default defineComponent({
   color: #fff;
 
   /* border: 1px solid #133838; */
-  background-color: red;
+
+  /* background-color: red; */
+  background-image: linear-gradient(to right, #7124d4, #d62050);
   border-radius: 50px;
 
   /* margin-top: 25px; */
@@ -591,9 +603,9 @@ export default defineComponent({
 .tabs nav a {
   position: relative;
   display: block;
-  font-size: 18px;
-  font-weight: 900;
-  color: #133838;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
   padding: 15px 0 6px;
   outline: none;
   line-height: 1;
@@ -623,7 +635,9 @@ export default defineComponent({
 }
 
 .tabs nav ul li.tab-current a::after {
-  background-color: rgb(211 157 235 / 40%);
+  background-color: rgb(153 73 255 / 90%);
+
+  /* opacity: 75%; */
 
   /* background-color: rgb(255, 255, 255,0.5); */
 }

@@ -67,7 +67,7 @@ async function cancelOrder(orderId: string) {
     <template #activator>
       <BalBtn
         color="white"
-        :size="'sm'"
+        :size="'xs'"
         class="relative p-1 activity-card-content"
       >
         <ActivityIcon v-if="pendingTransactions.length === 0" />
@@ -123,6 +123,14 @@ async function cancelOrder(orderId: string) {
 <style>
 .activity-card {
   /* background-color: #133838; */
+  background-image: linear-gradient(
+    to right,
+    rgb(113 36 212 / 75%),
+    rgb(214 32 80 / 75%)
+  );
+
+  /* opacity: 90%; */
+  color: white;
 
   /* color: white; */
 
@@ -130,17 +138,23 @@ async function cancelOrder(orderId: string) {
   align-self: center;
   height: fit-content;
   margin-top: 2px;
+  border-radius: 6px;
 }
 
 .activity-card-content {
-  background-color: transparent;
+  /* background-color: transparent; */
   color: white;
   align-self: center;
-  height: fit-content;
+  background-image: linear-gradient(
+    to right,
+    rgb(113 36 212 / 75%),
+    rgb(214 32 80 / 75%)
+  );
 
   /* border-top-right-radius: 0px; */
-  border: 1px solid rgb(172 169 169);
-  border-radius: 0;
+
+  /* border: 1px solid rgb(172 169 169); */
+  border-radius: 6px;
   height: 27px;
 }
 

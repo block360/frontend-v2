@@ -149,12 +149,13 @@ onMounted(() => {
           v-bind="inputAttrs"
           :disabled="disabled"
           :class="['input', inputClasses, 'input-swap']"
-          :style="inputColor && `background-color: ${inputColor};color:black;`"
+          :style="
+            inputColor &&
+            `background-color: ${inputColor};color:black;border-radius:8px`
+          "
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
-          @click="onClick"
-          @focus="onFocus"
         />
         <div v-if="$slots.prepend" :class="['prepend', prependClasses]">
           <slot name="prepend" />
@@ -164,7 +165,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <div v-if="isInvalid && !!errors[0]" :class="['error']">
+      <div v-if="isInvalid && !!errors[0]" :class="['error-swap']">
         {{ errors[0] }}
       </div>
     </div>
@@ -195,6 +196,7 @@ onMounted(() => {
           v-bind="inputAttrs"
           :disabled="disabled"
           :class="['input', inputClasses]"
+          style="color: black"
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
@@ -242,5 +244,11 @@ onMounted(() => {
 
 .error {
   @apply text-xs text-red-500 mt-1 ml-1;
+}
+
+.error-swap {
+  @apply text-xs text-red-500 mt-1 ml-1;
+
+  color: white;
 }
 </style>

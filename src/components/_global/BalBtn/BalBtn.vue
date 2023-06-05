@@ -51,6 +51,7 @@ type Props = {
   loading?: boolean;
   loadingLabel?: string;
   disabled?: boolean;
+  bgColor?: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -66,6 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
   loadingLabel: 'loading...',
   disabled: false,
+  bgColor: '',
 });
 
 const sizeClasses = computed(() => {

@@ -60,7 +60,9 @@ const modalAddToken = ref(false);
         <a>{{ t('Support') }}</a>
       </div>
       <div class="dropdown-item">
-        <a>{{ t('Code') }}</a>
+        <a href="https://github.com/gsu-protocol/frontend-v2" target="_blank">{{
+          t('Code')
+        }}</a>
       </div>
       <div class="dropdown-item">
         <a>{{ t('Discords') }}</a>
@@ -85,7 +87,15 @@ const modalAddToken = ref(false);
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  background-color: rgb(255 255 255 / 90%);
+
+  /* background-color: rgb(255 255 255 / 90%); */
+  background-image: linear-gradient(
+    to right,
+    rgb(113 36 212 / 75%),
+    rgb(214 32 80 / 75%)
+  );
+
+  /* opacity: 80%; */
 
   /* left: 0; */
 
@@ -122,7 +132,7 @@ const modalAddToken = ref(false);
   font-weight: 800;
   padding: 5px 15px;
   line-height: 1;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -130,25 +140,31 @@ const modalAddToken = ref(false);
   display: block;
   font-size: 27px;
   line-height: 0.6;
-  padding: 7px 4px 10px 5px;
+  padding: 5px 2px 8px 3px;
   margin-top: 0;
 }
 
 .dropdown {
   font-size: 1px;
   line-height: 0.6;
-  padding: 7px 4px 0 5px;
+  padding: 5px 2px 0 3px;
   position: relative;
   right: 0;
   width: fit-content;
   margin-top: 0;
   margin-left: 6px;
-  color: red;
+  color: #7124d4;
 }
 
 .dropdown:hover {
-  color: red;
-  background-color: rgb(255 255 255 / 80%);
+  color: white;
+
+  /* background-color: rgb(255 255 255 / 80%); */
+  background-image: linear-gradient(
+    to right,
+    rgb(113 36 212 / 75%),
+    rgb(214 32 80 / 75%)
+  );
 
   /* opacity: 0.3; */
 
@@ -176,7 +192,7 @@ const modalAddToken = ref(false);
 
 .dropdown-item:hover,
 .dropdown-item.active {
-  color: red;
+  color: black;
   background-color: transparent;
 }
 

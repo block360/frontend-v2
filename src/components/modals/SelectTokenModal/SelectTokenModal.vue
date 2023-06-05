@@ -7,7 +7,7 @@ import TokenListItem from '@/components/lists/TokenListItem.vue';
 import TokenListsListItem from '@/components/lists/TokenListsListItem.vue';
 import { useTokenLists } from '@/providers/token-lists.provider';
 import { useTokens } from '@/providers/tokens.provider';
-import useUrls from '@/composables/useUrls';
+// import useUrls from '@/composables/useUrls';
 import { TokenInfoMap, TokenList } from '@/types/TokenList';
 import { useMagicKeys } from '@vueuse/core';
 
@@ -57,8 +57,7 @@ const state: ComponentState = reactive({
 /**
  * COMPOSABLES
  */
-const { activeTokenLists, approvedTokenLists, toggleTokenList, isActiveList } =
-  useTokenLists();
+const { approvedTokenLists, toggleTokenList, isActiveList } = useTokenLists();
 const {
   getToken,
   searchTokens,
@@ -69,7 +68,7 @@ const {
   injectTokens,
 } = useTokens();
 const { t } = useI18n();
-const { resolve } = useUrls();
+// const { resolve } = useUrls();
 
 /**
  * COMPUTED
@@ -143,10 +142,10 @@ function onListExit(): void {
   state.query = '';
 }
 
-function toggleSelectTokenList(): void {
-  state.selectTokenList = !state.selectTokenList;
-  state.query = '';
-}
+// function toggleSelectTokenList(): void {
+//   state.selectTokenList = !state.selectTokenList;
+//   state.query = '';
+// }
 
 /**
  * WATCHERS
@@ -188,7 +187,7 @@ watchEffect(() => {
   <BalModal
     show
     noContentPad
-    bgImage="linear-gradient(to right,rgb(211 157 235 / 60%),rgb(241 165 188 / 60%));"
+    bgImage="linear-gradient(to right,rgb(113,36,212,75%),rgb(214,32,80,75%));"
     :isSwapView="true"
     @close="$emit('close')"
   >
@@ -247,7 +246,7 @@ watchEffect(() => {
           </BalBtn>
           <h5>{{ title }}</h5>
         </div>
-        <div
+        <!-- <div
           v-if="!state.selectTokenList && !hideTokenLists"
           class="group flex items-center mr-2 cursor-pointer"
           @click="toggleSelectTokenList"
@@ -268,7 +267,7 @@ watchEffect(() => {
               class="ml-1 text-blue-500 group-hover:text-pink-500 group-focus:text-pink-500 dark:text-blue-400 transition-all duration-200 ease-out"
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </template>
     <template v-if="state.selectTokenList">

@@ -1,20 +1,3 @@
-<template>
-  <div class="flex">
-    <BalBtn
-      v-for="option in options"
-      :key="option.value"
-      outline
-      size="sm"
-      class="mr-2 capitalize w-18"
-      v-bind="attrs_"
-      :color="modelValue === option.value ? 'blue' : 'gray'"
-      @click="onSelect(option)"
-    >
-      {{ 'best' === option.label ? $t(option.label) : option.label }}
-    </BalBtn>
-  </div>
-</template>
-
 <script lang="ts">
 import omit from 'lodash/omit';
 
@@ -31,6 +14,7 @@ export default defineComponent({
   props: {
     modelValue: { type: [String, Number], required: true },
     options: { type: Array as PropType<Option[]>, required: true },
+    bgColor: { type: String, required: false, default: '' },
   },
 
   emits: ['update:modelValue'],
@@ -54,3 +38,21 @@ export default defineComponent({
   },
 });
 </script>
+<template>
+  <div class="flex">
+    <BalBtn
+      v-for="option in options"
+      :key="option.value"
+      outline
+      size="sm"
+      class="mr-2 capitalize w-18"
+      v-bind="attrs_"
+      :color="modelValue === option.value ? 'blue' : 'white'"
+      @click="onSelect(option)"
+    >
+      {{ 'best' === option.label ? $t(option.label) : option.label }}
+    </BalBtn>
+  </div>
+</template>
+
+

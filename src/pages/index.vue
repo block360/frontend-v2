@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import HomePageHero from '@/components/heros/HomePageHero.vue';
+// import HomePageHero from '@/components/heros/HomePageHero.vue';
 import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
 import FeaturedProtocols from '@/components/sections/FeaturedProtocols.vue';
 import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
@@ -15,7 +15,7 @@ const router = useRouter();
 const { appNetworkConfig } = useNetwork();
 const isElementSupported = appNetworkConfig.supportsElementPools;
 const { selectedTokens, addSelectedToken, removeSelectedToken } =
-  usePoolFilters();
+  usePoolFilters(appNetworkConfig.chainId);
 
 const poolsSortField = ref('totalLiquidity');
 
@@ -42,7 +42,7 @@ function onColumnSort(columnId: string) {
 
 <template>
   <div>
-    <HomePageHero />
+    <!-- <HomePageHero /> -->
     <div class="xl:container xl:px-4 pt-10 md:pt-8 xl:mx-auto">
       <BalStack vertical>
         <div class="px-4 xl:px-0">
@@ -57,6 +57,7 @@ function onColumnSort(columnId: string) {
               size="sm"
               outline
               :class="{ 'mt-4': upToMediumBreakpoint }"
+              :disabled="true"
               @click="navigateToCreatePool"
             >
               {{ $t('createAPool.title') }}
@@ -69,6 +70,7 @@ function onColumnSort(columnId: string) {
             <TokenSearchInput
               v-model="selectedTokens"
               class="w-full md:w-2/3"
+              :disableBut="true"
               @add="addSelectedToken"
               @remove="removeSelectedToken"
             />
@@ -79,6 +81,7 @@ function onColumnSort(columnId: string) {
               outline
               :class="{ 'mt-4': upToMediumBreakpoint }"
               :block="upToMediumBreakpoint"
+              :disabled="true"
               @click="navigateToCreatePool"
             >
               {{ $t('createAPool.title') }}

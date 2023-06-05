@@ -17,15 +17,16 @@ module.exports = {
   theme: {
     fontFamily: {
       body: [
-        'Inter-Variable',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Helvetica',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
+        'OpenSans-Medium',
+        // 'Inter-Variable',
+        // '-apple-system',
+        // 'BlinkMacSystemFont',
+        // '"Segoe UI"',
+        // 'Helvetica',
+        // 'Arial',
+        // 'sans-serif',
+        // '"Apple Color Emoji"',
+        // '"Segoe UI Emoji"',
       ],
       display: [
         '"Tiempos Headline Medium"',

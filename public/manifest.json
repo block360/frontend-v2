@@ -1,9 +1,9 @@
 {
-  "short_name": "Balancer",
-  "name": "Balancer",
-  "description": "Swap tokens and manage your assets on Balancer Protocol",
+  "short_name": "swap.global",
+  "name": "swap.global",
+  "description": "Swap tokens and manage your assets on swap.global Protocol",
   "providedBy": {
-    "name": "Balancer",
+    "name": "swap.global",
     "url": "https://balancer.fi"
   },
   "icons": [

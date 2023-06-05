@@ -8,7 +8,7 @@ const ClaimPage = () => import('@/pages/claim/index.vue');
 const LegacyClaimPage = () => import('@/pages/claim/legacy.vue');
 const CookiesPolicyPage = () => import('@/pages/cookies-policy.vue');
 const GetVeBalPage = () => import('@/pages/get-vebal.vue');
-// const HomePage = () => import('@/pages/index.vue');
+const HomePage = () => import('@/pages/index.vue');
 const PoolPage = () =>
   import(/* webpackPrefetch: true */ '@/pages/pool/_id.vue');
 const CreatePoolPage = () => import('@/pages/pool/create.vue');
@@ -44,6 +44,11 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'home',
     component: SwapPage,
+  },
+  {
+    path: '/pool',
+    name: 'pool-main',
+    component: HomePage,
   },
   {
     path: '/terms-of-use',
@@ -152,6 +157,11 @@ const routes: RouteRecordRaw[] = [
     path: '/:networkSlug?',
     name: 'home',
     component: SwapPage,
+  },
+  {
+    path: '/:networkSlug/pool',
+    name: 'pool-main',
+    component: HomePage,
   },
   {
     path: '/:pathMatch(.*)*',

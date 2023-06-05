@@ -23,9 +23,10 @@ function onClose() {
         style="
           background-image: linear-gradient(
             to right,
-            rgb(211 157 235 / 60%),
-            rgb(241 165 188 / 60%)
+            rgb(153 73 255),
+            rgb(233 74 116)
           );
+          opacity: 0.75;
           padding: 15px;
           border-radius: 20px;
           width: fit-content;
@@ -46,7 +47,7 @@ function onClose() {
                 >
               </div>
               <strong
-                class="text-black"
+                class="text-white"
                 style="font-size: 30px; font-weight: 100; margin-left: 25px"
                 >{{ t('FAQ') }}</strong
               >
@@ -54,7 +55,7 @@ function onClose() {
                 {{ t('OfferingAccess') }}
               </small> -->
             </div>
-            <div class="mb-8 text-black modal-body">
+            <div class="mb-8 text-white modal-body">
               <div class="row">
                 <div class="mb-3 col-sm-12">
                   <div class="card">
