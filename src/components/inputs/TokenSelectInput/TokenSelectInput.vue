@@ -87,7 +87,10 @@ watch(props, () => {
       <div class="w-8">
         <BalAsset :address="token?.address" class="shadow" />
       </div>
-      <span class="text-base font-medium" style="color: white">
+      <span
+        class="text-base font-medium"
+        style="color: white; margin-bottom: 3px"
+      >
         {{ token?.symbol }}
       </span>
       <span v-if="Number(weight) > 0" class="ml-2 text-secondary">
@@ -301,7 +304,11 @@ watch(props, () => {
 
   font-variation-settings: 'wght' 700;
   border-radius: 40px;
-  border: 1px solid red;
+
+  /* border: 1px solid red; */
+  background-image: linear-gradient(to right, #7124d4, #d62050);
+
+  /* opacity: 75%; */
 }
 
 .selectable {

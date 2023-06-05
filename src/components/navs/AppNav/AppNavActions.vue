@@ -50,6 +50,11 @@ function connectWalletHandler() {
         v-else
         color="white"
         class="wallet-connect"
+        style="
+          background-image: linear-gradient(to right, #7124d4, #d62050);
+          color: white;
+          height: 20px;
+        "
         @click="connectWalletHandler"
       >
         <!-- <WalletIcon class="mr-2" /> -->
@@ -86,10 +91,12 @@ function connectWalletHandler() {
 
 <style>
 .currency {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
-  color: black;
+  color: white;
   background: transparent;
+
+  /* background-image: linear-gradient(to right,rgb(153, 73, 255,0.75),#E94A74); */
   height: 27px;
 
   /* margin: 3px; */
@@ -102,14 +109,17 @@ function connectWalletHandler() {
   margin-left: 6px;
   border: 1px solid rgb(172 169 169);
   margin-top: 4px;
+  background-image: linear-gradient(to right, #7124d4, #d62050);
+  opacity: 0.8;
+  border-radius: 6px;
 
   /* margin-top: 4px; */
 }
 
 .balance {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
-  color: black;
+  color: white;
   background: transparent;
   height: 27px;
   margin-left: 6px;
@@ -121,20 +131,26 @@ function connectWalletHandler() {
   justify-content: center;
   align-items: center;
   align-self: center;
-  border: 1px solid rgb(172 169 169);
+
+  /* border: 1px solid rgb(172 169 169); */
   margin-top: 4px;
+  background-image: linear-gradient(to right, #7124d4, #d62050);
+  opacity: 0.8;
+  border-radius: 6px;
 
   /* margin-top: 2px; */
 }
 
 .wallet-connect {
-  background-color: transparent;
-  border-color: rgb(172 169 169);
+  /* background-color: transparent; */
+
+  /* border-color: rgb(172 169 169);
   border-width: 1px;
-  border-style: solid;
+  border-style: solid; */
 
   /* width: 117px; */
-  height: 18px;
+
+  /* height: 18px; */
   align-self: center;
 
   /* font-size: 13px; */

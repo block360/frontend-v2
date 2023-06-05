@@ -10,8 +10,8 @@ const tokenlists: TokenListURLMap = {
       'https://raw.githubusercontent.com/block360/frontend-v2/update-on-hompage/generated/balancer.tokenlist.json',
   },
   External: [
-    'ipns://tokens.uniswap.org',
-    'https://www.gemini.com/uniswap/manifest.json',
+    // 'ipns://tokens.uniswap.org',
+    // 'https://www.gemini.com/uniswap/manifest.json',
   ],
 };
 

@@ -27,13 +27,12 @@ const { networkSlug } = useNetwork();
  * METHODS
  */
 function handleScroll() {
-  if (!appNav.value) return;
-
-  if (window.scrollY === 0) {
-    appNav.value.classList.remove('shadow-lg');
-  } else {
-    appNav.value.classList.add('shadow-lg');
-  }
+  // if (!appNav.value) return;
+  // if (window.scrollY === 0) {
+  //   appNav.value.classList.remove('shadow-lg');
+  // } else {
+  //   appNav.value.classList.add('shadow-lg');
+  // }
 }
 
 /**
@@ -85,6 +84,7 @@ onUnmounted(() => {
   padding: 14px 16px 8px;
   height: 82px;
   transform: scale(0.8);
+  position: relative;
 
   /* margin-top: 40px; */
 

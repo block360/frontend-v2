@@ -183,14 +183,6 @@ onMounted(() => {
 
     <div class="flex items-center" style="margin-top: 35px; margin-bottom: 5px">
       <SwapPairToggle />
-      <!-- <div class="mx-2 h-px bg-gray-100 dark:bg-gray-700 grow" /> -->
-      <!-- <div
-        v-if="rateLabel"
-        class="flex items-center text-xs text-gray-600 dark:text-gray-400 cursor-pointer"
-        @click="isInRate = !isInRate"
-        v-html="rateLabel"
-      /> -->
-      <!-- <div>aaaa{{ rateLabel }}</div> -->
     </div>
 
     <TokenInput
@@ -214,13 +206,16 @@ onMounted(() => {
       style="
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+
+        /* justify-content: space-between; */
         margin-top: 37px;
         margin-right: 15px;
         margin-left: 4px;
       "
     >
-      <span v-if="rateLabel" class="text-input-label">Rate</span>
+      <span v-if="rateLabel" class="text-input-label" style="margin-right: 20px"
+        >Rate</span
+      >
       <span v-if="rateLabel" class="text-input-label">{{ rateLabel }}</span>
     </div>
   </div>
@@ -232,7 +227,7 @@ onMounted(() => {
 }
 
 .text-input-label {
-  color: red;
+  color: white;
   background-color: transparent;
   font-size: 14px;
   font-weight: 700;

@@ -44,7 +44,12 @@ const emit = defineEmits(['swap', 'close']);
 const { t } = useI18n();
 const { fNum } = useNumbers();
 const { tokens, balanceFor, approvalRequired } = useTokens();
-const { blockNumber, account, startConnectWithInjectedProvider } = useWeb3();
+const {
+  blockNumber,
+  account,
+  startConnectWithInjectedProvider,
+  appNetworkConfig,
+} = useWeb3();
 const { slippage } = useUserSettings();
 
 /**
@@ -485,14 +490,15 @@ watch(blockNumber, () => {
 </script>
 
 <template>
-  <BalModal show @close="onClose">
+  <BalModal show :isSwapView="true" @close="onClose">
     <div
       style="
         background-image: linear-gradient(
           to right,
-          rgb(211 157 235 / 60%),
-          rgb(241 165 188 / 60%)
+          rgb(153 73 255),
+          rgb(233 74 116)
         );
+        opacity: 0.75;
         padding: 20px;
         border-radius: 20px;
       "
@@ -510,7 +516,7 @@ watch(blockNumber, () => {
         "
       >
         <button
-          class="flex text-black-500 hover:text-black-700"
+          class="flex text-white-500 hover:text-black-700"
           @click="onClose"
         >
           <BalIcon class="flex" name="chevron-left" />
@@ -518,7 +524,7 @@ watch(blockNumber, () => {
 
         <div
           style="
-            color: black;
+            color: white;
             align-self: center;
             font-size: 22px;
             font-weight: 500;
@@ -529,6 +535,7 @@ watch(blockNumber, () => {
       </BalStack>
       <BalCard
         noPad
+        noBorder
         class="overflow-auto relative mb-6"
         style="background-color: transparent"
       >
@@ -581,12 +588,12 @@ watch(blockNumber, () => {
             >
               <div
                 class="text-black font-large"
-                style="font-size: 22px; font-weight: 500"
+                style="font-size: 22px; font-weight: 500; color: white"
               >
                 {{ fNum(swapping.tokenInAmountInput.value, FNumFormats.token) }}
               </div>
               <div
-                class="text-black font-large"
+                class="text-white font-large"
                 style="font-size: 22px; font-weight: 500"
               >
                 {{ swapping.tokenIn.value.symbol }}
@@ -597,7 +604,7 @@ watch(blockNumber, () => {
             class="w-12 h-12 icon-swap-toggle"
             :src="KeyboardArrow"
             width="100px"
-            style="margin-left: 17px"
+            style="margin-left: 17px; color: white"
           />
           <div class="p-3">
             <div
@@ -609,7 +616,7 @@ watch(blockNumber, () => {
               "
             >
               <div
-                class="text-black font-large"
+                class="text-white font-large"
                 style="font-size: 22px; font-weight: 500"
               >
                 {{
@@ -617,7 +624,7 @@ watch(blockNumber, () => {
                 }}
               </div>
               <div
-                class="text-black font-large"
+                class="text-white font-large"
                 style="font-size: 22px; font-weight: 500"
               >
                 {{ swapping.tokenOut.value.symbol }}
@@ -629,6 +636,7 @@ watch(blockNumber, () => {
       </BalCard>
       <BalCard
         noPad
+        noBorder
         shadow="none"
         class="mb-3"
         style="background-color: transparent"
@@ -708,7 +716,9 @@ watch(blockNumber, () => {
             </div>
             <div class="summary-item-row">
               <div class="">Swap fee</div>
-              <div>0 ETH</div>
+              <div>
+                {{ appNetworkConfig?.chainId === 1 ? '0.001 ETH' : '0 ETH' }}
+              </div>
             </div>
           </div>
         </template>
@@ -732,6 +742,7 @@ watch(blockNumber, () => {
         v-if="!account"
         block
         class="swap-button"
+        bgColor="background-image: linear-gradient(to right,#7124d4,#d62050)"
         @click.prevent="startConnectWithInjectedProvider"
       >
         {{ $t('connectWallet') }}
@@ -740,7 +751,7 @@ watch(blockNumber, () => {
         v-else
         :actions="actions"
         :disabled="disableSubmitButton || showPriceUpdateError"
-        class="swap-button"
+        style="color: white"
         :isSwapView="true"
       />
       <BalAlert
@@ -791,6 +802,8 @@ watch(blockNumber, () => {
 
 .summary-item-row {
   @apply flex justify-between mb-1;
+
+  color: white;
 }
 
 .step {
@@ -819,5 +832,6 @@ watch(blockNumber, () => {
   /* text-transform: uppercase; */
 
   /* margin-top: 55px; */
+  background-image: linear-gradient(to right, #7124d4, #d62050);
 }
 </style>

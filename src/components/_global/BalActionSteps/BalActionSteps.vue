@@ -361,7 +361,7 @@ async function handleTransaction(
   color: white;
 
   /* border: 1px solid #fff; */
-  background-color: red;
+  background-image: linear-gradient(to right, #7124d4, #d62050);
   border-radius: 50px;
 
   /* text-transform: uppercase; */

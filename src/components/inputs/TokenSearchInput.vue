@@ -20,10 +20,12 @@ import useBreakpoints from '@/composables/useBreakpoints';
 
 type Props = {
   modelValue: string[];
+  disableBut: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
+  disableBut: false,
 });
 
 const emit = defineEmits<{
@@ -117,6 +119,7 @@ function onClick() {
         color="white"
         size="sm"
         :block="upToMediumBreakpoint"
+        :disabled="disableBut"
         @click="onClick"
       >
         <BalIcon name="search" size="sm" class="mr-2" />
@@ -128,7 +131,7 @@ function onClick() {
           :key="token"
           color="white"
           iconSize="sm"
-          :closeable="true"
+          :closeable="disableBut ? false : true"
           @closed="emit('remove', token)"
         >
           <BalAsset :address="token" :size="20" class="flex-auto" />
@@ -139,7 +142,7 @@ function onClick() {
         v-if="selectableTokensAddresses.length"
         :label="selectTokensLabel"
         :addresses="selectableTokensAddresses"
-        @click="address => addToken(address)"
+        @click="disableBut ? () => {} : address => addToken(address)"
       />
     </div>
     <teleport to="#modal">

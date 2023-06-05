@@ -1,8 +1,31 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import FaqsModal from '@/components/modals/FaqsModal.vue';
+import SupportModal from '@/components/modals/SupportModal.vue';
+import AddTokenModal from '@/components/modals/AddTokenModal.vue';
 
 // COMPOSABLES
 const { t } = useI18n();
+
+function handlePreviewButton(modalName) {
+  console.log('clicked');
+
+  if (modalName == 'FAQS') {
+    modalFaqs.value = true;
+  } else if (modalName == 'SUPPORT') {
+    modalSupport.value = true;
+  } else if (modalName == 'ADDTOKEN') [(modalAddToken.value = true)];
+}
+
+function handlePreviewModalClose() {
+  modalFaqs.value = false;
+  modalSupport.value = false;
+  modalAddToken.value = false;
+}
+
+const modalFaqs = ref(false);
+const modalSupport = ref(false);
+const modalAddToken = ref(false);
 </script>
   <template>
   <div class="inner-box">
@@ -29,7 +52,11 @@ const { t } = useI18n();
         <hr class="divider" />
         <ul>
           <li>
-            <a href="#" data-toggle="modal" data-target="#simpleDeposit">
+            <a
+              data-toggle="modal"
+              data-target="#simpleDeposit"
+              :onclick="() => handlePreviewButton('ADDTOKEN')"
+            >
               {{ t('AddGSUToYourWallet') }}
             </a>
             <span>|</span>
@@ -41,30 +68,53 @@ const { t } = useI18n();
             <span>|</span>
           </li>
           <li>
-            <a href="#" data-toggle="modal" data-target="#faqs">
+            <a
+              data-toggle="modal"
+              data-target="#faqs"
+              :onclick="() => handlePreviewButton('FAQS')"
+            >
               {{ t('FAQ') }}
             </a>
             <span>|</span>
           </li>
           <li>
-            <a href="#" data-toggle="modal" data-target="#support">
+            <a
+              data-toggle="modal"
+              data-target="#support"
+              :onclick="() => handlePreviewButton('SUPPORT')"
+            >
               {{ t('Support') }}
             </a>
             <span>|</span>
           </li>
           <li>
-            <a href="#">
+            <a
+              href="https://github.com/gsu-protocol/frontend-v2"
+              target="_blank"
+            >
               {{ t('Code') }}
             </a>
             <span>|</span>
           </li>
           <li>
-            <a href="#">{{ t('Discords') }}</a>
+            <a>{{ t('Discords') }}</a>
           </li>
         </ul>
       </div>
     </div>
   </div>
+
+  <teleport to="#modal">
+    <FaqsModal v-if="modalFaqs" @close="handlePreviewModalClose" />
+  </teleport>
+
+  <teleport to="#modal">
+    <SupportModal v-if="modalSupport" @close="handlePreviewModalClose" />
+  </teleport>
+
+  <teleport to="#modal">
+    <AddTokenModal v-if="modalAddToken" @close="handlePreviewModalClose" />
+  </teleport>
 </template>
 
 <style scoped>
@@ -154,7 +204,7 @@ const { t } = useI18n();
 
   /* margin: 20px auto; */
   margin-right: 20px;
-  margin-top: 37px;
+  margin-top: 40px;
   background-color: rgb(255 255 255 / 50%);
   border-radius: 20px;
 
@@ -179,13 +229,13 @@ const { t } = useI18n();
 }
 
 .imp {
-  color: #e94173;
+  color: #ba2cdd;
   font-weight: 700;
   font-size: 18px;
 }
 
 .divider {
-  background-color: red;
+  background-color: #ba2cdd;
   margin-top: 8px;
   margin-bottom: 8px;
   height: 1px;
