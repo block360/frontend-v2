@@ -27,7 +27,7 @@
     },
     {
       "chainId": 5,
-      "address": "0x1f1f156E0317167c11Aa412E3d1435ea29Dc3cCE",
+      "address": "0x1f1f156e0317167c11aa412e3d1435ea29dc3cce",
       "name": "Tether USD",
       "symbol": "USDT",
       "decimals": 6,
@@ -35,7 +35,7 @@
     },
     {
       "chainId": 5,
-      "address": "0x252D98faB648203AA33310721bBbDdfA8F1b6587",
+      "address": "0x252d98fab648203aa33310721bbbddfa8f1b6587",
       "name": "GSU Coin",
       "symbol": "GSUc",
       "decimals": 18,

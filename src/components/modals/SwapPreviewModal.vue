@@ -1,10 +1,11 @@
 <script setup lang="ts">
-// import { SubgraphPoolBase } from '@balancer-labs/sdk';
-// import { formatUnits } from '@ethersproject/units';
-// import { mapValues } from 'lodash';
+import { SubgraphPoolBase } from '@balancer-labs/sdk';
+import { formatUnits } from '@ethersproject/units';
+import { mapValues } from 'lodash';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import SwapRoute from '@/components/cards/SwapCard/SwapRoute.vue';
 import { SwapQuote } from '@/composables/swap/types';
 import useRelayerApproval, {
   RelayerType,
@@ -15,14 +16,13 @@ import { UseSwapping } from '@/composables/swap/useSwapping';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import { useTokens } from '@/providers/tokens.provider';
 import { useUserSettings } from '@/providers/user-settings.provider';
-// import { FiatCurrency } from '@/constants/currency';
+import { FiatCurrency } from '@/constants/currency';
 import { bnum, bnumZero } from '@/lib/utils';
 import { isStETH } from '@/lib/utils/balancer/lido';
 import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionActionInfo } from '@/types/transactions';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
-import KeyboardArrow from '@/assets/images/keyboard_arrow_down.svg';
 
 const PRICE_UPDATE_THRESHOLD = 0.02;
 
@@ -42,14 +42,9 @@ const emit = defineEmits(['swap', 'close']);
  * COMPOSABLES
  */
 const { t } = useI18n();
-const { fNum } = useNumbers();
+const { fNum, toFiat } = useNumbers();
 const { tokens, balanceFor, approvalRequired } = useTokens();
-const {
-  blockNumber,
-  account,
-  startConnectWithInjectedProvider,
-  appNetworkConfig,
-} = useWeb3();
+const { blockNumber, account, startConnectWithInjectedProvider } = useWeb3();
 const { slippage } = useUserSettings();
 
 /**
@@ -60,7 +55,7 @@ const lastQuote = ref<SwapQuote | null>(
 );
 const priceUpdated = ref(false);
 const priceUpdateAccepted = ref(false);
-// const showSummaryInFiat = ref(false);
+const showSummaryInFiat = ref(false);
 
 /**
  * COMPUTED
@@ -71,31 +66,31 @@ const slippageRatePercent = computed(() =>
 
 const addressIn = computed(() => props.swapping.tokenIn.value.address);
 
-// const tokenInFiatValue = computed(() =>
-//   fNum(
-//     toFiat(
-//       props.swapping.tokenInAmountInput.value,
-//       props.swapping.tokenIn.value.address
-//     ),
-//     FNumFormats.fiat
-//   )
-// );
+const tokenInFiatValue = computed(() =>
+  fNum(
+    toFiat(
+      props.swapping.tokenInAmountInput.value,
+      props.swapping.tokenIn.value.address
+    ),
+    FNumFormats.fiat
+  )
+);
 
-// const tokenOutFiatValue = computed(() =>
-//   fNum(
-//     toFiat(
-//       props.swapping.tokenOutAmountInput.value,
-//       props.swapping.tokenOut.value.address
-//     ),
-//     FNumFormats.fiat
-//   )
-// );
+const tokenOutFiatValue = computed(() =>
+  fNum(
+    toFiat(
+      props.swapping.tokenOutAmountInput.value,
+      props.swapping.tokenOut.value.address
+    ),
+    FNumFormats.fiat
+  )
+);
 
-// const showSwapRoute = computed(() => props.swapping.isBalancerSwap.value);
+const showSwapRoute = computed(() => props.swapping.isBalancerSwap.value);
 
-// const zeroFee = computed(() =>
-//   showSummaryInFiat.value ? fNum('0', FNumFormats.fiat) : '0.0 ETH'
-// );
+const zeroFee = computed(() =>
+  showSummaryInFiat.value ? fNum('0', FNumFormats.fiat) : '0.0 ETH'
+);
 
 const exceedsBalance = computed(() => {
   return (
@@ -110,80 +105,80 @@ const disableSubmitButton = computed(() => {
   return !!exceedsBalance.value || !!props.error;
 });
 
-// const summary = computed(() => {
-//   const summaryItems = {
-//     amountBeforeFees: '',
-//     swapFees: '',
-//     totalWithoutSlippage: '',
-//     totalWithSlippage: '',
-//   };
+const summary = computed(() => {
+  const summaryItems = {
+    amountBeforeFees: '',
+    swapFees: '',
+    totalWithoutSlippage: '',
+    totalWithSlippage: '',
+  };
 
-//   const exactIn = props.swapping.exactIn.value;
+  const exactIn = props.swapping.exactIn.value;
 
-//   const tokenIn = props.swapping.tokenIn.value;
-//   const tokenOut = props.swapping.tokenOut.value;
+  const tokenIn = props.swapping.tokenIn.value;
+  const tokenOut = props.swapping.tokenOut.value;
 
-//   const tokenInAmountInput = props.swapping.tokenInAmountInput.value;
-//   const tokenOutAmountInput = props.swapping.tokenOutAmountInput.value;
+  const tokenInAmountInput = props.swapping.tokenInAmountInput.value;
+  const tokenOutAmountInput = props.swapping.tokenOutAmountInput.value;
 
-//   if (props.swapping.isWrapUnwrapSwap.value) {
-//     summaryItems.amountBeforeFees = tokenOutAmountInput;
-//     summaryItems.swapFees = '0';
-//     summaryItems.totalWithoutSlippage = tokenOutAmountInput;
-//     summaryItems.totalWithSlippage = tokenOutAmountInput;
-//   } else {
-//     const quote = props.swapping.getQuote();
+  if (props.swapping.isWrapUnwrapSwap.value) {
+    summaryItems.amountBeforeFees = tokenOutAmountInput;
+    summaryItems.swapFees = '0';
+    summaryItems.totalWithoutSlippage = tokenOutAmountInput;
+    summaryItems.totalWithSlippage = tokenOutAmountInput;
+  } else {
+    const quote = props.swapping.getQuote();
 
-//     if (exactIn) {
-//       summaryItems.amountBeforeFees = tokenOutAmountInput;
-//       summaryItems.swapFees = formatUnits(
-//         quote.feeAmountOutToken,
-//         tokenOut.decimals
-//       );
-//       summaryItems.totalWithoutSlippage = bnum(summaryItems.amountBeforeFees)
-//         .minus(summaryItems.swapFees)
-//         .toString();
-//       summaryItems.totalWithSlippage = formatUnits(
-//         quote.minimumOutAmount,
-//         tokenOut.decimals
-//       );
-//     } else {
-//       summaryItems.amountBeforeFees = tokenInAmountInput;
-//       summaryItems.swapFees = formatUnits(
-//         quote.feeAmountInToken,
-//         tokenIn.decimals
-//       );
-//       summaryItems.totalWithoutSlippage = bnum(summaryItems.amountBeforeFees)
-//         .plus(summaryItems.swapFees)
-//         .toString();
-//       summaryItems.totalWithSlippage = formatUnits(
-//         quote.maximumInAmount,
-//         tokenIn.decimals
-//       );
-//     }
-//   }
+    if (exactIn) {
+      summaryItems.amountBeforeFees = tokenOutAmountInput;
+      summaryItems.swapFees = formatUnits(
+        quote.feeAmountOutToken,
+        tokenOut.decimals
+      );
+      summaryItems.totalWithoutSlippage = bnum(summaryItems.amountBeforeFees)
+        .minus(summaryItems.swapFees)
+        .toString();
+      summaryItems.totalWithSlippage = formatUnits(
+        quote.minimumOutAmount,
+        tokenOut.decimals
+      );
+    } else {
+      summaryItems.amountBeforeFees = tokenInAmountInput;
+      summaryItems.swapFees = formatUnits(
+        quote.feeAmountInToken,
+        tokenIn.decimals
+      );
+      summaryItems.totalWithoutSlippage = bnum(summaryItems.amountBeforeFees)
+        .plus(summaryItems.swapFees)
+        .toString();
+      summaryItems.totalWithSlippage = formatUnits(
+        quote.maximumInAmount,
+        tokenIn.decimals
+      );
+    }
+  }
 
-//   if (showSummaryInFiat.value) {
-//     return mapValues(
-//       summaryItems,
-//       itemValue =>
-//         `${fNum(
-//           toFiat(itemValue, exactIn ? tokenOut.address : tokenIn.address),
-//           FNumFormats.fiat
-//         )}`
-//     );
-//   } else {
-//     return mapValues(
-//       summaryItems,
-//       itemValue =>
-//         `${fNum(itemValue, FNumFormats.token)} ${
-//           exactIn || props.swapping.isWrapUnwrapSwap.value
-//             ? tokenOut.symbol
-//             : tokenIn.symbol
-//         }`
-//     );
-//   }
-// });
+  if (showSummaryInFiat.value) {
+    return mapValues(
+      summaryItems,
+      itemValue =>
+        `${fNum(
+          toFiat(itemValue, exactIn ? tokenOut.address : tokenIn.address),
+          FNumFormats.fiat
+        )}`
+    );
+  } else {
+    return mapValues(
+      summaryItems,
+      itemValue =>
+        `${fNum(itemValue, FNumFormats.token)} ${
+          exactIn || props.swapping.isWrapUnwrapSwap.value
+            ? tokenOut.symbol
+            : tokenIn.symbol
+        }`
+    );
+  }
+});
 
 const labels = computed(() => {
   if (props.swapping.isWrap.value) {
@@ -282,9 +277,9 @@ const cowswapRelayerApproval = useRelayerApprovalTx(
 
 const lidoRelayerApproval = useRelayerApprovalTx(RelayerType.LIDO, isStETHSwap);
 
-// const pools = computed<SubgraphPoolBase[]>(() => {
-//   return props.swapping.sor.pools.value;
-// });
+const pools = computed<SubgraphPoolBase[]>(() => {
+  return props.swapping.sor.pools.value;
+});
 
 const requiresTokenApproval = computed(() => {
   if (props.swapping.isWrap.value && !props.swapping.isEthSwap.value) {
@@ -490,56 +485,18 @@ watch(blockNumber, () => {
 </script>
 
 <template>
-  <BalModal show :isSwapView="true" @close="onClose">
-    <div
-      style="
-        background-image: linear-gradient(
-          to right,
-          rgb(153 73 255),
-          rgb(233 74 116)
-        );
-        opacity: 0.75;
-        padding: 20px;
-        border-radius: 20px;
-      "
-    >
-      <BalStack
-        horizontal
-        align="center"
-        spacing="xs"
-        class="mb-4"
-        style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin-right: 120px;
-        "
-      >
-        <button
-          class="flex text-white-500 hover:text-black-700"
-          @click="onClose"
-        >
+  <BalModal show @close="onClose">
+    <div>
+      <BalStack horizontal align="center" spacing="xs" class="mb-4">
+        <button class="flex text-blue-500 hover:text-blue-700" @click="onClose">
           <BalIcon class="flex" name="chevron-left" />
         </button>
-
-        <div
-          style="
-            color: white;
-            align-self: center;
-            font-size: 22px;
-            font-weight: 500;
-          "
-        >
+        <h4>
           {{ labels.modalTitle }}
-        </div>
+        </h4>
       </BalStack>
-      <BalCard
-        noPad
-        noBorder
-        class="overflow-auto relative mb-6"
-        style="background-color: transparent"
-      >
-        <!-- <template #header>
+      <BalCard noPad class="overflow-auto relative mb-6">
+        <template #header>
           <div class="w-full">
             <div>
               <BalAlert
@@ -562,10 +519,22 @@ watch(blockNumber, () => {
                 block
               />
             </div>
+            <div
+              class="p-3 w-full text-sm bg-gray-50 dark:bg-gray-800 rounded-t-lg border-b dark:border-gray-800"
+            >
+              <span>
+                {{ $t('effectivePrice') }}
+                {{
+                  swapping.exactIn.value
+                    ? swapping.effectivePriceMessage.value.tokenIn
+                    : swapping.effectivePriceMessage.value.tokenOut
+                }}
+              </span>
+            </div>
           </div>
-        </template> -->
-        <div style="background-color: transparent">
-          <!-- <BalAlert
+        </template>
+        <div>
+          <BalAlert
             v-if="exceedsBalance"
             class="p-3"
             type="error"
@@ -576,81 +545,76 @@ watch(blockNumber, () => {
             )} ${props.swapping.tokenIn.value.symbol}`"
             block
             square
-          /> -->
-          <div class="relative p-3 border-gray-100 dark:border-gray-900">
-            <div
-              class="flex items-center"
-              style="
-                justify-content: space-between;
-                margin-right: 15px;
-                margin-left: 15px;
-              "
-            >
-              <div
-                class="text-black font-large"
-                style="font-size: 22px; font-weight: 500; color: white"
-              >
-                {{ fNum(swapping.tokenInAmountInput.value, FNumFormats.token) }}
+          />
+          <div
+            class="relative p-3 border-b border-gray-100 dark:border-gray-900"
+          >
+            <div class="flex items-center">
+              <div class="mr-3">
+                <BalAsset
+                  :address="swapping.tokenIn.value.address"
+                  :size="36"
+                />
               </div>
-              <div
-                class="text-white font-large"
-                style="font-size: 22px; font-weight: 500"
-              >
-                {{ swapping.tokenIn.value.symbol }}
+              <div>
+                <div class="font-medium">
+                  {{
+                    fNum(swapping.tokenInAmountInput.value, FNumFormats.token)
+                  }}
+                  {{ swapping.tokenIn.value.symbol }}
+                </div>
+                <div class="text-sm text-secondary">
+                  {{ tokenInFiatValue }}
+                </div>
               </div>
             </div>
           </div>
-          <img
-            class="w-12 h-12 icon-swap-toggle"
-            :src="KeyboardArrow"
-            width="100px"
-            style="margin-left: 17px; color: white"
-          />
+          <div class="arrow-down">
+            <ArrowDownIcon />
+          </div>
           <div class="p-3">
-            <div
-              class="flex items-center"
-              style="
-                justify-content: space-between;
-                margin-right: 15px;
-                margin-left: 15px;
-              "
-            >
-              <div
-                class="text-white font-large"
-                style="font-size: 22px; font-weight: 500"
-              >
-                {{
-                  fNum(swapping.tokenOutAmountInput.value, FNumFormats.token)
-                }}
+            <div class="flex items-center">
+              <div class="mr-3">
+                <BalAsset
+                  :address="swapping.tokenOut.value.address"
+                  :size="36"
+                />
               </div>
-              <div
-                class="text-white font-large"
-                style="font-size: 22px; font-weight: 500"
-              >
-                {{ swapping.tokenOut.value.symbol }}
+              <div>
+                <div class="font-medium">
+                  {{
+                    fNum(swapping.tokenOutAmountInput.value, FNumFormats.token)
+                  }}
+                  {{ swapping.tokenOut.value.symbol }}
+                </div>
+                <div class="text-sm text-secondary">
+                  {{ tokenOutFiatValue }}
+                  <span
+                    v-if="
+                      swapping.isBalancerSwap.value ||
+                      swapping.isWrapUnwrapSwap.value
+                    "
+                  >
+                    / {{ $t('priceImpact') }}:
+                    {{
+                      fNum(swapping.sor.priceImpact.value, FNumFormats.percent)
+                    }}
+                  </span>
+                </div>
               </div>
-              <!-- </div> -->
             </div>
           </div>
         </div>
       </BalCard>
-      <BalCard
-        noPad
-        noBorder
-        shadow="none"
-        class="mb-3"
-        style="background-color: transparent"
-      >
-        <!-- <template #header>
+      <BalCard noPad shadow="none" class="mb-3">
+        <template #header>
           <div
             class="flex justify-between items-center p-3 w-full border-b dark:border-gray-900"
           >
-            <div class="font-semibold text-black">
+            <div class="font-semibold">
               {{ labels.swapSummary.title }}
             </div>
-            <div
-              class="flex text-xs text-black uppercase divide-x dark:divide-gray-500"
-            >
+            <div class="flex text-xs uppercase divide-x dark:divide-gray-500">
               <div
                 :class="[
                   'pr-2 cursor-pointer font-medium',
@@ -671,8 +635,8 @@ watch(blockNumber, () => {
               </div>
             </div>
           </div>
-        </template> -->
-        <!-- <div v-if="swapping.isCowswapSwap.value" class="p-3 text-sm text-black bg-transparent">
+        </template>
+        <div v-if="swapping.isCowswapSwap.value" class="p-3 text-sm">
           <div class="summary-item-row">
             <div>
               {{ labels.swapSummary.totalBeforeFees }}
@@ -695,30 +659,28 @@ watch(blockNumber, () => {
               "
             />
           </div>
-        </div> -->
-        <hr />
+        </div>
         <template #footer>
           <div
-            class="p-3 w-full text-sm text-black bg-transparent dark:bg-gray-800 rounded-b-lg"
-            style="margin-right: 15px; margin-left: 15px; margin-top: 15px"
+            class="p-3 w-full text-sm bg-white dark:bg-gray-800 rounded-b-lg"
           >
             <div class="font-medium summary-item-row">
-              <div class="">
+              <div class="w-64">
                 {{ labels.swapSummary.totalAfterFees }}
               </div>
-              <div>
-                {{
-                  swapping.exactIn.value
-                    ? swapping.effectivePriceMessage.value.tokenIn
-                    : swapping.effectivePriceMessage.value.tokenOut
-                }}
-              </div>
+              <div v-html="summary.totalWithoutSlippage" />
             </div>
-            <div class="summary-item-row">
-              <div class="">Swap fee</div>
-              <div>
-                {{ appNetworkConfig?.chainId === 1 ? '0.001 ETH' : '0 ETH' }}
+            <div class="summary-item-row text-secondary">
+              <div class="w-64">
+                {{ labels.swapSummary.totalWithSlippage }}
               </div>
+              <div
+                v-html="
+                  swapping.isWrapUnwrapSwap.value
+                    ? ''
+                    : summary.totalWithSlippage
+                "
+              />
             </div>
           </div>
         </template>
@@ -740,9 +702,8 @@ watch(blockNumber, () => {
       />
       <BalBtn
         v-if="!account"
+        color="gradient"
         block
-        class="swap-button"
-        bgColor="background-image: linear-gradient(to right,#7124d4,#d62050)"
         @click.prevent="startConnectWithInjectedProvider"
       >
         {{ $t('connectWallet') }}
@@ -751,8 +712,6 @@ watch(blockNumber, () => {
         v-else
         :actions="actions"
         :disabled="disableSubmitButton || showPriceUpdateError"
-        style="color: white"
-        :isSwapView="true"
       />
       <BalAlert
         v-if="swapping.submissionError.value != null"
@@ -779,7 +738,7 @@ watch(blockNumber, () => {
         block
       />
     </div>
-    <!-- <SwapRoute
+    <SwapRoute
       v-if="showSwapRoute"
       :addressIn="swapping.tokenIn.value.address"
       :amountIn="swapping.tokenInAmountInput.value"
@@ -788,22 +747,20 @@ watch(blockNumber, () => {
       :pools="pools"
       :sorReturn="swapping.sor.sorReturn.value"
       class="mt-3"
-    /> -->
+    />
   </BalModal>
 </template>
 
 <style scoped>
 .arrow-down {
-  @apply left-0 rounded-full border border-gray-100 flex items-center h-8 w-8 justify-center bg-transparent mr-3
+  @apply absolute right-0 rounded-full border border-gray-100 flex items-center h-8 w-8 justify-center bg-white mr-3
     dark:border-gray-800 dark:bg-gray-800;
 
-  /* transform: translateY(-50%); */
+  transform: translateY(-50%);
 }
 
 .summary-item-row {
   @apply flex justify-between mb-1;
-
-  color: white;
 }
 
 .step {
@@ -821,17 +778,5 @@ watch(blockNumber, () => {
 
 .step-approved {
   @apply border-green-500 dark:border-green-500;
-}
-
-.swap-button {
-  /* color: #fff;
-  border: none;
-  background-color: red;
-  border-radius: 50px; */
-
-  /* text-transform: uppercase; */
-
-  /* margin-top: 55px; */
-  background-image: linear-gradient(to right, #7124d4, #d62050);
 }
 </style>
