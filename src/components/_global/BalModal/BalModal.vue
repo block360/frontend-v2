@@ -123,7 +123,7 @@ defineExpose({ hide });
 
 <style scoped>
 .bal-modal {
-  @apply top-0 left-0 fixed h-screen w-full z-40;
+  @apply top-0 left-0 fixed h-full w-full z-40;
 }
 
 .content-container {

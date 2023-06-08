@@ -156,6 +156,8 @@ onMounted(() => {
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
+          @click="onClick"
+          @focus="onFocus"
         />
         <div v-if="$slots.prepend" :class="['prepend', prependClasses]">
           <slot name="prepend" />

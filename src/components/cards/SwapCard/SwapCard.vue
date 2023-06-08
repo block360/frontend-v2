@@ -505,6 +505,7 @@ export default defineComponent({
   border-radius: 18px;
   min-height: 440px;
   max-width: 360px;
+  width: 100%;
   box-shadow: 0 0 29px 0 rgb(0 0 0 / 33%);
   background-image: linear-gradient(
     to right,

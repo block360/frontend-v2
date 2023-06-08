@@ -68,12 +68,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-top: 5vh;
-
-  /* width: 660px; */
-
-  /* height: 445px; */
-
-  /* height: 100vh; */
 }
 
 .content-md {
@@ -81,14 +75,6 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  /* margin-top: 16vh; */
-
-  /* width: 660px; */
-
-  /* height: 445px; */
-
-  /* height: 100vh; */
 }
 
 .main-content {

@@ -60,7 +60,7 @@ class MetaService implements IMetaService {
   private setDefaultMeta(): void {
     const descriptionMeta = document.querySelector('meta[name=description]');
 
-    document.title = 'Balancer';
+    document.title = 'DEX';
     descriptionMeta?.setAttribute(
       'content',
       ''
