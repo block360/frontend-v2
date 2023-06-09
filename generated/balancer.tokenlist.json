@@ -37,19 +37,19 @@
     },
     {
       "chainId": 5,
-      "address": "0x1f1f156e0317167c11aa412e3d1435ea29dc3cce",
-      "name": "Tether USD",
-      "symbol": "USDT",
-      "decimals": 6,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
-    },
-    {
-      "chainId": 5,
       "address": "0x252d98fab648203aa33310721bbbddfa8f1b6587",
       "name": "GSU Coin",
       "symbol": "GSUc",
       "decimals": 18,
       "logoURI": "https://static.wixstatic.com/media/552241_85f982df336147bd975e4860cf3e12d9~mv2.png/v1/fill/w_164,h_164,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/GSU-Protocol-Emblem.png"
+    },
+    {
+      "chainId": 5,
+      "address": "0x1f1f156e0317167c11aa412e3d1435ea29dc3cce",
+      "name": "Tether USD",
+      "symbol": "USDT",
+      "decimals": 6,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
     }
   ]
 }
