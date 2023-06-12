@@ -7,6 +7,8 @@ export const defaultAdjustedBalance = '55555';
 
 export const defaultBatchSwapResponse = 'Batch Swap response';
 
+export const defaultContractBalance = '321';
+export const defaultContractBalanceBN = BigNumber.from(defaultContractBalance);
 interface IContract {
   // Equivalent to readonly estimateGas property in Contract
   estimateGas: {
@@ -30,6 +32,9 @@ export class MockedContractWithSigner implements IContract {
   }
   adjustedBalanceOf() {
     return defaultAdjustedBalance;
+  }
+  balanceOf() {
+    return Promise.resolve(defaultContractBalanceBN);
   }
 }
 

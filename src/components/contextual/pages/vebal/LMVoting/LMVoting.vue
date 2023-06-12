@@ -6,7 +6,7 @@ import useDebouncedRef from '@/composables/useDebouncedRed';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import { poolURLFor } from '@/composables/usePoolHelpers';
 import useVotingGauges from '@/composables/useVotingGauges';
-import { bnum, isSameAddress, scale } from '@/lib/utils';
+import { bnum, scale } from '@/lib/utils';
 import { VotingGaugeWithVotes } from '@/services/balancer/gauges/gauge-controller.decorator';
 
 import GaugesTable from './GaugesTable.vue';
@@ -15,6 +15,7 @@ import ResubmitVotesAlert from './ResubmitVotes/ResubmitVotesAlert.vue';
 import { orderedTokenURIs } from '@/composables/useVotingGauges';
 import { Network } from '@/lib/config';
 import GaugesFilters from './GaugesFilters.vue';
+import { isGaugeExpired } from './voting-utils';
 
 /**
  * DATA
@@ -82,8 +83,6 @@ const hasExpiredLock = computed(
     veBalLockInfoQuery.data.value?.isExpired
 );
 
-const gaugesTableKey = computed(() => JSON.stringify(isLoading.value));
-
 const gaugesFilteredByExpiring = computed(() => {
   if (showExpiredGauges.value) {
     return votingGauges.value;
@@ -93,9 +92,7 @@ const gaugesFilteredByExpiring = computed(() => {
     if (Number(gauge.userVotes) > 0) {
       return true;
     }
-    return !expiredGauges.value?.some(expGauge =>
-      isSameAddress(expGauge, gauge.address)
-    );
+    return !isGaugeExpired(expiredGauges.value, gauge.address);
   });
 });
 
@@ -136,6 +133,49 @@ function handleModalClose() {
 function handleVoteSuccess() {
   refetchVotingGauges();
 }
+
+function isExpired(gauge: VotingGaugeWithVotes) {
+  return isGaugeExpired(expiredGauges.value, gauge.address);
+}
+
+const intersectionSentinel = ref<HTMLDivElement | null>(null);
+const renderedRowsIdx = ref(0);
+let observer: IntersectionObserver | undefined;
+function addIntersectionObserver(): void {
+  if (
+    !('IntersectionObserver' in window) ||
+    !('IntersectionObserverEntry' in window) ||
+    !intersectionSentinel.value
+  ) {
+    renderedRowsIdx.value = votingGauges.value.length;
+    return;
+  }
+  const options = {
+    rootMargin: '0% 0% 50% 0%',
+  };
+  const callback = (entries: IntersectionObserverEntry[]): void => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        renderedRowsIdx.value += 40;
+      }
+    });
+  };
+  observer = new IntersectionObserver(callback, options);
+  observer.observe(intersectionSentinel.value);
+}
+onMounted(() => {
+  addIntersectionObserver();
+});
+onBeforeUnmount(() => {
+  observer?.disconnect();
+});
+watch(
+  () => [showExpiredGauges.value, activeNetworkFilters.value],
+  () => {
+    renderedRowsIdx.value = votingGauges.value.length;
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -252,7 +292,7 @@ function handleVoteSuccess() {
     </div>
 
     <GaugesTable
-      :key="gaugesTableKey"
+      :renderedRowsIdx="renderedRowsIdx"
       :expiredGauges="expiredGauges"
       :isLoading="isLoading"
       :data="filteredVotingGauges"
@@ -268,6 +308,7 @@ function handleVoteSuccess() {
     <GaugeVoteModal
       v-if="!!activeVotingGauge"
       :gauge="activeVotingGauge"
+      :isGaugeExpired="isExpired(activeVotingGauge)"
       :logoURIs="orderedTokenURIs(activeVotingGauge)"
       :poolURL="poolURLFor(activeVotingGauge.pool, activeVotingGauge.network)"
       :unallocatedVoteWeight="unallocatedVoteWeight"

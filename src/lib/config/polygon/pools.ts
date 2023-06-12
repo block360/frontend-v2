@@ -1,5 +1,5 @@
 import { BoostedProtocol } from '@/composables/useBoostedPool';
-import { Pools } from '@/types/pools';
+import { PoolWarning, Pools } from '@/types/pools';
 
 const pools: Pools = {
   IdsMap: {
@@ -38,6 +38,9 @@ const pools: Pools = {
     'StablePhantom',
     'ComposableStable',
     'FX',
+    'Gyro2',
+    'Gyro3',
+    'GyroE',
   ],
   Stable: {
     AllowList: [
@@ -106,6 +109,10 @@ const pools: Pools = {
       '0x7f4f4942f2a14b6ab7b08b10ada1aacede4ee8d4000200000000000000000b44', // stmatci-bb-wmatic/bb-am-usd
       '0x8fd39252d683fdb60bddd4df4b53c9380b496d59000200000000000000000b45', // wsteth-bb-a-weth/bb-am-usd
       '0xfaf3bc722d34146be83a2aac40b43148a51a9126000200000000000000000b4c', // 50kacy/50weth
+      '0xbadcdaf6212b0bacf45cc32447cb615f85fe6adf000100000000000000000b87', // 50weth/50wsteth/50nex
+      '0xb1cc24df1d3d2c6cb798b1129ddaae9e29d437c0000100000000000000000b8d', // staking defi pool
+      '0x9841438683c2efbfb28c94ec341544b94e4f6dd5000100000000000000000b8f', // WBTC/USDC/PAXG/WETH
+      '0x945f337307ea76fdaa2590d083423850f64e247f000100000000000000000b98', // 27wstETH-7WMATIC-25WBTC-7USDC-18stMATIC-8WETH-8DAI
     ],
   },
   Factories: {
@@ -185,6 +192,7 @@ const pools: Pools = {
       '0x8fd39252d683fdb60bddd4df4b53c9380b496d59000200000000000000000b45',
       '0x3efb91c4f9b103ee45885695c67794591916f34e000200000000000000000b43',
       '0x924ec7ed38080e40396c46f6206a6d77d0b9f72d00020000000000000000072a',
+      '0x8fbd0f8e490735cfc3abf4f29cbddd5c3289b9a7000000000000000000000b5b',
     ],
     AllowList: [],
   },
@@ -231,6 +239,36 @@ const pools: Pools = {
       boosted: true,
       boostedProtocols: [BoostedProtocol.Aave],
     },
+    '0x8fbd0f8e490735cfc3abf4f29cbddd5c3289b9a7000000000000000000000b5b': {
+      name: 'FRAX/Boosted Aave v3 USD',
+      hasIcon: false,
+      boosted: true,
+      boostedProtocols: [BoostedProtocol.Aave],
+    },
+    '0xb371aa09f5a110ab69b39a84b5469d29f9b22b76000000000000000000000b37': {
+      name: 'Balancer Boosted Aave v3 USD',
+      hasIcon: false,
+      boosted: true,
+      boostedProtocols: [BoostedProtocol.Aave],
+    },
+    '0x8fd39252d683fdb60bddd4df4b53c9380b496d59000200000000000000000b45': {
+      name: 'wstETH/Boosted Aave v3 WETH/Boosted Aave v3 USD',
+      hasIcon: false,
+      boosted: true,
+      boostedProtocols: [BoostedProtocol.Aave],
+    },
+    '0x7f4f4942f2a14b6ab7b08b10ada1aacede4ee8d4000200000000000000000b44': {
+      name: 'stMATIC/Boosted Aave v3 wMATIC/Boosted Aave v3 USD',
+      hasIcon: false,
+      boosted: true,
+      boostedProtocols: [BoostedProtocol.Aave],
+    },
+    '0x3efb91c4f9b103ee45885695c67794591916f34e000200000000000000000b43': {
+      name: '2BRL/Boosted Aave v3 USD',
+      hasIcon: false,
+      boosted: true,
+      boostedProtocols: [BoostedProtocol.Aave],
+    },
   },
   Deep: [
     '0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b', // bb-am-USD (polygon)
@@ -246,6 +284,7 @@ const pools: Pools = {
     '0x7f4f4942f2a14b6ab7b08b10ada1aacede4ee8d4000200000000000000000b44', // stmatci-bb-wmatic/bb-am-usd
     '0x8fd39252d683fdb60bddd4df4b53c9380b496d59000200000000000000000b45', // wsteth-bb-a-weth/bb-am-usd
     '0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42', // frxETH / bb-a-weth
+    '0x8fbd0f8e490735cfc3abf4f29cbddd5c3289b9a7000000000000000000000b5b', // frax / bb-am-usd
   ],
   BoostedApr: [
     '0x48e6b98ef6329f8f0a30ebb8c7c960330d648085', // bb-am-USD
@@ -286,6 +325,30 @@ const pools: Pools = {
       'xave',
     '0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2000200000000000000000b49':
       'gyro',
+  },
+  Issues: {
+    [PoolWarning.PoolProtocolFeeVulnWarning]: [
+      '0xb54b2125b711cd183edd3dd09433439d5396165200000000000000000000075e',
+    ],
+    [PoolWarning.RenBTCWarning]: [
+      '0xfeadd389a5c427952d8fdb8057d6c8ba1156cc5600020000000000000000001e',
+    ],
+    [PoolWarning.PoolOwnerVulnWarningGovernanceMigrate]: [
+      '0x06df3b2bbb68adc8b0e302443692037ed9f91b42000000000000000000000012',
+      '0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4',
+    ],
+    [PoolWarning.PoolOwnerVulnWarningGovernance]: [
+      '0xf38cf113d2d4f60c36cbd95af2f48a9a0167045a00000000000000000000005b',
+      '0x0d34e5dd4d8f043557145598e4e2dc286b35fd4f000000000000000000000068',
+      '0x5028497af0c9a54ea8c6d42a054c0341b9fc616800020000000000000000007b',
+      '0xc31a37105b94ab4efca1954a14f059af11fcd9bb000000000000000000000455',
+    ],
+    [PoolWarning.PoolOwnerVulnWarningEcosystemMigrate]: [
+      '0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366',
+    ],
+    [PoolWarning.PoolOwnerVulnWarningEcosystem]: [
+      '0xb4670d1389c758e4380c4211bcbc85342688b9c50002000000000000000003d8',
+    ],
   },
 };
 

@@ -82,6 +82,6 @@ onMounted(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transform: scale(0.9);
+  transform: scale(0.8);
 }
 </style>

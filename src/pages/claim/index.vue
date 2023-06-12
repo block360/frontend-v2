@@ -12,7 +12,6 @@ import ProtocolRewardsTable, {
   ProtocolRewardRow,
 } from '@/components/tables/ProtocolRewardsTable.vue';
 import { GaugePool, useClaimsData } from '@/composables/useClaimsData';
-import { networkHasNativeGauges } from '@/composables/useNetwork';
 import useNumbers from '@/composables/useNumbers';
 import { isStableLike } from '@/composables/usePoolHelpers';
 import { useTokenHelpers } from '@/composables/useTokenHelpers';
@@ -26,6 +25,7 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { TOKENS } from '@/constants/tokens';
 import { buildNetworkIconURL } from '@/lib/utils/urls';
 import { Network } from '@/lib/config';
+import { poolMetadata } from '@/lib/config/metadata';
 
 /**
  * TYPES
@@ -163,6 +163,9 @@ async function injectPoolTokens(pools: GaugePool[]): Promise<void> {
 }
 
 function gaugeTitle(pool: GaugePool): string {
+  const metadata = poolMetadata(pool.id);
+  if (metadata?.name) return metadata.name;
+
   const _tokens = pool.tokens.map(token => ({
     ...token,
     ...getToken(getAddress(token.address)),
@@ -293,7 +296,7 @@ onBeforeMount(async () => {
             />
           </div>
         </template>
-        <div v-if="networkHasNativeGauges">
+        <div>
           <h3 class="inline-block px-4 xl:px-0 mt-8 mr-1.5 text-xl">
             {{ $t('otherTokenIncentives') }}
           </h3>

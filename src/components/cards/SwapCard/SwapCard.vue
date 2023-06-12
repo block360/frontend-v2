@@ -439,9 +439,6 @@ export default defineComponent({
         setTokenOutAmount(assetOutAmount);
       }
     }
-    function switchToWETH() {
-      tokenInAddress.value = appNetworkConfig.addresses.weth;
-    }
     function handlePreviewButton() {
       swapping.resetSubmissionError();
       modalSwapPreviewIsOpen.value = true;
@@ -481,7 +478,6 @@ export default defineComponent({
       handlePreviewButton,
       handlePreviewModalClose,
       // methods
-      switchToWETH,
       handleErrorButtonClick,
       appNetworkConfig,
     };

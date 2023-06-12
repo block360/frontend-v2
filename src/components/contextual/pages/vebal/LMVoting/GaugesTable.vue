@@ -15,7 +15,6 @@ import {
   isUnknownType,
   poolURLFor,
 } from '@/composables/usePoolHelpers';
-import { isSameAddress } from '@/lib/utils';
 import { VotingGaugeWithVotes } from '@/services/balancer/gauges/gauge-controller.decorator';
 import useWeb3 from '@/services/web3/useWeb3';
 
@@ -32,6 +31,7 @@ import { differenceInWeeks } from 'date-fns';
 import { oneSecondInMs } from '@/composables/useTime';
 import { buildNetworkIconURL } from '@/lib/utils/urls';
 import { poolMetadata } from '@/lib/config/metadata';
+import { isGaugeExpired } from './voting-utils';
 
 /**
  * TYPES
@@ -43,6 +43,7 @@ type Props = {
   noPoolsLabel?: string;
   isPaginated?: boolean;
   filterText?: string;
+  renderedRowsIdx: number;
 };
 
 /**
@@ -72,7 +73,7 @@ const { isWalletReady } = useWeb3();
 /**
  * DATA
  */
-const columns = ref<ColumnDefinition<VotingGaugeWithVotes>[]>([
+const columns = computed((): ColumnDefinition<VotingGaugeWithVotes>[] => [
   {
     name: t('veBAL.liquidityMining.table.chain'),
     id: 'chain',
@@ -130,8 +131,6 @@ const columns = ref<ColumnDefinition<VotingGaugeWithVotes>[]>([
   },
 ]);
 
-const dataKey = computed(() => JSON.stringify(props.data));
-
 /**
  * METHODS
  */
@@ -162,7 +161,7 @@ function getIsGaugeNew(addedTimestamp: number): boolean {
 }
 
 function getIsGaugeExpired(gaugeAddress: string): boolean {
-  return !!props.expiredGauges.some(item => isSameAddress(gaugeAddress, item));
+  return isGaugeExpired(props.expiredGauges, gaugeAddress);
 }
 
 function getHasUserVotes(userVotes: string): boolean {
@@ -203,7 +202,6 @@ function getPickedTokens(tokens: PoolToken[]) {
     noPad
   >
     <BalTable
-      :key="dataKey"
       :columns="columns"
       :data="data"
       :isLoading="isLoading"
@@ -222,6 +220,7 @@ function getPickedTokens(tokens: PoolToken[]) {
         pinOn: 'address',
         pinnedData: ['0xE867AD0a48e8f815DC0cda2CDb275e0F163A480b'],
       }"
+      :renderedRowsIdx="renderedRowsIdx"
     >
       <template #chainColumnHeader>
         <div class="flex items-center">
