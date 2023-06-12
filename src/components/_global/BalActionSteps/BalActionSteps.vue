@@ -336,6 +336,7 @@ async function handleTransaction(
   /* border: 1px solid #fff; */
   background-image: linear-gradient(to right, #7124d4, #d62050);
   border-radius: 50px;
+  border: 2px solid #fff;
 
   /* text-transform: uppercase; */
 

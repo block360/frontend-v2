@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
-import SwapSettingsPopover, {
-  SwapSettingsContext,
-} from '@/components/popovers/SwapSettingsPopover.vue';
+// import SwapSettingsPopover, {
+//   SwapSettingsContext,
+// } from '@/components/popovers/SwapSettingsPopover.vue';
 import { configService } from '@/services/config/config.service';
 import InvestFormV2 from '@/components/forms/pool_actions/InvestForm/InvestFormV2.vue';
 import InvestForm from '@/components/forms/pool_actions/InvestForm/InvestForm.vue';
@@ -57,7 +57,7 @@ watch(activeTab, value => {
         </div>
         <div class="flex justify-between items-center">
           <h4>{{ $t('addLiquidity') }}</h4>
-          <SwapSettingsPopover :context="SwapSettingsContext.invest" />
+          <!-- <SwapSettingsPopover :context="SwapSettingsContext.invest" /> -->
         </div>
         <BalTabs
           v-if="isDeepPool && isPreMintedBptPool"

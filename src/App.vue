@@ -106,13 +106,18 @@ watch(route, newRoute => {
 
 <style scoped>
 #app {
-  background-image: url('../src/assets/images/background1.png');
+  background-image: url('../src/assets/images/background.png');
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
 
   /* background:  #feed02; */
-  background-position: center;
+
+  /* background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; */
   min-height: 100vh;
 }
 </style>

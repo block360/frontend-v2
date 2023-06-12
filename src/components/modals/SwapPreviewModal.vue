@@ -22,7 +22,7 @@ import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionActionInfo } from '@/types/transactions';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
-import KeyboardArrow from '@/assets/images/keyboard_arrow_down.svg';
+// import KeyboardArrow from '@/assets/images/keyboard_arrow_down.svg';
 
 const PRICE_UPDATE_THRESHOLD = 0.02;
 
@@ -495,10 +495,11 @@ watch(blockNumber, () => {
       style="
         background-image: linear-gradient(
           to right,
-          rgb(153 73 255),
-          rgb(233 74 116)
+          rgb(113 36 212 / 75%),
+          rgb(214 32 80 / 75%)
         );
-        opacity: 0.75;
+
+        /* opacity: 0.75; */
         padding: 20px;
         border-radius: 20px;
       "
@@ -600,13 +601,13 @@ watch(blockNumber, () => {
               </div>
             </div>
           </div>
-          <img
+          <!-- <img
             class="w-12 h-12 icon-swap-toggle"
             :src="KeyboardArrow"
             width="100px"
             style="margin-left: 17px; color: white"
-          />
-          <div class="p-3">
+          /> -->
+          <div class="p-3" style="margin-top: 15px">
             <div
               class="flex items-center"
               style="
@@ -830,6 +831,7 @@ watch(blockNumber, () => {
   border-radius: 50px; */
 
   /* text-transform: uppercase; */
+  border: 2px solid #fff;
 
   /* margin-top: 55px; */
   background-image: linear-gradient(to right, #7124d4, #d62050);

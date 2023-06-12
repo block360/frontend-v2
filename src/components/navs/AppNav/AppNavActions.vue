@@ -53,7 +53,8 @@ function connectWalletHandler() {
         style="
           background-image: linear-gradient(to right, #7124d4, #d62050);
           color: white;
-          height: 20px;
+          height: 22px;
+          margin-top: 5px;
         "
         @click="connectWalletHandler"
       >

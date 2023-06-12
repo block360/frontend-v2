@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tabs">
+    <!-- <div class="tabs">
       <nav>
         <ul>
           <li :class="$route.name != 'tracking' ? 'tab-current' : ''">
@@ -11,7 +11,7 @@
           <li :class="$route.name == 'tracking' ? 'tab-current' : ''"></li>
         </ul>
       </nav>
-    </div>
+    </div> -->
     <BalCard class="card-container" :isSwapView="true">
       <!-- <template #header>
       <div class="flex justify-between items-center w-full">
@@ -540,8 +540,7 @@ export default defineComponent({
 
 .swap-button {
   color: #fff;
-
-  /* border: 1px solid #133838; */
+  border: 2px solid #fff;
 
   /* background-color: red; */
   background-image: linear-gradient(to right, #7124d4, #d62050);

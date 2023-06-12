@@ -6,7 +6,7 @@ import { useTokens } from '@/providers/tokens.provider';
 import useVeBal from '@/composables/useVeBAL';
 import { bnum } from '@/lib/utils';
 
-import SwapPairToggle from './SwapPairToggle.vue';
+// import SwapPairToggle from './SwapPairToggle.vue';
 
 /**
  * TYPES
@@ -182,7 +182,7 @@ onMounted(() => {
     />
 
     <div class="flex items-center" style="margin-top: 35px; margin-bottom: 5px">
-      <SwapPairToggle />
+      <!-- <SwapPairToggle /> -->
     </div>
 
     <TokenInput

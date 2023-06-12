@@ -56,7 +56,11 @@ const isBalRulesAccepted = computed(() => '1');
   <BalModal
     :show="props.isVisible"
     title="Connect to a wallet"
-    bgColor="red"
+    bgImage="linear-gradient(
+          to right,
+          rgb(113,36,212,75%),
+          rgb(214,32,80,75%)
+        )"
     :isSwapView="true"
     @close="emit('close')"
   >

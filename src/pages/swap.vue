@@ -9,7 +9,7 @@ import useBreakpoints from '@/composables/useBreakpoints';
 // import BridgeLink from '@/components/links/BridgeLink.vue';
 // import { hasBridge } from '@/composables/useNetwork';
 import { provideUserTokens } from '@/providers/local/user-tokens.provider';
-import AboutCard from '@/components/cards/AboutCard.vue';
+// import AboutCard from '@/components/cards/AboutCard.vue';
 
 /**
  * PROVIDERS
@@ -51,7 +51,7 @@ onMounted(() => {
         ['xs', 'sm', 'md', 'lg'].includes(bp) ? 'content-md' : 'content-lg'
       "
     >
-      <AboutCard />
+      <!-- <AboutCard /> -->
       <SwapCard />
     </div>
   </div>
@@ -82,6 +82,6 @@ onMounted(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 </style>

@@ -55,9 +55,10 @@
       </g>
     </svg> -->
     <img
-      src="~@/assets/images/GSUSwapLogo.png"
-      width="160"
+      src="~@/assets/images/logo.png"
+      width="180"
       aria-labelledby="logoTitle logoDesc"
+      style="margin-left: 3px"
     />
   </div>
 </template>

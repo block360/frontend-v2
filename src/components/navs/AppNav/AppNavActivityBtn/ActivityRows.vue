@@ -53,7 +53,7 @@ const disablePending = computed(() => connector.value?.id === 'gnosis');
             />
           </div>
           <div
-            class="text-sm group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white transition-colors text-secondary summary"
+            class="text-sm text-white group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white transition-colors summary"
           >
             {{ transaction.summary }}
           </div>
