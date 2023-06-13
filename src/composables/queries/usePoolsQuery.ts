@@ -83,6 +83,8 @@ export default function usePoolsQuery(
   }
 
   function initializeDecoratedSubgraphRepository() {
+    console.log('inside initializeDecoratedSubgraphRepository');
+
     return {
       fetch: async (options: PoolsRepositoryFetchOptions): Promise<Pool[]> => {
         const pools = await balancerSubgraphService.pools.get(
@@ -94,8 +96,8 @@ export default function usePoolsQuery(
 
         const tokens = flatten(
           pools.map(pool => [
-            ...pool.tokensList,
-            ...tokenTreeLeafs(pool.tokens),
+            ...pool.tokensList.reverse(),
+            ...tokenTreeLeafs(pool.tokens.reverse()),
             pool.address,
           ])
         );
@@ -131,6 +133,8 @@ export default function usePoolsQuery(
     const tokenListFormatted = filterTokens.value.map(address =>
       address.toLowerCase()
     );
+
+    console.log(tokenListFormatted, 'tokenListFormatted');
 
     const orderBy = isBalancerApiDefined
       ? poolsSortField?.value
