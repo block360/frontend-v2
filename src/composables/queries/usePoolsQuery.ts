@@ -21,6 +21,10 @@ import { balancerAPIService } from '@/services/balancer/api/balancer-api.service
 import { poolsStoreService } from '@/services/pool/pools-store.service';
 import { isBalancerApiDefined } from '@/lib/utils/balancer/api';
 import { bnum } from '@/lib/utils';
+import useConfig from '../useConfig';
+import { TokenInfoMap, TokenListMap } from '@/types/TokenList';
+import { getAddress } from '@ethersproject/address';
+import TokenListService from '@/services/token-list/token-list.service';
 
 type PoolsQueryResponse = {
   pools: Pool[];
@@ -47,10 +51,55 @@ export default function usePoolsQuery(
   const { injectTokens, tokens: tokenMeta } = useTokens();
   const { networkId } = useNetwork();
   let poolsRepository = initializePoolsRepository();
+  const { networkConfig } = useConfig();
 
   /**
    * METHODS
    */
+  function mapTokenListTokens(tokenListMap: TokenListMap): TokenInfoMap {
+    const isEmpty = Object.keys(tokenListMap).length === 0;
+    if (isEmpty) return {};
+
+    const tokens = [...Object.values(tokenListMap)]
+      .map(list => list.tokens)
+      .flat();
+
+    const tokensMap = tokens.reduce<TokenInfoMap>((acc, token) => {
+      const address: string = getAddress(token.address);
+
+      // Don't include if already included
+      if (acc[address]) return acc;
+
+      // Don't include if not on app network
+      if (token.chainId !== networkConfig.chainId) return acc;
+
+      acc[address] = token;
+      return acc;
+    }, {});
+
+    return tokensMap;
+  }
+
+  async function getTokenList() {
+    let tokensListPromise;
+    if (configService.network.chainId == 1) {
+      tokensListPromise = import(`@/assets/data/tokenlists/tokens-1.json`);
+    } else if (configService.network.chainId == 5) {
+      tokensListPromise = import(`@/assets/data/tokenlists/tokens-5.json`);
+    }
+
+    const module = await tokensListPromise;
+    console.log(module.default, 'usePoolFilters');
+    const tokenLists = module.default as TokenListMap;
+    const allTokenLists = TokenListService.filterTokensList(
+      tokenLists,
+      configService.network.chainId
+    );
+    const allTokenListTokens = Object.values(
+      mapTokenListTokens(allTokenLists)
+    ).filter(tokenData => tokenData.symbol === 'GSUc')[0].address;
+    return allTokenListTokens;
+  }
 
   function initializePoolsRepository() {
     const FallbackRepository = getPoolsFallbackRepository();
@@ -83,12 +132,16 @@ export default function usePoolsQuery(
   }
 
   function initializeDecoratedSubgraphRepository() {
-    console.log('inside initializeDecoratedSubgraphRepository');
-
     return {
       fetch: async (options: PoolsRepositoryFetchOptions): Promise<Pool[]> => {
         const pools = await balancerSubgraphService.pools.get(
           getQueryArgs(options)
+        );
+
+        const tokenFilter = await getTokenList();
+        console.log(
+          tokenFilter,
+          'inside initializeDecoratedSubgraphRepository'
         );
 
         const poolDecorator = new PoolDecorator(pools);
@@ -96,8 +149,18 @@ export default function usePoolsQuery(
 
         const tokens = flatten(
           pools.map(pool => [
-            ...pool.tokensList.reverse(),
-            ...tokenTreeLeafs(pool.tokens.reverse()),
+            ...(pool.tokensList.includes(tokenFilter)
+              ? pool.tokensList[0] == tokenFilter
+                ? pool.tokensList
+                : pool.tokensList.reverse()
+              : pool.tokensList),
+            ...tokenTreeLeafs(
+              pool.tokens.filter(val => val.address == tokenFilter).length > 0
+                ? pool.tokens[0].address == tokenFilter
+                  ? pool.tokens
+                  : pool.tokens.reverse()
+                : pool.tokens
+            ),
             pool.address,
           ])
         );
