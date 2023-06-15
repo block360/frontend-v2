@@ -72,13 +72,12 @@ function onClose() {
 </script>
 
 <template>
-  <BalModal show :isSwapView="true" @close="onClose">
+  <BalModal show noContentPad :isSwapView="true" @close="onClose">
     <div>
       <!-- Modal -->
       <div
         id="support"
         class="modal fade"
-        tabindex="-1"
         role="dialog"
         aria-labelledby="supportLabel"
         aria-hidden="true"
@@ -92,17 +91,16 @@ function onClose() {
           /* opacity: 0.75; */
           padding: 15px;
           border-radius: 20px;
-          width: fit-content;
         "
       >
-        <div class="modal-dialog modal-dialog-centered">
+        <div>
           <div class="modal-content">
             <div
               :onclick="onClose"
               style="cursor: pointer; color: red; font-size: 30px"
             >
               <span
-                class="float-right material-icons clos text-red"
+                class="float-right text-white material-icons clos"
                 data-dismiss="modal"
                 aria-label="Close"
                 >close</span

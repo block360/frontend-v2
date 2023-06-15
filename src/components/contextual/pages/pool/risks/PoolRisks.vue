@@ -33,12 +33,14 @@ defineProps<Props>();
         :key="hash"
         class="mb-1 link"
       >
-        <router-link :to="{ name: 'risks', hash }">{{ title }}</router-link>
+        <!-- <router-link :to="{ name: 'risks', hash }"> -->
+        {{ title }}
+        <!-- </router-link> -->
       </li>
       <li class="link">
-        <router-link :to="{ name: 'risks', hash: '#general-risks' }"
-          >General Balancer protocol risks</router-link
-        >
+        <!-- <router-link :to="{ name: 'risks', hash: '#general-risks' }"> -->
+        General Swap protocol risks
+        <!-- </router-link> -->
       </li>
     </ul>
   </div>

@@ -16,7 +16,7 @@ function onClose() {
 </script>
 
 <template>
-  <BalModal show :isSwapView="true" @close="onClose">
+  <BalModal show noContentPad :isSwapView="true" @close="onClose">
     <div
       id="simpleDeposit"
       class="modal fade"
@@ -30,7 +30,8 @@ function onClose() {
         /* opacity: 0.75; */
         padding: 10px;
         border-radius: 20px;
-        width: fit-content;
+
+        /* width: fit-content; */
       "
     >
       <div
@@ -74,7 +75,7 @@ function onClose() {
             background-image: linear-gradient(to right, #7124d4, #d62050);
             border-radius: 20px;
             padding: 10px;
-            font-size: 15px;
+            font-size: 12px;
             color: white;
           "
         >

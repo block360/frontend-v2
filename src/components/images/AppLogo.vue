@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import useBreakpoints from '@/composables/useBreakpoints';
+
 // import useDarkMode from '@/composables/useDarkMode';
 // import useTailwind from '@/composables/useTailwind';
 
@@ -8,6 +10,7 @@
 // type Props = {
 //   forceDark?: boolean;
 // };
+const { bp } = useBreakpoints();
 
 /**
  * PROPS & EMITS
@@ -56,7 +59,7 @@
     </svg> -->
     <img
       src="~@/assets/images/logo.png"
-      width="180"
+      :width="['xs', 'sm'].includes(bp) ? '140' : '180'"
       aria-labelledby="logoTitle logoDesc"
       style="margin-left: 3px"
     />

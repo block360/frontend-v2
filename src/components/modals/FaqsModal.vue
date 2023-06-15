@@ -10,13 +10,12 @@ function onClose() {
 </script>
 
 <template>
-  <BalModal show :isSwapView="true" @close="onClose">
+  <BalModal show noContentPad :isSwapView="true" @close="onClose">
     <div>
       <!-- Modal -->
       <div
         id="faqs"
         class="modal fade"
-        tabindex="-1"
         role="dialog"
         aria-labelledby="supportLabel"
         aria-hidden="true"
@@ -27,15 +26,16 @@ function onClose() {
             rgb(214 32 80 / 75%)
           );
 
+          /* overflow-y: scroll; */
+
           /* opacity: 0.75; */
           padding: 15px;
           border-radius: 20px;
-          width: fit-content;
+
+          /* width: fit-content; */
         "
       >
-        <div
-          class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-        >
+        <div>
           <div class="modal-content">
             <div class="mt-8 mb-8 text-center">
               <div :onclick="onClose" style="cursor: pointer">
@@ -43,7 +43,7 @@ function onClose() {
                   class="float-right material-icons clos text-red"
                   data-dismiss="modal"
                   aria-label="Close"
-                  style="color: red; font-size: 30px"
+                  style="color: white; font-size: 30px"
                   >close</span
                 >
               </div>

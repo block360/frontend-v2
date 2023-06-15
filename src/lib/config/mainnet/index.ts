@@ -39,7 +39,7 @@ const config: Config = {
   },
   bridgeUrl: '',
   supportsEIP1559: true,
-  supportsElementPools: true,
+  supportsElementPools: false,
   blockTime: 12,
   nativeAsset: {
     name: 'Ether',
