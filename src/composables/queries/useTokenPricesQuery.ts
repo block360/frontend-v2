@@ -49,7 +49,7 @@ export default function useTokenPricesQuery(
     const { prices } = await api.GetCurrentTokenPrices();
 
     //GSU
-    const priceGsu = await fetchGSURates('USD');
+    const priceGsu = await fetchGSURates('GSUusd');
     prices.push({
       price: priceGsu,
       address: '0x252D98faB648203AA33310721bBbDdfA8F1b6587',

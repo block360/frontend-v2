@@ -6,7 +6,7 @@ import { GraphQLArgs } from '@balancer-labs/sdk';
 import QUERY_KEYS from '@/constants/queryKeys';
 import { useTokens } from '@/providers/tokens.provider';
 
-import { poolsStoreService } from '@/services/pool/pools-store.service';
+// import { poolsStoreService } from '@/services/pool/pools-store.service';
 import { Pool } from '@/services/pool/types';
 
 import { tokensListExclBpt, tokenTreeLeafs } from '../usePoolHelpers';
@@ -74,7 +74,7 @@ export default function usePoolQuery(
    * If pool is already downloaded, we can use it instantly
    * it may be if user came to pool page from home page
    */
-  const poolInfo = poolsStoreService.findPool(id);
+  // const poolInfo = poolsStoreService.findPool(id);
 
   /**
    * COMPOSABLES
@@ -114,11 +114,11 @@ export default function usePoolQuery(
     const tokenFilter = await getTokenList();
 
     let pool: Pool;
-    if (poolInfo) {
-      pool = poolInfo;
-    } else {
-      pool = await poolRepository.fetch(getQueryArgs());
-    }
+    // if (poolInfo) {
+    //   pool = poolInfo;
+    // } else {
+    pool = await poolRepository.fetch(getQueryArgs());
+    // }
 
     if (!pool) throw new Error('Pool does not exist');
 

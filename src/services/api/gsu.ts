@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GSU_RATES =
-  process.env.GSU_RATES || 'https://api.gsucoin.app/Products/GSULive/';
+  process.env.GSU_RATES || 'https://code.gcurate.com/ratelive.asp';
 
 type RatesAPIResponse = {
   price: string;
@@ -10,7 +10,7 @@ type RatesAPIResponse = {
 export const fetchGSURates = async function (symbol: string): Promise<number> {
   let rate = 0;
   try {
-    const response = await axios(GSU_RATES + '?symbol=' + symbol, {
+    const response = await axios(GSU_RATES + '?Spot=' + symbol, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -21,7 +21,9 @@ export const fetchGSURates = async function (symbol: string): Promise<number> {
 
       throw new Error(`Error! status: ${response.status}`);
     }
-    const result = (await response.data) as RatesAPIResponse;
+    const result = (await response.data.filter(data => {
+      Object.keys(data).includes(symbol);
+    })) as RatesAPIResponse;
 
     rate = Number(result.price);
     // if (rate.isZero()) {
