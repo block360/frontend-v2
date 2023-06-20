@@ -6,7 +6,6 @@ import { getApi } from '@/dependencies/balancer-api';
 import { GqlTokenPrice } from '@/services/api/graphql/generated/api-types';
 import { oneMinInMs } from '../useTime';
 import { getAddress } from '@ethersproject/address';
-import { fetchGSURates } from '@/services/api/gsu';
 
 /**
  * TYPES
@@ -48,16 +47,8 @@ export default function useTokenPricesQuery(
   const queryFn = async () => {
     const { prices } = await api.GetCurrentTokenPrices();
 
-    //GSU
-    const priceGsu = await fetchGSURates('GSUusd');
-    prices.push({
-      price: priceGsu,
-      address: '0x252D98faB648203AA33310721bBbDdfA8F1b6587',
-    });
-
     let pricesMap = priceArrayToMap(prices);
     pricesMap = injectCustomTokens(pricesMap, pricesToInject.value);
-    console.log('Fetching', Object.values(prices).length, 'prices');
 
     return pricesMap;
   };
