@@ -117,6 +117,18 @@ onMounted(() => {
     textInput.value?.focus();
   }
 });
+
+function checkIfNumber(event) {
+  /**
+   * Allowing: Integers | decimals | Backspace | Tab | Delete | Left & Right arrow keys
+   **/
+
+  const regex = new RegExp(
+    /(^\d*\.?\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight)/
+  );
+
+  return !event.key.match(regex) && event.preventDefault();
+}
 </script>
 
 <template>
@@ -153,6 +165,7 @@ onMounted(() => {
             inputColor &&
             `background-color: ${inputColor};color:black;border-radius:8px`
           "
+          @keypress="type === 'number' && checkIfNumber($event)"
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
@@ -199,6 +212,7 @@ onMounted(() => {
           :disabled="disabled"
           :class="['input', inputClasses]"
           style="color: black"
+          @keypress="type === 'number' && checkIfNumber($event)"
           @blur="onBlur"
           @input="onInput"
           @keydown="onKeydown"
