@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
+import { computed, onBeforeMount, ref, toRef, watch, watchEffect } from 'vue';
 
 import WrapStEthLink from '@/components/contextual/pages/pool/add-liquidity/WrapStEthLink.vue';
 import StakePreviewModal from '@/components/contextual/pages/pool/staking/StakePreviewModal.vue';
@@ -87,11 +87,12 @@ const excludedTokens = computed((): string[] => {
 });
 
 const joinTokensWithBalance = computed<string[]>(() =>
-  poolJoinTokens.value.filter(
-    address =>
-      includesAddress(tokensWithBalance.value, address) ||
-      isSameAddress(address, wrappedNativeAsset.value.address)
-  )
+  poolJoinTokens.value.filter(address => {
+    console.log(wrappedNativeAsset, 'joinTokensWithBalance');
+
+    includesAddress(tokensWithBalance.value, address) ||
+      isSameAddress(address, wrappedNativeAsset.value.address);
+  })
 );
 
 const joinTokensWithoutBalance = computed<string[]>(() =>
@@ -108,6 +109,9 @@ async function initializeTokensForm(isSingleAssetJoin: boolean) {
     // asset.
     addTokensIn([wrappedNativeAsset.value.address]);
   } else {
+    // console.log("inside 2nd");
+    console.log(joinTokensWithBalance.value, 'inside 2nd');
+
     addTokensIn(joinTokensWithBalance.value);
   }
 }
@@ -140,6 +144,10 @@ onBeforeMount(() => {
 /**
  * WATCHERS
  */
+watchEffect(() => {
+  console.log(amountsIn, 'amountsIn');
+});
+
 watch(
   [isSingleAssetJoin, joinTokensWithBalance],
   (

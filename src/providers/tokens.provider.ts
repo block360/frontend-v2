@@ -43,6 +43,7 @@ import {
 } from '@/types/TokenList';
 import useWeb3 from '@/services/web3/useWeb3';
 import { tokenListService } from '@/services/token-list/token-list.service';
+import { AmountToApprove } from '@/composables/approvals/useTokenApprovalActions';
 
 const { uris: tokenListUris } = tokenListService;
 
@@ -101,13 +102,22 @@ export const tokensProvider = (
   /**
    * All tokens from all token lists.
    */
-  const allTokenListTokens = computed(
-    (): TokenInfoMap => ({
+  const allTokenListTokens = computed((): TokenInfoMap => {
+    console.log(
+      {
+        // [networkConfig.nativeAsset.address]: nativeAsset,
+        ...mapTokenListTokens(allTokenLists.value),
+        // ...state.injectedTokens,
+      },
+      'allTokenListTokens'
+    );
+
+    return {
       [networkConfig.nativeAsset.address]: nativeAsset,
       ...mapTokenListTokens(allTokenLists.value),
       ...state.injectedTokens,
-    })
-  );
+    };
+  });
 
   /**
    * All tokens from token lists that are toggled on.
@@ -129,13 +139,22 @@ export const tokensProvider = (
    * and any injected tokens. Static and dynamic
    * meta data should be available for these tokens.
    */
-  const tokens = computed(
-    (): TokenInfoMap => ({
+  const tokens = computed((): TokenInfoMap => {
+    console.log(
+      {
+        // [networkConfig.nativeAsset.address]: nativeAsset,
+        ...allTokenListTokens.value,
+        // ...state.injectedTokens,
+      },
+      'i am fuked'
+    );
+
+    return {
       [networkConfig.nativeAsset.address]: nativeAsset,
       ...allTokenListTokens.value,
       ...state.injectedTokens,
-    })
-  );
+    };
+  });
 
   const wrappedNativeAsset = computed(
     (): TokenInfo => getToken(TOKENS.Addresses.wNativeAsset)
@@ -356,18 +375,20 @@ export const tokensProvider = (
   }
 
   /**
-   * Check which tokens require approvals for given amounts
-   * @returns a subset of the token addresses passed in.
+   * Check which tokens/amounts require approvals for the spender.
+   *
+   * @param {AmountToApprove[]} amountsToApprove - array of token addresses and amounts to check.
+   * @param {string} spender - Contract address of spender to check approvals against.
+   * @returns a subset of the amountsToApprove array.
    */
   function approvalsRequired(
-    tokenAddresses: string[],
-    amounts: string[],
-    contractAddress: string = networkConfig.addresses.vault
-  ): string[] {
-    return tokenAddresses.filter((address, index) => {
-      if (!contractAddress) return false;
+    amountsToApprove: AmountToApprove[],
+    spender: string
+  ): AmountToApprove[] {
+    return amountsToApprove.filter(({ address, amount }) => {
+      if (!spender) return false;
 
-      return approvalRequired(address, amounts[index], contractAddress);
+      return approvalRequired(address, amount, spender);
     });
   }
 
@@ -423,6 +444,11 @@ export const tokensProvider = (
    */
   function getToken(address: string): TokenInfo {
     address = getAddressFromPoolId(address); // In case pool ID has been passed
+    console.log(
+      selectByAddressFast(tokens.value, getAddress(address)),
+      'getAddressFromPoolId'
+    );
+
     return selectByAddressFast(tokens.value, getAddress(address)) as TokenInfo;
   }
 
@@ -467,9 +493,28 @@ export const tokensProvider = (
    * Returns true if the token is the native asset or wrapped native asset
    */
   function isWethOrEth(tokenAddress: string): boolean {
+    console.log(
+      isSameAddress(
+        tokenAddress,
+        wrappedNativeAsset?.value?.address
+          ? wrappedNativeAsset.value.address
+          : '0xdFCeA9088c8A88A76FF74892C1457C17dfeef9C1'
+      ),
+      'isWethOrEth'
+    );
+
     return (
       isSameAddress(tokenAddress, nativeAsset.address) ||
-      isSameAddress(tokenAddress, wrappedNativeAsset.value.address)
+      (wrappedNativeAsset?.value?.address
+        ? isSameAddress(
+            tokenAddress,
+            wrappedNativeAsset?.value?.address
+              ? wrappedNativeAsset.value.address
+              : '0xdFCeA9088c8A88A76FF74892C1457C17dfeef9C1'
+          )
+        : false)
+      // isSameAddress(tokenAddress, wrappedNativeAsset?.value?.address ? wrappedNativeAsset.value.address :"0xdFCeA9088c8A88A76FF74892C1457C17dfeef9C1")
+      // isSameAddress(tokenAddress, "0xdFCeA9088c8A88A76FF74892C1457C17dfeef9C1")
     );
   }
 

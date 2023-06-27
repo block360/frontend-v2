@@ -62,10 +62,14 @@ export function useAddLiquidityTotals(pool: Pool) {
   });
 
   const hasBalanceForSomeTokens = computed((): boolean => {
+    console.log(poolJoinTokens, 'hasBalanceForSomeTokens');
+
     const hasBalanceForSome =
-      tokensWithBalanceFrom(poolJoinTokens.value).filter(
-        address => !isWethOrEth(address)
-      ).length > 0;
+      tokensWithBalanceFrom(poolJoinTokens.value).filter(address => {
+        console.log(address, '!isWethOrEth(address)');
+
+        return !isWethOrEth(address);
+      }).length > 0;
 
     // If the pool contains the wrapped native asset, user might have balance for just one of them
     if (isWrappedNativeAsset(pool)) {

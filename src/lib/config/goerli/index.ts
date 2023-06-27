@@ -15,6 +15,7 @@ const config: Config = {
   monorepoName: 'goerli',
   slug: 'goerli',
   network: 'goerli',
+  trustWalletNetwork: 'goerli',
   unknown: false,
   visibleInUI: true,
   testNetwork: true,
@@ -36,7 +37,7 @@ const config: Config = {
   },
   bridgeUrl: '',
   supportsEIP1559: true,
-  supportsElementPools: false,
+  supportsElementPools: true,
   blockTime: 12,
   nativeAsset: {
     name: 'Ether',
