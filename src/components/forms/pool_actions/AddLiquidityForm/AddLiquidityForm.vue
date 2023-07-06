@@ -90,8 +90,10 @@ const joinTokensWithBalance = computed<string[]>(() =>
   poolJoinTokens.value.filter(address => {
     console.log(wrappedNativeAsset, 'joinTokensWithBalance');
 
-    includesAddress(tokensWithBalance.value, address) ||
-      isSameAddress(address, wrappedNativeAsset.value.address);
+    return (
+      includesAddress(tokensWithBalance.value, address) ||
+      isSameAddress(address, wrappedNativeAsset.value.address)
+    );
   })
 );
 

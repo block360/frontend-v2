@@ -43,7 +43,7 @@ export default function usePoolFilters(networkId) {
 
   onBeforeMount(async () => {
     const module = await tokensListPromise;
-    console.log(module.default, 'usePoolFilters');
+    // console.log(module.default, 'usePoolFilters');
     const tokenLists = module.default as TokenListMap;
 
     // filter token lists by network id
